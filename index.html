@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>5E Character Sheet</title>
+	<link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<header class="charDetails">
+
+		<section id="charHeader" class="sectWrapper row">
+			<article class="charName">
+				<div id="characterName" class="infoInput" title="Character's Name">
+					Obliviaron
+				</div>
+				<div class="infoTitle">
+					Character Name
+				</div>
+			</article>
+			<article class="classLevel">
+				<div id="characterLevel" class="infoInput" title="Character's Class and Level">
+					 Fighter 7 [7]
+				</div>
+				<div class="infoTitle">
+					Class & Level
+				</div>
+			</article>
+			<article class="race">
+				<div id="characterRace" class="infoInput" title="Character's Race">
+					Human
+				</div>
+				<div class="infoTitle">
+					Race
+				</div>
+			</article>
+			<article class="background">
+				<div id="characterBackground" class="infoInput" title="Character's Background">
+					Survivalist
+				</div>
+				<div class="infoTitle">
+					Background
+				</div>
+			</article>
+			<article class="alignment">
+				<div id="characterAlignment" class="infoInput" title="Character's Alignment">
+					Chaotic-Good
+				</div>
+				<div class="infoTitle">
+					Alignment
+				</div>
+			</article>
+			<article class="charExperience">
+				<div id="characterXP" class="infoInput" title="Experience Total">
+					7500
+				</div>
+				<div class="infoTitle">
+					Experience
+				</div>
+			</article>
+		</section>
+
+	</header>
+
+	<main id="sheetFill" class="row">
+
+		<section id="abilityScores" class="sectWrapper column">
+
+			<article class="infoTitle">
+				Strength
+				<div class="attrItem column">
+					<div id="strScore" class="attrScore" title="Strength Score">
+						18
+					</div>
+					<div id="strMod" class="attrMod" title="Strength Modifier">
+						+4
+					</div>
+				</div>
+			</article>
+			<article class="infoTitle">
+				Dexterity
+				<div class="attrItem column">
+					<div id="dexScore" class="attrScore" title="Dexterity Score">
+						14
+					</div>
+					<div id="dexMod" class="attrMod" title="Dexterity Modifier">
+						+2
+					</div>
+				</div>
+			</article>
+			<article class="infoTitle">
+				Constitution
+				<div class="attrItem column">
+					<div id="conScore" class="attrScore" title="Constitution Score">
+						16
+					</div>
+					<div id="conMod" class="attrMod" title="Constitution Modifier">
+						+3
+					</div>
+				</div>
+			</article>
+			<article class="infoTitle">
+				Intelligence
+				<div class="attrItem column">
+					<div id="intScore" class="attrScore" title="Intelligence Score">
+						12
+					</div>
+					<div id="intMod" class="attrMod" title="Intelligence Modifier">
+						+1
+					</div>
+				</div>
+			</article>
+			<article class="infoTitle">
+				Wisdom
+				<div class="attrItem column">
+					<div id="wisScore" class="attrScore" title="Wisdom Score">
+						10
+					</div>
+					<div id="wisMod" class="attrMod" title="Wisdom Modifier">
+						0
+					</div>
+				</div>
+			</article>
+			<article class="infoTitle">
+				Charisma
+				<div class="attrItem column">
+					<div id="chaScore" class="attrScore" title="Charisma Score">
+						8
+					</div>
+					<div id="chaMod" class="attrMod" title="Charisma Score">
+						-1
+					</div>
+				</div>
+			</article>
+
+		</section>
+
+		<section id="profSavesSkills" class="column">
+
+			<article id="profBonusWrapper" class="sectWrapper row">
+				Proficiency Bonus
+				<div id="profBonus" class="infoInput" title="Proficiency Bonus">
+					+3
+				</div>
+			</article>
+
+			<article id="savingThrowsWrapper" class="sectWrapper column">
+				Saving Throws
+				<span class="row saveItm">
+					<img id="strSaveProf" class="profImg" src="img/Solid-Shield.png" alt="Proficient" title="Proficent">
+					<div class="saveTitle">
+						Strength
+					</div>
+					<div id="strSave" class="infoInput" title="Strength Save">
+						+7
+					</div>
+				</span>
+				<span class="row saveItm">
+					<img id="dexSaveProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="saveTitle">
+						Dexterity
+					</div>
+					<div id="dexSave" class="infoInput" title="Dexterity Save">
+						+2
+					</div>
+				</span>
+				<span class="row saveItm">
+					<img id="conSaveProf" class="profImg" src="img/Solid-Shield.png" alt="Proficient" title="Proficent">
+					<div class="saveTitle">
+						Constitution
+					</div>
+					<div id="conSave" class="infoInput" title="Constitution Save">
+						+6
+					</div>
+				</span>
+				<span class="row saveItm">
+					<img id="intSaveProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="saveTitle">
+						Intelligence
+					</div>
+					<div id="intSave" class="infoInput" title="Intelligence Save">
+						+1
+					</div>
+				</span>
+				<span class="row saveItm">
+					<img id="wisSaveProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="saveTitle">
+						Wisdom
+					</div>
+					<div id="wisSave" class="infoInput" title="Wisdom Save">
+						0
+					</div>
+				</span>
+				<span class="row saveItm">
+					<img id="chaSaveProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="saveTitle">
+						Charisma
+					</div>
+					<div id="chaSave" class="infoInput" title="Charisma Save">
+						-1
+					</div>
+				</span>
+			</article>
+
+			<article id="passivePerceptionWrapper" class="sectWrapper row">
+				Passive Perception
+				<div id="passivePerception" class="infoInput" title="Passive Perception">
+					10
+				</div>
+			</article>
+
+			<article id="skillsWrapper" class="sectWrapper column">
+				Skills
+				<span class="row skillItm">
+					<img id="acrobaticsProf" class="profImg" src="img/Blades-Solid-Shield.png" alt="Expertise" title="Expertise">
+					<div class="skillTitle">
+						Acrobatics (Dex)
+					</div>
+					<div id="acrobaticsSkill" class="infoInput" title="Acrobatics Skill Bonus">
+						+2
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="animalhandlingProf" class="profImg" src="img/Blades-Hollow-Shield.png" alt="Jack-of-All-Trades" title="Jack-of-All-Trades">
+					<div class="skillTitle">
+						Animal Handling (Wis)
+					</div>
+					<div id="animalhandlingSkill" class="infoInput" title="Animal Handling Skill Bonus">
+						+15
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="arcanaProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Arcana (Int)
+					</div>
+					<div id="arcanaSkill" class="infoInput" title="Arcana Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="athleticsProf" class="profImg" src="img/Solid-Shield.png" alt="Proficient" title="Proficent">
+					<div class="skillTitle">
+						Athletics (Str)
+					</div>
+					<div id="athleticsSkill" class="infoInput" title="Athletics Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="deceptionProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Deception (Cha)
+					</div>
+					<div id="deceptionSkill" class="infoInput" title="Athletics Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="historyProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						History (Int)
+					</div>
+					<div id="historySkill" class="infoInput" title="History Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="insightProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Insight (Wis)
+					</div>
+					<div id="insightSkill" class="infoInput" title="Insight Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="intimidationProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Intimidation (Cha)
+					</div>
+					<div id="intimidationSkill" class="infoInput" title="Intimidation Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="investigationProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Investigation (Int)
+					</div>
+					<div id="investigationSkill" class="infoInput" title="Investigation Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="medicineProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Medicine (Wis)
+					</div>
+					<div id="medicineSkill" class="infoInput" title="Medicine Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="natureProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Nature (Int)
+					</div>
+					<div id="natureSkill" class="infoInput" title="Nature Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="perceptionProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Perception (Wis)
+					</div>
+					<div id="perceptionSkill" class="infoInput" title="Perception Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="performanceProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Performance (Cha)
+					</div>
+					<div id="performanceSkill" class="infoInput" title="Performance Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="persuasionProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Persuasion (Cha)
+					</div>
+					<div id="persuasionSkill" class="infoInput" title="Persuasion Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="religionProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Religion (Int)
+					</div>
+					<div id="religionSkill" class="infoInput" title="Religion Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="sleightofhandProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Sleight of Hand (Dex)
+					</div>
+					<div id="sleightofhandSkill" class="infoInput" title="Sleight of Hand Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="stealthProf" class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficent">
+					<div class="skillTitle">
+						Stealth (Dex)
+					</div>
+					<div id="stealthSkill" class="infoInput" title="Stealth Skill Bonus">
+						-1
+					</div>
+				</span>
+				<span class="row skillItm">
+					<img id="survivalProf" class="profImg" src="img/Solid-Shield.png" alt="Proficient" title="Proficent">
+					<div class="skillTitle">
+						Survival (Wis)
+					</div>
+					<div id="survivalSkill" class="infoInput" title="Survival Skill Bonus">
+						-1
+					</div>
+				</span>
+			</article>
+
+		</section>
+
+		<section id="combatFeatures" class="column">
+
+			<section id="badgeWrapper" class="row">
+
+				<article class="badges">
+					Initiative
+					<div id="initiativeBonus" class="infoInput row" title="Initiative Bonus">
+						+2
+					</div>
+				</article>
+				<article class="badges">
+					Armor Class
+					<div id="armorClass" class="infoInput row" title="Armor Class">
+						18
+					</div>
+				</article>
+				<article class="badges">
+					Hit Points
+					<div id="hitPoints" class="infoInput row" title="Current Hit Points">
+						60
+					</div>
+				</article>
+				<article class="badges column" style="display: none;">
+					Death Saves
+					<span class="success deathsave row">
+						Success
+						<div class="row">
+							<input class="styled-checkbox deathSuccess" id="deathsaveS1" type="checkbox">
+							<label for="deathsaveS1"></label>
+							<input class="styled-checkbox deathSuccess" id="deathsaveS2" type="checkbox">
+							<label for="deathsaveS2"></label>
+							<input class="styled-checkbox deathSuccess" id="deathsaveS3" type="checkbox">
+							<label for="deathsaveS3"></label>
+						</div>
+					</span>
+					<span class="failure deathsave row">
+						Failure
+						<div class="row">
+							<input class="styled-checkbox deathFailure" id="deathsaveF1" type="checkbox">
+							<label for="deathsaveF1"></label>
+							<input class="styled-checkbox deathFailure" id="deathsaveF2" type="checkbox">
+							<label for="deathsaveF2"></label>
+							<input class="styled-checkbox deathFailure" id="deathsaveF3" type="checkbox">
+							<label for="deathsaveF3"></label>
+						</div>
+					</span>
+					<button>Heal</button>
+				</article>
+				<article class="badges">
+					Hit Dice
+					<div id="hitDice" class="infoInput row" title="Remaining Hit Dice">
+						7d10
+					</div>
+				</article>
+				<article class="badges">
+					Speed
+					<div id="speed" class="infoInput row" title="Character Speed">
+						50 Walk, 60 Fly, 40 Swim
+					</div>
+				</article>
+				<article class="badges">
+					Vision
+					<div id="vision" class="infoInput row" title="Character Vision">
+						Darkvision 60, Blindsight 60
+					</div>
+				</article>
+				<article class="badges" style="display: none;">
+					Class Badge 1
+					<div id="classBadge1" class="infoInput row">
+						1
+					</div>
+				</article>
+				<article class="badges" style="display: none;">
+					Class Badge 2
+					<div id="classBadge2" class="infoInput row">
+						2
+					</div>
+				</article>
+				<article class="badges" style="display: none;">
+					Class Badge 3
+					<div id="classBadge3" class="infoInput row">
+						3
+					</div>
+				</article>
+				<article class="badges" style="display: none;">
+					Class Badge 4
+					<div id="classBadge4" class="infoInput row">
+						4
+					</div>
+				</article>
+				<article class="badges" style="display: none;">
+					Class Badge 5
+					<div id="classBadge5" class="infoInput row">
+						5
+					</div>
+				</article>
+
+			</section>
+
+			<section class="center">
+				<article id="attackWrapper" class="sectWrapper">
+					Attacks
+					<span class="atkHeader row">
+						<div class="atkName" title="Weapon Name">Name</div><div class="atkBns" title="Attack Bonus">Bonus</div><div class="atkDmg" title="Attack Damage">Damage</div><div class="atkRng" title="Attack Range">Range</div>
+					</span>
+					<span id="atk1" class="atkItem infoInput row">
+						<div class="atkName textDefault">Longsword</div><div class="atkBns textDefault">+7</div><div class="atkDmg textDefault">1d8+4</div><div class="atkRng textDefault">Melee</div>
+					</span>
+					<span id="atk2" class="atkItem infoInput row">
+						<div class="atkName textDefault">Longbow</div><div class="atkBns textDefault">+5</div><div class="atkDmg textDefault">1d8+2+1d6[Cold]</div><div class="atkRng textDefault">150/600</div>
+					</span>
+					<span id="atk3" class="atkItem infoInput row">
+						<div class="atkName textDefault">Dagger</div><div class="atkBns textDefault">+5</div><div class="atkDmg textDefault">1d4+2</div><div class="atkRng textDefault">20/60</div>
+					</span>
+					<span id="atk4" class="atkItem infoInput row" style="display: none;">
+
+					</span>
+					<span id="atk5" class="atkItem infoInput row" style="display: none;">
+
+					</span>
+				</article>
+			</section>
+			<section id="charInfoWrapper" class="sectWrapper">
+					Character Details
+					<article class="detailHeader">
+						Proficiencies
+						<div class="detailInfo">
+							Light Armor, Medium Armor, Heavy Armor, Simple Weapons, Martial Weapons, Guitar
+						</div>
+					</article>
+					<article class="detailHeader">
+						Languages
+						<div class="detailInfo">
+							Common, Elven, Dwarven
+						</div>
+					</article>
+
+				</section>
+
+
+		</section>
+		<section>
+
+			<article class="sectionWrapper">
+				Spells
+
+			</article>
+
+		</section>
+	</main>
+
+</body>
+</html>

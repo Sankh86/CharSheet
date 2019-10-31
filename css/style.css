@@ -1,0 +1,500 @@
+    /* Sheet Settings */
+
+body {
+    font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.sectWrapper,
+.badges {
+    background: rgb(220, 220, 220);
+    text-align: center;
+    padding: 5px;
+    margin: 3px;
+    border: 2px solid rgb(150, 150, 150);
+    cursor: default;
+}
+
+.sectWrapper {
+    border-radius: 5px;
+}
+
+.column,
+.row {
+    display: flex;
+}
+
+.column {
+    flex-direction:column;
+}
+
+#sheetFill {
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.infoTitle {
+    font-size: .8rem;
+    cursor: default;
+    margin: 0 5px;
+}
+
+#profBonusWrapper,
+#savingThrowsWrapper,
+#passivePerceptionWrapper,
+#skillsWrapper,
+#attackWrapper,
+#charInfoWrapper {
+    font-size: 1rem;
+}
+
+.infoTitle,
+#savingThrowsWrapper,
+#skillsWrapper,
+#profBonusWrapper,
+#passivePerceptionWrapper,
+.badges,
+#attackWrapper,
+#charInfoWrapper {
+    text-transform: uppercase;
+}
+
+.textDefault {
+    text-transform: none;
+}
+
+.infoInput {
+    background: white;
+    border-bottom: 1px solid black;
+    font-size: 1rem;
+    text-align: center;
+    margin: 0 5px;
+    padding: 0 5px;
+    border-top: 1px solid darkgray;
+    border-left: 1px solid darkgray;
+    border-right: 1px solid darkgray;
+    cursor: default;
+}
+
+.infoInput {
+    box-shadow: inset 0px 0px 7px rgba(0, 0, 0, .35);
+}
+
+.attrItem {
+    box-shadow: inset 0px 0px 15px rgba(0, 0, 0, .35);
+}
+
+.profCheck {
+    margin-left: 5px;
+}
+
+/* .center {
+    display: flex;
+    justify-content: center;
+} */
+
+button {
+    background: rgb(245, 245, 245);
+    border-radius: 3px;
+    border-bottom: 1px solid rgb(150, 150, 150);
+    border-right: 1px solid rgb(150, 150, 150);
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.styled-checkbox {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+.styled-checkbox + label {
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+}
+
+.styled-checkbox + label:before {
+    content: '';
+    margin-left: 2px;
+    margin-bottom: 2px;
+    display: inline-block;
+    vertical-align: text-top;
+    width: 25px;
+    height: 15px;
+    border-radius: 7px;
+    border: 1px solid rgb(150, 150, 150);
+}
+
+button:hover,
+.styled-checkbox:hover + label:before {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, .5),
+        0 0 0 2px rgb(175, 175, 175);
+}
+
+.styled-checkbox:disabled + label {
+    color: #b8b8b8;
+    cursor: auto;
+}
+
+.styled-checkbox:disabled + label:before {
+    box-shadow: none;
+    background: #ddd;
+}
+
+    /* Character Info */
+
+#charHeader {
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.charDetails {
+    width: calc( 100vw - 6px );
+}
+
+.charName {
+    min-width: 150px;
+}
+
+.classLevel {
+    min-width: 90px;
+}
+
+.race,
+.background,
+.alignment {
+    min-width: 80px;
+}
+
+.charExperience {
+    min-width: 90px;
+    margin-left: auto;
+}
+
+#characterName {
+    font-size: 1.4rem;
+}
+
+
+    /* Attributes Panel */
+
+#abilityScores {
+    min-height: 570px;
+    height: calc( 100vh - 88px );
+    width: 84px;
+    align-items: center;
+}
+
+.attrItem {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 0 5px;
+    margin: 0 0 10px;
+    width: 55px;
+    background: white;
+    cursor: default;
+    align-items: center;
+}
+
+.attrScore {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.attrMod {
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 30px;
+    border-radius: 5px 5px 0 0;
+}
+
+
+    /* Proficiency Bonus, Saves, & Skills Panel */
+
+#profBonusWrapper,
+#savingThrowsWrapper,
+#passivePerceptionWrapper,
+#skillsWrapper {
+    justify-content: flex-start;
+    width: 180px;
+}
+
+#profBonusWrapper,
+#passivePerceptionWrapper {
+    align-items: center;
+}
+
+#profBonus,
+#passivePerception {
+    font-size: 1.1rem;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin: 5px 5px 5px auto;
+    font-weight: bold;
+    width: 25px;
+}
+
+.profImg {
+    height:16px;
+    width: 16px;
+}
+
+#strSave,
+#dexSave,
+#conSave,
+#intSave,
+#wisSave,
+#chaSave {
+    width: 25px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+#skillsWrapper {
+    min-height: 465px;
+    height: calc( 100vh - 386px );
+    overflow: auto;
+}
+
+.saveTitle,
+.skillTitle {
+    margin-left: 3px;
+    margin-right: auto;
+}
+
+.saveTitle {
+    font-size: 1rem;
+}
+
+.skillTitle {
+    font-size: .9rem;
+}
+
+.saveItm,
+.skillItm {
+    text-align: center;
+    align-items: center;
+}
+
+.saveItm,
+.skillItm {
+    margin-top: 2px;
+    text-transform: none;
+}
+
+#acrobaticsSkill,
+#animalhandlingSkill,
+#arcanaSkill,
+#athleticsSkill,
+#deceptionSkill,
+#historySkill,
+#insightSkill,
+#intimidationSkill,
+#investigationSkill,
+#medicineSkill,
+#natureSkill,
+#perceptionSkill,
+#performanceSkill,
+#persuasionSkill,
+#religionSkill,
+#sleightofhandSkill,
+#stealthSkill,
+#survivalSkill {
+    width: 25px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 3px;
+    font-size: .9rem;
+    font-weight: bold;
+}
+
+
+    /* Badges */
+
+#combatFeatures {
+    min-width: 300px;
+    width: calc( 100vw - 321px )
+}
+
+#badgeWrapper {
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.badges {
+    border-radius: 10px 10px 5px 5px;
+    font-size: .7rem;
+}
+
+#initiativeBonus,
+#armorClass,
+#hitPoints,
+#hitDice,
+#speed,
+#vision,
+#classBadge1,
+#classBadge2,
+#classBadge3,
+#classBadge4,
+#classBadge5 {
+    margin: 3px 0 0;
+    border-bottom: 1px solid darkgrey;
+    border-radius: 3px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+}
+
+#initiativeBonus,
+#armorClass,
+#hitPoints,
+#hitDice,
+#classBadge1,
+#classBadge2,
+#classBadge3,
+#classBadge4,
+#classBadge5 {
+    min-width: 50px;
+    font-weight: bold;
+}
+
+#speed,
+#vision {
+    min-width: 60px;
+    text-transform: none;
+}
+
+#initiativeBonus,
+#armorClass,
+#hitPoints {
+    font-size: 1.1rem;
+}
+
+.deathsave {
+    font-size: .85rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.success {
+    margin-top: 3px;
+}
+
+.failure {
+    margin-bottom: 3px;
+}
+
+.deathSuccess + label:before {
+    background: rgb(170, 200, 170);
+}
+
+.deathSuccess:checked + label:before {
+    background: rgb(50, 170, 50);
+}
+
+.deathFailure + label:before {
+    background: rgb(200, 170, 170);
+}
+
+.deathFailure:checked + label:before {
+    background: rgb(170, 50, 50);
+}
+
+#hitDice,
+#speed {
+    font-size: .8rem;
+}
+
+#vision {
+    font-size: .7rem;
+}
+
+
+    /* Attack & Character Details */
+
+#attackWrapper {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+}
+
+.atkHeader {
+    font-size: .7rem;
+    margin: 0 10px;
+}
+
+.atkName {
+    text-align: left;
+}
+
+.atkBns,
+.atkDmg,
+.atkRng {
+    text-align: center;
+}
+
+.atkName {
+    width: 30%
+}
+
+.atkBns {
+    width: 10%;
+}
+
+.atkDmg {
+    width: 40%
+}
+
+
+.atkRng {
+    width: 20%;
+}
+
+.atkItem {
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.detailHeader {
+    text-align: left;
+    text-transform: none;
+    padding: 1px 0;
+    font-size: 1.1rem;
+}
+
+.detailInfo {
+    margin-left: 20px;
+    padding: 1px 3px;
+    font-size: .9rem;
+    background: white;
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 3px;
+}
+
+@media (min-width: 1000px) {
+	#combatFeatures {
+        width: calc( 100vw - 571px )
+    }
+}
+
+@media (min-width: 1300px) {
+	#combatFeatures {
+        width: calc( 100vw - 871px )
+    }
+
+    .charDetails {
+        max-width: 1920px;
+        margin: auto;
+    }
+
+    #sheetFill {
+        max-width: 1920px;
+        margin: auto;
+    }
+
+}
