@@ -1,5 +1,9 @@
     /* Sheet Settings */
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'PT Sans Narrow', sans-serif;
 }
@@ -27,6 +31,11 @@ body {
     flex-direction:column;
 }
 
+.scroll {
+    overflow-y: auto;
+    height: calc(100% - 20px);
+}
+
 #sheetFill {
     align-items: flex-start;
     flex-wrap: wrap;
@@ -34,8 +43,8 @@ body {
 
 .infoTitle {
     font-size: .8rem;
+    width: 100%;
     cursor: default;
-    margin: 0 5px;
 }
 
 #profBonusWrapper,
@@ -54,8 +63,16 @@ body {
 #passivePerceptionWrapper,
 .badges,
 #attackWrapper,
-#charInfoWrapper {
+#charInfoWrapper,
+.spellStats {
     text-transform: uppercase;
+}
+
+#profSavesSkills,
+#combatFeatures,
+#spellWrapper {
+    height: calc( 100vh - 70px);
+    justify-content: space-between;
 }
 
 .textDefault {
@@ -76,7 +93,7 @@ body {
 }
 
 .infoInput {
-    box-shadow: inset 0px 0px 7px rgba(0, 0, 0, .35);
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, .35);
 }
 
 .attrItem {
@@ -87,10 +104,6 @@ body {
     margin-left: 5px;
 }
 
-/* .center {
-    display: flex;
-    justify-content: center;
-} */
 
 button {
     background: rgb(245, 245, 245);
@@ -147,10 +160,8 @@ button:hover,
 #charHeader {
     align-items: flex-end;
     flex-wrap: wrap;
-}
-
-.charDetails {
-    width: calc( 100vw - 6px );
+    width: calc( 100vw - 6px);
+    height: 64px;
 }
 
 .charName {
@@ -180,8 +191,8 @@ button:hover,
     /* Attributes Panel */
 
 #abilityScores {
-    min-height: 570px;
-    height: calc( 100vh - 88px );
+    min-height: 556px;
+    height: calc( 100vh - 76px );
     width: 84px;
     align-items: center;
 }
@@ -189,9 +200,8 @@ button:hover,
 .attrItem {
     border: 2px solid black;
     border-radius: 5px;
-    padding: 0 5px;
     margin: 0 0 10px;
-    width: 55px;
+    width: 100%;
     background: white;
     cursor: default;
     align-items: center;
@@ -220,12 +230,13 @@ button:hover,
 #passivePerceptionWrapper,
 #skillsWrapper {
     justify-content: flex-start;
-    width: 180px;
+    min-width: 214px;
 }
 
 #profBonusWrapper,
 #passivePerceptionWrapper {
     align-items: center;
+    height: 44px;
 }
 
 #profBonus,
@@ -235,7 +246,12 @@ button:hover,
     border-radius: 5px;
     margin: 5px 5px 5px auto;
     font-weight: bold;
-    width: 25px;
+    width: 35px;
+}
+
+#savingThrowsWrapper {
+    height: 184px;
+    justify-content: space-between;
 }
 
 .profImg {
@@ -249,16 +265,14 @@ button:hover,
 #intSave,
 #wisSave,
 #chaSave {
-    width: 25px;
-    height: 20px;
+    width: 30px;
     border: 1px solid black;
     border-radius: 3px;
 }
 
 #skillsWrapper {
-    min-height: 465px;
-    height: calc( 100vh - 386px );
-    overflow: auto;
+    flex-grow: 1;
+    min-height: 272px;
 }
 
 .saveTitle,
@@ -305,8 +319,7 @@ button:hover,
 #sleightofhandSkill,
 #stealthSkill,
 #survivalSkill {
-    width: 25px;
-    height: 20px;
+    width: 30px;
     border: 1px solid black;
     border-radius: 3px;
     font-size: .9rem;
@@ -317,8 +330,9 @@ button:hover,
     /* Badges */
 
 #combatFeatures {
-    min-width: 300px;
-    width: calc( 100vw - 321px )
+    min-width: 270px;
+    width: calc( 100vw - 310px );
+    min-height: 562px;
 }
 
 #badgeWrapper {
@@ -418,9 +432,9 @@ button:hover,
     /* Attack & Character Details */
 
 #attackWrapper {
-    width: 100%;
+    width: calc( 100% - 6px );
     max-width: 600px;
-    margin: auto;
+    margin: 3px auto;
 }
 
 .atkHeader {
@@ -468,27 +482,61 @@ button:hover,
 }
 
 .detailInfo {
-    margin-left: 20px;
+    margin-left: 15px;
+    margin-right: 3px;
     padding: 1px 3px;
-    font-size: .9rem;
+    font-size: .95rem;
     background: white;
+    box-shadow: 1px 2px rgb(150, 150, 150), inset 0px 0px 10px rgba(0, 0, 0, .35);
     border: 1px solid rgb(150, 150, 150);
-    border-radius: 3px;
+    border-radius: 0 0 5px 5px;
 }
+
+#charInfoWrapper {
+    flex-grow: 1;
+    min-height: 250px;
+}
+
+
+/* Spell Details */
+
+.spellStats {
+    font-size: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spellStats span {
+    align-items: center;
+    padding: 0 5px;
+    width: 90px;
+}
+
+.spellStats div {
+    width: 70px;
+}
+
+#spellAttack1,
+#spellDC1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+/* Media Queries */
 
 @media (min-width: 1000px) {
 	#combatFeatures {
-        width: calc( 100vw - 571px )
+        width: calc( 100vw - 590px )
     }
 }
 
 @media (min-width: 1300px) {
 	#combatFeatures {
-        width: calc( 100vw - 871px )
+        width: calc( 100vw - 890px )
     }
 
     .charDetails {
-        max-width: 1920px;
         margin: auto;
     }
 
