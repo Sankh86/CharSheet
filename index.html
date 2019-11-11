@@ -603,91 +603,73 @@
 							</li>
 							<li>
 								Dancing Lignts
-								<p></p>
+								<p>C</p>
 								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
 							</li>
 						</ul>
 					</span>
-					<span>
-						<section class = "row">1st Level Spells<div id="spellSecondCasts"> 1 / 1 </div></section>
+					<span style="display: block;">
+						<section class = "row">1st Level Spells<div id="spellSecondCasts"> 3 / 3 </div></section>
 						<ul id="spellFirst" class="detailInfo">
 							<li>
-								<input class="styled-checkbox spellMemorized" id="spellFirst1" type="checkbox">
-								<label for="spellFirst1"></label>
-								Identify
+								<input class="spellListCheckbox spellMemorized" id="spellFirst1" type="checkbox">
+								<label for="spellFirst1">Identify</label>
 								<p title="Ritual Spell">R</p>
 								<p></p>
 								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
 							</li>
-							<li>
-								<input class="styled-checkbox spellMemorized" id="spellFirst2" type="checkbox">
-								<label for="spellFirst2"></label>
-								Mage Armor
-								<p></p>
-								<p></p>
-								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
-							</li>
-							<li>
-								<input class="styled-checkbox spellMemorized" id="spellFirst3" type="checkbox">
-								<label for="spellFirst3"></label>
-								Chromatic Orb
-								<p></p>
-								<p></p>
-								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
-							</li>
 						</ul>
 					</span>
-					<span>
+					<span style="display: block;">
 						<section class = "row">2nd Level Spells<div id="spellSecondCasts"> 1 / 1 </div></section>
 						<ul id="spellSecond" class="detailInfo">
 							<li>
-								<input class="styled-checkbox spellMemorized" id="spellSecond1" type="checkbox">
-								<label for="spellSecond1"></label>
-								Darkness
-								<p></p>
-								<p title="Requires Concentration">C</p>
+								<input class="spellListCheckbox spellMemorized" id="spellSecond1" type="checkbox">
+								<label for="spellSecond1">Darkness</label>
+								<p title="Ritual Spell"></p>
+								<p>C</p>
 								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
 							</li>
 						</ul>
 					</span>
-					<span style="display: none;">
-						3rd Level Spells
+					<span style="display: block;">
+						<section class = "row">3rd Level Spells<div id="spellThirdCasts"> 1 / 1 </div></section>
 						<ul id="spellThird" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: none;">
-						4th Level Spells
+					<span style="display: block;">
+						<section class = "row">4th Level Spells<div id="spellFourthCasts"> 1 / 1 </div></section>
 						<ul id="spellFourth" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: none;">
-						5th Level Spells
+					<span style="display: block;">
+						<section class = "row">5th Level Spells<div id="spellFifthCasts"> 1 / 1 </div></section>
 						<ul id="spellFifth" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: none;">
-						6th Level Spells
+					<span style="display: block;">
+						<section class = "row">6th Level Spells<div id="spellSixthCasts"> 1 / 1 </div></section>
 						<ul id="spellSixth" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: none;">
-						7th Level Spells
+					<span style="display: block;">
+						<section class = "row">7th Level Spells<div id="spellSeventhCasts"> 1 / 1 </div></section>
 						<ul id="spellSeventh" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: none;">
-						8th Level Spells
+					<span style="display: block;">
+						<section class = "row">8th Level Spells<div id="spellEighthCasts"> 1 / 1 </div></section>
 						<ul id="spellEighth" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: none;">
-						9th Level Spells
+					<span style="display: block;">
+						<section class = "row">9th Level Spells<div id="spellNinthCasts"> 1 / 1 </div></section>
 						<ul id="spellNinth" class="detailInfo">
 
 						</ul>
@@ -696,9 +678,29 @@
 
 			</article>
 
-			<article class="sectWrapper">
-				Input Spell
-			</article>
+			<form id="addSpellForm" class="sectWrapper">
+				<label for="addSpellName">New Spell</label><br>
+				<span class="row addSpellWrap">
+					<input type="text" id="addSpellName" title="Spell Name">
+					<select id="addSpellLevel">
+						<option value="spellCantrip">Cantrip</option>
+						<option value="spellFirst">1st Lvl</option>
+						<option value="spellSecond">2nd Lvl</option>
+						<option value="spellThird">3rd Lvl</option>
+						<option value="spellFourth">4th Lvl</option>
+						<option value="spellFifth">5th Lvl</option>
+						<option value="spellSixth">6th Lvl</option>
+						<option value="spellSeventh">7th Lvl</option>
+						<option value="spellEighth">8th Lvl</option>
+						<option value="spellNinth">9th Lvl</option>
+					</select>
+					<input type="checkbox" id="addSpellRitual" class="addSpellCheckbox">
+					<label class="ritualCheck" for="addSpellRitual" title="Can be cast as a ritual">Ritual</label>
+					<input type="checkbox" id="addSpellConcentration" class="addSpellCheckbox" title="Requires Concentration">
+					<label class="concentrationCheck" for="addSpellConcentration" title="Requires Concentration">Concentration</label>
+					<input type="submit" value="Add Spell">
+				</span>
+			</form>
 
 		</section>
 
