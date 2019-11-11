@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	
+
 
 	<section id="charHeader" class="sectWrapper row">
 		<article class="charName">
@@ -562,9 +562,14 @@
 			</section>
 
 		</section>
-		<section id=spellWrapper>
 
-			<article class="sectWrapper spellStats row">
+		<section id="inventoryWrapper">
+				Inventory
+		</section>
+
+		<section id="spellWrapper" class="column">
+
+			<article class="sectWrapper row spellStats">
 				<span class="column">
 					Spell Attack
 					<div id = "spellAttack1" class="infoInput">
@@ -574,13 +579,129 @@
 				<span class="column">
 					Spell DC
 					<div id = "spellDC1" class="infoInput">
-						+5
+						16
 					</div>
 				</span>
 
 			</article>
 
+			<article id="spellList" class="sectWrapper column">
+				Spells List
+				<span class="scroll">
+					<span>
+						Cantrips
+						<ul id="spellCantrip" class="detailInfo">
+							<li>
+								Frostbite
+								<p></p>
+								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
+							</li>
+							<li>
+								Shocking Grasp
+								<p></p>
+								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
+							</li>
+							<li>
+								Dancing Lignts
+								<p></p>
+								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
+							</li>
+						</ul>
+					</span>
+					<span>
+						<section class = "row">1st Level Spells<div id="spellSecondCasts"> 1 / 1 </div></section>
+						<ul id="spellFirst" class="detailInfo">
+							<li>
+								<input class="styled-checkbox spellMemorized" id="spellFirst1" type="checkbox">
+								<label for="spellFirst1"></label>
+								Identify
+								<p title="Ritual Spell">R</p>
+								<p></p>
+								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
+							</li>
+							<li>
+								<input class="styled-checkbox spellMemorized" id="spellFirst2" type="checkbox">
+								<label for="spellFirst2"></label>
+								Mage Armor
+								<p></p>
+								<p></p>
+								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
+							</li>
+							<li>
+								<input class="styled-checkbox spellMemorized" id="spellFirst3" type="checkbox">
+								<label for="spellFirst3"></label>
+								Chromatic Orb
+								<p></p>
+								<p></p>
+								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
+							</li>
+						</ul>
+					</span>
+					<span>
+						<section class = "row">2nd Level Spells<div id="spellSecondCasts"> 1 / 1 </div></section>
+						<ul id="spellSecond" class="detailInfo">
+							<li>
+								<input class="styled-checkbox spellMemorized" id="spellSecond1" type="checkbox">
+								<label for="spellSecond1"></label>
+								Darkness
+								<p></p>
+								<p title="Requires Concentration">C</p>
+								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
+							</li>
+						</ul>
+					</span>
+					<span style="display: none;">
+						3rd Level Spells
+						<ul id="spellThird" class="detailInfo">
+
+						</ul>
+					</span>
+					<span style="display: none;">
+						4th Level Spells
+						<ul id="spellFourth" class="detailInfo">
+
+						</ul>
+					</span>
+					<span style="display: none;">
+						5th Level Spells
+						<ul id="spellFifth" class="detailInfo">
+
+						</ul>
+					</span>
+					<span style="display: none;">
+						6th Level Spells
+						<ul id="spellSixth" class="detailInfo">
+
+						</ul>
+					</span>
+					<span style="display: none;">
+						7th Level Spells
+						<ul id="spellSeventh" class="detailInfo">
+
+						</ul>
+					</span>
+					<span style="display: none;">
+						8th Level Spells
+						<ul id="spellEighth" class="detailInfo">
+
+						</ul>
+					</span>
+					<span style="display: none;">
+						9th Level Spells
+						<ul id="spellNinth" class="detailInfo">
+
+						</ul>
+					</span>
+				</span>
+
+			</article>
+
+			<article class="sectWrapper">
+				Input Spell
+			</article>
+
 		</section>
+
 	</main>
 
 </body>

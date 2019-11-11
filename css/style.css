@@ -52,7 +52,8 @@ body {
 #passivePerceptionWrapper,
 #skillsWrapper,
 #attackWrapper,
-#charInfoWrapper {
+#charInfoWrapper,
+#spellList {
     font-size: 1rem;
 }
 
@@ -64,13 +65,15 @@ body {
 .badges,
 #attackWrapper,
 #charInfoWrapper,
-.spellStats {
+.spellStats,
+#spellList {
     text-transform: uppercase;
 }
 
 #profSavesSkills,
 #combatFeatures,
-#spellWrapper {
+#spellWrapper,
+#inventoryWrapper {
     height: calc( 100vh - 70px);
     justify-content: space-between;
 }
@@ -139,6 +142,7 @@ button {
     border: 1px solid rgb(150, 150, 150);
 }
 
+.trash:hover,
 button:hover,
 .styled-checkbox:hover + label:before {
     box-shadow: inset 0 0 5px rgba(0, 0, 0, .5),
@@ -155,6 +159,15 @@ button:hover,
     background: #ddd;
 }
 
+.trash {
+    height: 20px;
+    width: 22px;
+    padding: 1px 3px;
+    background: rgb(215, 100, 100);
+    border-radius: 2px;
+    margin: 1px;
+}
+
     /* Character Info */
 
 #charHeader {
@@ -166,20 +179,24 @@ button:hover,
 
 .charName {
     min-width: 150px;
+    width: 15%;
 }
 
-.classLevel {
-    min-width: 90px;
+.classLevel,
+.alignment {
+    min-width: 100px;
+    width: 12%;
 }
 
 .race,
-.background,
-.alignment {
+.background {
     min-width: 80px;
+    width: 10%;
 }
 
 .charExperience {
     min-width: 90px;
+    width: 8%;
     margin-left: auto;
 }
 
@@ -187,6 +204,11 @@ button:hover,
     font-size: 1.4rem;
 }
 
+.background,
+.alignment,
+.charExperience {
+    display: none;
+}
 
     /* Attributes Panel */
 
@@ -265,9 +287,10 @@ button:hover,
 #intSave,
 #wisSave,
 #chaSave {
-    width: 30px;
+    width: 35px;
     border: 1px solid black;
     border-radius: 3px;
+    font-weight: bold;
 }
 
 #skillsWrapper {
@@ -319,7 +342,7 @@ button:hover,
 #sleightofhandSkill,
 #stealthSkill,
 #survivalSkill {
-    width: 30px;
+    width: 35px;
     border: 1px solid black;
     border-radius: 3px;
     font-size: .9rem;
@@ -331,8 +354,9 @@ button:hover,
 
 #combatFeatures {
     min-width: 270px;
-    width: calc( 100vw - 310px );
+    width: calc(100vw - 310px);
     min-height: 562px;
+    flex-grow: 3;
 }
 
 #badgeWrapper {
@@ -432,9 +456,10 @@ button:hover,
     /* Attack & Character Details */
 
 #attackWrapper {
-    width: calc( 100% - 6px );
+    width: calc(100% - 6px);
     max-width: 600px;
     margin: 3px auto;
+    flex-grow: 1;
 }
 
 .atkHeader {
@@ -482,28 +507,37 @@ button:hover,
 }
 
 .detailInfo {
-    margin-left: 15px;
-    margin-right: 3px;
-    padding: 1px 3px;
-    font-size: .95rem;
+    margin: 1px 3px 10px 15px;
+    padding: 2px 3px;
+    font-size: 1rem;
     background: white;
-    box-shadow: 1px 2px rgb(150, 150, 150), inset 0px 0px 10px rgba(0, 0, 0, .35);
+    box-shadow: 1px 2px rgb(150, 150, 150), inset 0 0 10px rgba(0, 0, 0, .35);
     border: 1px solid rgb(150, 150, 150);
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 5px 5px 5px;
 }
 
 #charInfoWrapper {
     flex-grow: 1;
-    min-height: 250px;
+    min-height: 100px;
 }
 
 
 /* Spell Details */
+#spellWrapper{
+    min-width: 300px;
+    flex-grow: 2;
+    min-height: 500px;
+    align-items: center;
+}
+
 
 .spellStats {
     font-size: 1rem;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin: 3px 3px 12px;
+    min-width: 200px;
+    max-width: 45%;
 }
 
 .spellStats span {
@@ -522,18 +556,104 @@ button:hover,
     font-weight: bold;
 }
 
+#spellList {
+    width: calc(100% - 6px);
+    margin: 3px 0 auto;
+    flex-shrink: 1;
+    min-height: 100px;
+}
+
+#spellList span {
+    text-transform: none;
+    text-align: left;
+    font-size: 1.1rem;
+}
+
+#spellList ul {
+    border-top-right-radius: 0;
+}
+
+#spellList li {
+    display: flex;
+    border-bottom: 1px dotted gray;
+}
+
+#spellList li:last-child {
+    border-bottom: none;
+}
+
+#spellList label {
+    margin: 1px 3px 1px 1px;
+    height: 8px;
+}
+
+#spellList p {
+    margin: 0 10px;
+    padding: 0 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#spellList p:first-of-type {
+    margin-left: auto;
+}
+
+.spellMemorized + label:before {
+    background: rgb(255, 255, 255);
+}
+
+.spellMemorized:checked + label:before {
+    background: rgb(131, 131, 131);
+}
+
+/* Inventory Details */
+#inventoryWrapper {
+    min-width: 300px;
+    border: dotted 1px black;
+    flex-grow: 2;
+    min-height: 500px;
+}
+
+
+
 
 /* Media Queries */
-
-@media (min-width: 1000px) {
-	#combatFeatures {
-        width: calc( 100vw - 590px )
+@media (min-width: 440px) {
+    .charExperience {
+        display: block;
     }
 }
 
-@media (min-width: 1300px) {
-	#combatFeatures {
-        width: calc( 100vw - 890px )
+@media (min-width: 520px) {
+    .background {
+        display: block;
+    }
+
+    #spellWrapper,
+    #inventoryWrapper {
+        width: 50vw;
+    }
+}
+
+@media (min-width: 620px) {
+    .alignment {
+        display: block;
+    }
+}
+
+@media (min-width: 1000px) {
+    #inventoryWrapper {
+        display: none;
+    }
+
+    #sheetFill {
+        flex-wrap: nowrap;
+    }
+}
+
+@media (min-width: 1350px) {
+    #inventoryWrapper {
+        display: block;
     }
 
     .charDetails {
