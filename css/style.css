@@ -8,6 +8,39 @@ body {
     font-family: 'PT Sans Narrow', sans-serif;
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+  }
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 5px;
+  }
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .35);
+    border-radius: 5px;
+
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, .55);
+  }
+
+.grow20,
+.grow50 {
+    transition: all .2s ease-in-out;
+}
+
+.grow20:hover {
+    transform: scale(1.2);
+}
+
+.grow50:hover {
+    transform: scale(1.5);
+}
+
 .sectWrapper,
 .badges {
     background: rgb(220, 220, 220);
@@ -120,7 +153,8 @@ button {
 }
 
 .styled-checkbox,
-.spellListCheckbox,
+.spellMemorized,
+.itemEquipped,
 .addSpellCheckbox {
     position: absolute;
     opacity: 0;
@@ -148,9 +182,12 @@ button {
 
 .trash:hover,
 button:hover,
-.styled-checkbox:hover + label:before {
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, .5),
-        0 0 0 2px rgb(175, 175, 175);
+.styled-checkbox:hover + label:before,
+#addSpellForm input[type=submit]:hover,
+#addSpellForm select:hover,
+.addSpellCheckbox + label:hover {
+    box-shadow: inset 0 0 10px 1px rgba(255, 255, 255, 0.8),
+        0 0 3px 2px rgb(120, 120, 120);
 }
 
 .trash {
@@ -194,6 +231,15 @@ button:hover,
     margin-left: auto;
 }
 
+#characterXP {
+    transition: all .2s ease-in-out;
+}
+
+#characterXP:hover {
+    transform: scale(1.5) translate(-22px, -3px);
+}
+
+
 #characterName {
     font-size: 1.4rem;
 }
@@ -234,8 +280,14 @@ button:hover,
     border-top: 1px solid black;
     border-left: 1px solid black;
     border-right: 1px solid black;
+    box-shadow: 0 1px black, inset 0px -1px 10px -1px rgba(0, 0, 0, .35);
     width: 30px;
     border-radius: 5px 5px 0 0;
+    background: white;
+}
+
+.attrMod:hover {
+    border-radius: 5px;
 }
 
 
@@ -318,31 +370,21 @@ button:hover,
     text-transform: none;
 }
 
-#acrobaticsSkill,
-#animalhandlingSkill,
-#arcanaSkill,
-#athleticsSkill,
-#deceptionSkill,
-#historySkill,
-#insightSkill,
-#intimidationSkill,
-#investigationSkill,
-#medicineSkill,
-#natureSkill,
-#perceptionSkill,
-#performanceSkill,
-#persuasionSkill,
-#religionSkill,
-#sleightofhandSkill,
-#stealthSkill,
-#survivalSkill {
+
+#skillsWrapper div {
     width: 35px;
     border: 1px solid black;
     border-radius: 3px;
     font-size: .9rem;
     font-weight: bold;
+    transition: all .2s ease-in-out;
 }
 
+
+#skillsWrapper div:hover {
+    transform: translateX(-7px) scale(1.5);
+    z-index: 100;
+}
 
     /* Badges */
 
@@ -493,6 +535,11 @@ button:hover,
     margin-top: 5px;
 }
 
+.atkItem:hover {
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
 .detailHeader {
     text-align: left;
     text-transform: none;
@@ -548,6 +595,7 @@ button:hover,
 #spellDC1 {
     font-size: 1.2rem;
     font-weight: bold;
+    border: 1px solid rgb(150, 150, 150);
 }
 
 #spellList {
@@ -581,27 +629,39 @@ button:hover,
 #spellList ul {
     border-top-right-radius: 0;
     margin-top: 0;
+    z-index: 0;
 }
 
 #spellList li {
     display: flex;
-    padding-left: 3px;
+    padding-left: 4px;
     border-bottom: 1px dotted gray;
+    transition: all .1s ease-in-out;
+    z-index: 1000;
 }
 
 #spellList li:last-child {
     border-bottom: none;
 }
 
-.spellListCheckbox + label {
-    padding: 0 3px;
+#spellList li:hover {
+    transform: scale(1.06) translateX(-5px);
+    background: white;
+    border: 1px solid black;
+    border-radius: 3px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, .35);
+}
+
+.spellMemorized + label {
+    padding: 0 10px 0 20px;
     color: darkgray;
     text-decoration: line-through;
 }
 
-.spellListCheckbox:checked + label {
+.spellMemorized:checked + label {
     color: black;
     text-decoration: none;
+    padding-left: 0;
 }
 
 
@@ -614,14 +674,6 @@ button:hover,
 
 #spellList p:first-of-type {
     margin-left: auto;
-}
-
-.spellMemorized + label:before {
-    background: rgb(255, 255, 255);
-}
-
-.spellMemorized:checked + label:before {
-    background: rgb(131, 131, 131);
 }
 
 #addSpellForm {
@@ -640,6 +692,10 @@ button:hover,
 
 #addSpellForm input[type="text"] {
     width: 170px;
+}
+
+#addSpellForm input[type="text"]:focus {
+    outline: 2px solid rgb(85, 100, 150);
 }
 
 #addSpellForm select {
@@ -672,12 +728,49 @@ button:hover,
     font-weight: bold;
 }
 
+#addSpellForm input[type=submit] {
+    border-radius: 3px;
+    border: 1px solid rgb(150, 150, 150);
+    box-shadow: 1px 1px rgb(150, 150, 150);
+}
+
+
 /* Inventory Details */
 #inventoryWrapper {
     min-width: 300px;
-    border: dotted 1px black;
     flex-grow: 2;
     min-height: 500px;
+    justify-content: center;
+}
+
+
+
+
+
+#addItemForm{
+    margin-top: auto;
+}
+
+.coinpurse {
+    justify-content: space-around;
+}
+
+.coinpurse span {
+    flex: 1;
+}
+
+.ratio {
+    font-size: .7rem;
+    margin-left: 15px;
+}
+
+#ppAmount,
+#gpAmount,
+#epAmount,
+#spAmount,
+#cpAmount {
+    min-width: 40px;
+    width: 100%;
 }
 
 
@@ -718,7 +811,7 @@ button:hover,
 
 @media (min-width: 1350px) {
     #inventoryWrapper {
-        display: block;
+        display: flex;
     }
 
     .charDetails {
