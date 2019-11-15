@@ -29,7 +29,8 @@ body {
   }
 
 .grow20,
-.grow50 {
+.grow50,
+.growText {
     transition: all .2s ease-in-out;
 }
 
@@ -39,6 +40,10 @@ body {
 
 .grow50:hover {
     transform: scale(1.5);
+}
+
+.growText:hover {
+    font-size: 1.25rem;
 }
 
 .sectWrapper,
@@ -87,7 +92,8 @@ body {
 #attackWrapper,
 #charInfoWrapper,
 #spellList,
-#addSpellForm {
+#addSpellForm,
+.itemBox {
     font-size: 1rem;
 }
 
@@ -101,7 +107,8 @@ body {
 #charInfoWrapper,
 .spellStats,
 #spellList,
-#addSpellForm label {
+#addSpellForm label,
+.itemBox {
     text-transform: uppercase;
 }
 
@@ -181,6 +188,7 @@ button {
 }
 
 .trash:hover,
+.settingsIcon:hover,
 button:hover,
 .styled-checkbox:hover + label:before,
 #addSpellForm input[type=submit]:hover,
@@ -193,10 +201,20 @@ button:hover,
 .trash {
     height: 20px;
     width: 22px;
-    padding: 1px 3px;
-    background: rgb(215, 100, 100);
+    padding: 2px 3px;
+    background: rgb(215, 90, 90);
     border-radius: 2px;
     margin: 1px;
+}
+
+.settingsIcon {
+    height: 20px;
+    width: 20px;
+    padding: 2px;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    right: 2px;
 }
 
     /* Character Info */
@@ -320,11 +338,12 @@ button:hover,
 #savingThrowsWrapper {
     height: 184px;
     justify-content: space-between;
+    position: relative;
 }
 
 .profImg {
-    height:16px;
-    width: 16px;
+    height:15px;
+    width: 13px;
 }
 
 #strSave,
@@ -342,6 +361,7 @@ button:hover,
 #skillsWrapper {
     flex-grow: 1;
     min-height: 272px;
+    position: relative;
 }
 
 .saveTitle,
@@ -398,6 +418,7 @@ button:hover,
 #badgeWrapper {
     justify-content: center;
     flex-wrap: wrap;
+    position: relative;
 }
 
 .badges {
@@ -496,6 +517,7 @@ button:hover,
     max-width: 600px;
     margin: 3px auto;
     flex-grow: 1;
+    position: relative;
 }
 
 .atkHeader {
@@ -560,6 +582,7 @@ button:hover,
 #charInfoWrapper {
     flex-grow: 1;
     min-height: 100px;
+    position: relative;
 }
 
 
@@ -603,6 +626,7 @@ button:hover,
     margin: 3px 0 auto;
     flex-shrink: 1;
     min-height: 100px;
+    position: relative;
 }
 
 #spellList span {
@@ -645,11 +669,7 @@ button:hover,
 }
 
 #spellList li:hover {
-    transform: scale(1.06) translateX(-5px);
-    background: white;
-    border: 1px solid black;
-    border-radius: 3px;
-    box-shadow: inset 0 0 8px rgba(0, 0, 0, .35);
+    font-size: 1.25rem;
 }
 
 .spellMemorized + label {
@@ -695,7 +715,7 @@ button:hover,
 }
 
 #addSpellForm input[type="text"]:focus {
-    outline: 2px solid rgb(85, 100, 150);
+    outline: 2px solid rgb(200, 225, 250);
 }
 
 #addSpellForm select {
@@ -716,7 +736,6 @@ button:hover,
 
 .addSpellCheckbox + label {
     padding: 1px 3px;
-    background: rgb(240, 240, 240);
     color: gray;
     border: 1px solid rgb(150, 150, 150);
     border-radius: 3px;
@@ -724,7 +743,6 @@ button:hover,
 
 .addSpellCheckbox:checked + label {
     color: black;
-    background: rgb(150, 150, 150);
     font-weight: bold;
 }
 
@@ -743,9 +761,51 @@ button:hover,
     justify-content: center;
 }
 
+.itemBox {
+    position: relative;
+}
 
+#inventory {
+    margin: 0;
+    border-radius: 3px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, .35);
+}
 
+#inventory li {
+    text-transform: none;
+    border-bottom: 1px dotted gray;
+}
 
+#inventory li p {
+    margin: 0;
+    width: 35px;
+    padding: 5px 0 0 4px;
+    text-align: left;
+    font-size: .8rem;
+}
+
+#inventory label {
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+#inventory label p {
+    margin-left: auto;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0 5px;
+    text-align: center;
+}
+
+.itemEquipped + label {
+    border-radius: 3px;
+    padding: 1px 5px;
+    margin: 1px;
+}
+
+.itemEquipped:checked + label {
+    background: rgb(200, 225, 250);
+}
 
 #addItemForm{
     margin-top: auto;
@@ -772,8 +832,6 @@ button:hover,
     min-width: 40px;
     width: 100%;
 }
-
-
 
 /* Media Queries */
 @media (min-width: 440px) {
