@@ -10,23 +10,22 @@ body {
 
 ::-webkit-scrollbar {
     width: 5px;
-  }
+}
 
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 5px;
-  }
+}
 
 ::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, .35);
     border-radius: 5px;
 
-  }
+}
 
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, .55);
-  }
+}
 
 .grow20,
 .grow50,
@@ -93,6 +92,7 @@ body {
 #charInfoWrapper,
 #spellList,
 #addSpellForm,
+#addItemForm,
 .itemBox {
     font-size: 1rem;
 }
@@ -105,6 +105,7 @@ body {
 .badges,
 #attackWrapper,
 #charInfoWrapper,
+#addItemForm label,
 .spellStats,
 #spellList,
 #addSpellForm label,
@@ -149,7 +150,6 @@ body {
     margin-left: 5px;
 }
 
-
 button {
     background: rgb(245, 245, 245);
     border-radius: 3px;
@@ -161,6 +161,7 @@ button {
 
 .styled-checkbox,
 .spellMemorized,
+.switch-input,
 .itemEquipped,
 .addSpellCheckbox {
     position: absolute;
@@ -193,7 +194,8 @@ button:hover,
 .styled-checkbox:hover + label:before,
 #addSpellForm input[type=submit]:hover,
 #addSpellForm select:hover,
-.addSpellCheckbox + label:hover {
+.addSpellCheckbox + label:hover,
+.switch-label:hover {
     box-shadow: inset 0 0 10px 1px rgba(255, 255, 255, 0.8),
         0 0 3px 2px rgb(120, 120, 120);
 }
@@ -216,6 +218,7 @@ button:hover,
     top: 2px;
     right: 2px;
 }
+
 
     /* Character Info */
 
@@ -257,7 +260,6 @@ button:hover,
     transform: scale(1.5) translate(-22px, -3px);
 }
 
-
 #characterName {
     font-size: 1.4rem;
 }
@@ -267,6 +269,7 @@ button:hover,
 .charExperience {
     display: none;
 }
+
 
     /* Attributes Panel */
 
@@ -390,7 +393,6 @@ button:hover,
     text-transform: none;
 }
 
-
 #skillsWrapper div {
     width: 35px;
     border: 1px solid black;
@@ -400,11 +402,11 @@ button:hover,
     transition: all .2s ease-in-out;
 }
 
-
 #skillsWrapper div:hover {
     transform: translateX(-7px) scale(1.5);
     z-index: 100;
 }
+
 
     /* Badges */
 
@@ -547,7 +549,6 @@ button:hover,
     width: 40%
 }
 
-
 .atkRng {
     width: 20%;
 }
@@ -593,7 +594,6 @@ button:hover,
     min-height: 500px;
     align-items: center;
 }
-
 
 .spellStats {
     font-size: 1rem;
@@ -684,7 +684,6 @@ button:hover,
     padding-left: 0;
 }
 
-
 #spellList p {
     margin: 0 10px;
     padding: 0 5px;
@@ -697,11 +696,11 @@ button:hover,
 }
 
 #addSpellForm {
-    min-width: 275px;
-    width: 70%;
+    width: 271px;
 }
 
-#addSpellForm * {
+#addSpellForm *,
+#addItemForm * {
     margin: 1px 2px;
 }
 
@@ -714,7 +713,8 @@ button:hover,
     width: 170px;
 }
 
-#addSpellForm input[type="text"]:focus {
+#addSpellForm input[type="text"]:focus,
+#addItemForm input[type="text"]:focus {
     outline: 2px solid rgb(200, 225, 250);
 }
 
@@ -743,9 +743,11 @@ button:hover,
 
 .addSpellCheckbox:checked + label {
     color: black;
+    background: rgb(190, 190, 190);
     font-weight: bold;
 }
 
+#addItemForm input[type=submit],
 #addSpellForm input[type=submit] {
     border-radius: 3px;
     border: 1px solid rgb(150, 150, 150);
@@ -754,15 +756,74 @@ button:hover,
 
 
 /* Inventory Details */
+
 #inventoryWrapper {
     min-width: 300px;
     flex-grow: 2;
     min-height: 500px;
+    justify-content: space-between;
+}
+
+#addItemForm {
+    width: 275px;
+}
+
+#addItemForm span {
+    flex-wrap: wrap;
     justify-content: center;
 }
 
+#addItemName {
+    width: 200px;
+}
+
+.isWearable {
+    width: 70px;
+}
+
+.isGoods {
+    width: 49px;
+}
+
+.addItemAttuned {
+    width: 113px;
+}
+
+/* Sliding Radio Start */
+
+  .switch-label {
+    float: left;
+    padding: 1px 3px;
+    font-size: 1rem;
+    color: gray;
+    text-align: center;
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 3px;
+  }
+  .switch-label:active {
+    font-weight: bold;
+  }
+
+  .switch-input:checked + .switch-label {
+    font-weight: bold;
+    color: black;
+    background: rgb(190, 190, 190);
+  }
+
+
+/* Sliding Radio End */
+
+
+
+
+
+
+
+
 .itemBox {
-    position: relative;
+    flex-shrink: 1;
+    min-height: 40px;
+    margin-bottom: auto;
 }
 
 #inventory {
@@ -774,6 +835,10 @@ button:hover,
 #inventory li {
     text-transform: none;
     border-bottom: 1px dotted gray;
+}
+
+#inventory li:last-of-type {
+    border-bottom: none;
 }
 
 #inventory li p {
@@ -791,7 +856,7 @@ button:hover,
 
 #inventory label p {
     margin-left: auto;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     padding: 0 5px;
     text-align: center;
@@ -807,16 +872,19 @@ button:hover,
     background: rgb(200, 225, 250);
 }
 
-#addItemForm{
-    margin-top: auto;
+.coinpurse {
+    justify-content: center;
+    margin-top: 6px;
 }
 
-.coinpurse {
-    justify-content: space-around;
+.coinpurse section {
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .coinpurse span {
     flex: 1;
+    justify-content: center;
 }
 
 .ratio {
@@ -830,8 +898,9 @@ button:hover,
 #spAmount,
 #cpAmount {
     min-width: 40px;
-    width: 100%;
+    /* width: 100%; */
 }
+
 
 /* Media Queries */
 @media (min-width: 440px) {
@@ -858,7 +927,7 @@ button:hover,
 }
 
 @media (min-width: 1000px) {
-    #inventoryWrapper {
+    #spellWrapper {
         display: none;
     }
 
@@ -868,7 +937,7 @@ button:hover,
 }
 
 @media (min-width: 1350px) {
-    #inventoryWrapper {
+    #spellWrapper {
         display: flex;
     }
 

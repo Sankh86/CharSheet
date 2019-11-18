@@ -565,9 +565,23 @@
 
 		<section id="inventoryWrapper" class="column">
 
+			<form id="addItemForm" class="sectWrapper">
+				<label for="addItemName">New Item</label><br>
+				<span class="row">
+					<input type="text" id="addItemName" title="Add New Item">
+					<input type="radio" class="switch-input" name="addItemType" value="Wearable" id="addItemWearable" checked>
+					<label for="addItemWearable" class="switch-label isWearable">Wearable</label>
+					<input type="radio" class="switch-input" name="addItemType" value="Goods" id="addItemGoods">
+					<label for="addItemGoods" class="switch-label isGoods">Goods</label>
+					<span class="switch-selection"></span>
+					<input type="checkbox" id="addItemAttunement" class="addSpellCheckbox">
+					<label for="addItemAttunement" class="addItemAttuned" title="Can be cast as a ritual">Req Attunement</label>
+				</span>
+				<input type="submit" value="Add Item">
+			</form>
+
 			<article class="sectWrapper column itemBox">
 				Inventory
-				<img class="settingsIcon" src="img/Gear.png" alt="Inventory Settings" title="Inventory Settings">
 				<ul id="inventory" class="detailInfo scroll">
 					<li class="row">
 						<p></p>
@@ -579,562 +593,73 @@
 						<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
 					</li>
 					<li class="row">
-						<p>1x</p>
+						<p></p>
 						<input class="itemEquipped" id="item2" type="checkbox">
 						<label for="item2" class="row">
+							Breastplate
+							<p></p>
+						</label>
+						<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
+					</li>
+					<li class="row">
+						<p></p>
+						<input class="itemEquipped" id="item3" type="checkbox">
+						<label for="item3" class="row">
+							Longbow
+							<p></p>
+						</label>
+						<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
+					</li>
+					<li class="row">
+						<p>3x</p>
+						<input class="itemEquipped" id="item4" type="checkbox">
+						<label for="item4" class="row">
 							Potion of Healing - 2d4+2
 							<p></p>
 						</label>
 						<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
 					</li>
-					
-
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
+					<li class="row">
+						<p>100x</p>
+						<input class="itemEquipped" id="item5" type="checkbox">
+						<label for="item5" class="row">
+							Arrows
 							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-							<li class="row">
-							<p>1x</p>
-							<input class="itemEquipped" id="item2" type="checkbox">
-							<label for="item2" class="row">
-							Potion of Healing - 2d4+2
-							<p></p>
-							</label>
-							<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
-							</li>
-					
-					
-					
-					
-					
-					
-					</ul>
-				</span>
-
+						</label>
+						<img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
+					</li>
+				</ul>
 			</article>
 
-			<form id="addItemForm" class="sectWrapper">
-				Add Item
-			</form>
+
 
 			<article class="coinpurse sectWrapper column">
 				<section class="row">
-					<span class="row">
+					<span class="row" title="Platinum Pieces">
 						PP
 						<div id="ppAmount" class="infoInput">
 							100
 						</div>
 					</span>
-					<span class="row">
+					<span class="row" title="Gold Pieces">
 						GP
 						<div id="gpAmount" class="infoInput">
 							1000
 						</div>
 					</span>
-					<span class="row">
+					<span class="row" title="Electrum Pieces">
 						EP
 						<div id="epAmount" class="infoInput">
 							50
 						</div>
 					</span>
-					<span class="row">
+					<span class="row" title="Silver Pieces">
 						SP
 						<div id="spAmount" class="infoInput">
 							200
 						</div>
 					</span>
-					<span class="row">
+					<span class="row" title="Copper Pieces">
 						CP
 						<div id="cpAmount" class="infoInput">
 							10
