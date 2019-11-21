@@ -195,7 +195,8 @@ button:hover,
 #addSpellForm input[type=submit]:hover,
 #addSpellForm select:hover,
 .addSpellCheckbox + label:hover,
-.switch-label:hover {
+.addItemSubmit:hover,
+.isEquipped:hover {
     box-shadow: inset 0 0 10px 1px rgba(255, 255, 255, 0.8),
         0 0 3px 2px rgb(120, 120, 120);
 }
@@ -754,6 +755,10 @@ button:hover,
     box-shadow: 1px 1px rgb(150, 150, 150);
 }
 
+#addItemForm input[type=text],
+#addSpellForm input[type=text] {
+    padding: 0 2px;
+}
 
 /* Inventory Details */
 
@@ -765,7 +770,7 @@ button:hover,
 }
 
 #addItemForm {
-    width: 275px;
+    width: 284px;
 }
 
 #addItemForm span {
@@ -774,51 +779,25 @@ button:hover,
 }
 
 #addItemName {
-    width: 200px;
-}
-
-.isWearable {
-    width: 70px;
-}
-
-.isGoods {
-    width: 49px;
+    width: 220px;
 }
 
 .addItemAttuned {
     width: 113px;
 }
 
-/* Sliding Radio Start */
+.qtyLabel {
+    width: 30px;
+    text-align: right;
+}
 
-  .switch-label {
-    float: left;
-    padding: 1px 3px;
-    font-size: 1rem;
-    color: gray;
-    text-align: center;
-    border: 1px solid rgb(150, 150, 150);
-    border-radius: 3px;
-  }
-  .switch-label:active {
-    font-weight: bold;
-  }
+#addItemAmount {
+    width: 37px;
+}
 
-  .switch-input:checked + .switch-label {
-    font-weight: bold;
-    color: black;
-    background: rgb(190, 190, 190);
-  }
-
-
-/* Sliding Radio End */
-
-
-
-
-
-
-
+.addItemSubmit {
+    width: 70px;
+}
 
 .itemBox {
     flex-shrink: 1;
@@ -841,35 +820,38 @@ button:hover,
     border-bottom: none;
 }
 
-#inventory li p {
+#inventory li p:first-of-type {
     margin: 0;
     width: 35px;
-    padding: 5px 0 0 4px;
+    padding: 4px 0 0 4px;
     text-align: left;
     font-size: .8rem;
 }
 
-#inventory label {
+#inventory li {
     justify-content: space-between;
     flex-grow: 1;
 }
 
-#inventory label p {
-    margin-left: auto;
+#inventory li p:last-of-type {
+    margin: 0 20px 0 auto;
     font-size: 1rem;
     font-weight: bold;
     padding: 0 5px;
     text-align: center;
 }
 
-.itemEquipped + label {
+.isEquipped {
+    border: 1px solid rgb(150, 150, 150);
     border-radius: 3px;
-    padding: 1px 5px;
-    margin: 1px;
+    width: 20px;
+    height: 20px;
 }
 
-.itemEquipped:checked + label {
-    background: rgb(200, 225, 250);
+.equipped {
+    background-image: url(../img/Armor-Gray.png);
+    background-size: cover;
+    box-shadow: inset -1px -1px 5px -3px black, inset -1px -1px 5px -1px white;
 }
 
 .coinpurse {

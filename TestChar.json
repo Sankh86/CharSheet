@@ -1,0 +1,99 @@
+{   "charInfo":{
+        "characterName":"Obiliviaron",
+        "characterLevel":{
+            "Fighter":7,
+            "Rogue":1
+        },
+        "characterRace":"Human",
+        "characterBackground":"Outlander",
+        "characterAlignment":"Chaotic-Good"
+    },
+    "abilityScores":{
+        "strScore":18,
+        "dexScore":14,
+        "conScore":16,
+        "intScore":13,
+        "wisScore":10,
+        "chaScore":9
+    },
+    "savingThrows":{
+        "strSave":[1,0,0,6],
+        "dexSave":[0,1,0,6],
+        "conSave":[1,2,0,6],
+        "intSave":[0,3,0,6],
+        "wisSave":[0,4,0,6],
+        "chaSave":[0,5,0,6]
+    },
+    "skills":{
+        "acrobaticsSkill":[0,1,0],
+        "animalHandlingSkill":[0,5,0],
+        "arcanaSkill":[0,3,0],
+        "athleticsSkill":[1,0,0],
+        "deceptionSkill":[0,5,0],
+        "historySkill":[0,3,0],
+        "insightSkill":[0,4,0],
+        "intimidationSkill":[0,5,0],
+        "investigationSkill":[0,3,0],
+        "medicineSkill":[0,4,0],
+        "natureSkill":[0,3,0],
+        "perceptionSkill":[0,4,0],
+        "performanceSkill":[0,5,0],
+        "persuasionSkill":[0.5,5,0],
+        "religionSkill":[0,3,0],
+        "sleightOfHandSkill":[0,1,0],
+        "stealthSkill":[2,1,0],
+        "survivalSkill":[1,4,0]
+    },
+    "attacks":{
+        "Longsword":[1,0,0,0,"1d8","Melee"],
+        "Longbow +2":[1,1,2,2,"1d8","150/600"]
+    },
+    "details":{
+        "Proficiencies":"Light Armor, Medium Armor, Heavy Armor, Simple Weapons, Martial Weapons, Guitar",
+        "Languages":"Common, Elven, Dwarven",
+        "Background Feature":"You have an excellent memory for maps and geography, and you can always recall the general layout of terrain, settlements, and other features around you. In addition, you can find food and fresh water for yourself and up to five other people each day, provided that the land offers berries, small game, water, and so forth.",
+        "Fighting Style - Archery":"You gain a +2 bonus to Attack rolls you make with Ranged Weapons.",
+        "Second Wind":"You have a limited well of stamina that you can draw on to protect yourself from harm. On Your Turn, you can use a Bonus Action to regain Hit Points equal to 1d10 + your Fighter level. Once you use this feature, you must finish a short or Long Rest before you can use it again."
+    },
+    "inventory":[
+        ["Special Sword",1,true,true],
+        ["Breastplate",1,false,true],
+        ["Longbow +2",1,false,true],
+        ["Arrows",100,false,true],
+        ["Potion of Healing - 2d4+2",3,false,false]
+    ],
+    "spells":{
+        "spellStats":{"score":"intelligence","atkBon":0,"dcBon":0,"spellReset":"longRest"},
+        "spellCasts":{
+            "spellFirstCasts":[3,3],
+            "spellSecondCasts":[0,0],
+            "spellThirdCasts":[0,0],
+            "spellFourthCasts":[0,0],
+            "spellFifthCasts":[0,0],
+            "spellSixthCasts":[0,0],
+            "spellSeventhCasts":[0,0],
+            "spellEighthCasts":[0,0],
+            "spellNinthCasts":[0,0]
+        },
+        "spellsList":{
+            "spellCantrip":{
+                "Frostbite":{"ritual":false,"concentration":false,"memorized":true},
+                "Shocking Grasp":{"ritual":false,"concentration":false,"memorized":true},
+                "Dancing Lights":{"ritual":false,"concentration":true,"memorized":true}
+            },
+            "spellFirst":{
+                "Shield":{"ritual":false,"concentration":false,"memorized":true},
+                "Detect Magic":{"ritual":true,"concentration":true,"memorized":true},
+                "Feather Fall":{"ritual":false,"concentration":false,"memorized":false}
+            },
+            "spellSecond":{},
+            "spellThird":{},
+            "spellFourth":{},
+            "spellFifth":{},
+            "spellSixth":{},
+            "spellSeventh":{},
+            "spellEighth":{},
+            "spellNinth":{}
+        }
+    }
+}
