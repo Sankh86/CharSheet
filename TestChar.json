@@ -1,9 +1,9 @@
 {   "charInfo":{
         "characterName":"Obiliviaron",
-        "characterLevel":{
-            "Fighter":7,
-            "Rogue":1
-        },
+        "characterLevel":[
+            ["Fighter",7],
+            ["Rogue",1]
+        ],
         "characterRace":"Human",
         "characterBackground":"Outlander",
         "characterAlignment":"Chaotic-Good"
@@ -45,8 +45,9 @@
         "survivalSkill":[1,4,0]
     },
     "attacks":{
-        "Longsword":[1,0,0,0,"1d8","Melee"],
-        "Longbow +2":[1,1,2,2,"1d8","150/600"]
+        "Flame-Tongue":[1,0,0,0,"1d8+2d6(Fire)","Melee"],
+        "Longbow +1":[1,1,1,1,"1d8","150/600"],
+        "Dagger":[1,0,0,0,"1d4","20/60"]
     },
     "details":{
         "Proficiencies":"Light Armor, Medium Armor, Heavy Armor, Simple Weapons, Martial Weapons, Guitar",
@@ -56,17 +57,18 @@
         "Second Wind":"You have a limited well of stamina that you can draw on to protect yourself from harm. On Your Turn, you can use a Bonus Action to regain Hit Points equal to 1d10 + your Fighter level. Once you use this feature, you must finish a short or Long Rest before you can use it again."
     },
     "inventory":[
-        ["Special Sword",1,true,true],
+        ["Flame-Tongue",1,true,true],
         ["Breastplate",1,false,true],
-        ["Longbow +2",1,false,true],
+        ["Longbow +1",1,false,true],
         ["Arrows",100,false,true],
+        ["Dagger",1,false,true],
         ["Potion of Healing - 2d4+2",3,false,false]
     ],
     "spells":{
         "spellStats":{"score":"intelligence","atkBon":0,"dcBon":0,"spellReset":"longRest"},
         "spellCasts":{
             "spellFirstCasts":[3,3],
-            "spellSecondCasts":[0,0],
+            "spellSecondCasts":[1,1],
             "spellThirdCasts":[0,0],
             "spellFourthCasts":[0,0],
             "spellFifthCasts":[0,0],
@@ -76,24 +78,39 @@
             "spellNinthCasts":[0,0]
         },
         "spellsList":{
-            "spellCantrip":{
-                "Frostbite":{"ritual":false,"concentration":false,"memorized":true},
-                "Shocking Grasp":{"ritual":false,"concentration":false,"memorized":true},
-                "Dancing Lights":{"ritual":false,"concentration":true,"memorized":true}
-            },
-            "spellFirst":{
-                "Shield":{"ritual":false,"concentration":false,"memorized":true},
-                "Detect Magic":{"ritual":true,"concentration":true,"memorized":true},
-                "Feather Fall":{"ritual":false,"concentration":false,"memorized":false}
-            },
-            "spellSecond":{},
-            "spellThird":{},
-            "spellFourth":{},
-            "spellFifth":{},
-            "spellSixth":{},
-            "spellSeventh":{},
-            "spellEighth":{},
-            "spellNinth":{}
+            "spellCantrip":[
+                ["Frostbite",false, false, true],
+                ["Shocking Grasp", false, false, true],
+                ["Dancing Lights", false, true, true]
+            ],
+            "spellFirst":[
+                ["Shield", false, false, true],
+                ["Detect Magic", true, true, false],
+                ["Feather Fall", false, false, true]
+            ],
+            "spellSecond":[
+                ["Darkness", false, true, true],
+                ["Earthbind", false, true, true]
+            ],
+            "spellThird":[],
+            "spellFourth":[],
+            "spellFifth":[],
+            "spellSixth":[],
+            "spellSeventh":[],
+            "spellEighth":[],
+            "spellNinth":[]
         }
+    },
+    "misc":{
+        "coin":[100,1000,200,10],
+        "passivePerception":[6,0],
+        "initiative":[6,0],
+        "hitPoints":[60,60,0,0],
+        "hitDice":[7,7,"d10",1,1,"d6"],
+        "speed":"30",
+        "vision":"Darkvision 60",
+        "abilityBadges":[
+            ["Ki"]
+        ]
     }
 }

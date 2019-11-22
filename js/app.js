@@ -14,14 +14,12 @@ let characterLevelTotal = 0
 $.each(currentCharacter.charInfo, function(key, value){
     if (key === "characterLevel") {
         let classLevelText = ""
-        let classLevelTotal = 0
-        $.each(currentCharacter.charInfo.characterLevel, function(charClass, charLvl){
-            classLevelText += `${charClass} ${charLvl}, `;
-            classLevelTotal += parseInt(charLvl);
+        $(value).each(function(key2, classDetails){
+            classLevelText += `${classDetails[0]} ${classDetails[1]}, `;
+            characterLevelTotal += classDetails[1];
         });
         classLevelText = classLevelText.slice(0, -2);
-        classLevelText+= ` [${classLevelTotal}]`
-        characterLevelTotal = classLevelTotal
+        classLevelText+= ` [${characterLevelTotal}]`
         $(`#${key}`).text(classLevelText);
     } else {
     $(`#${key}`).text(value);
@@ -106,16 +104,45 @@ $.each(currentCharacter.details, function(key, value){
 });
 
     //Populate Inventory
-
+let attunedCount = 0
 $.each(currentCharacter.inventory, function(key, value){
     let attunement = ""
     let equipped = ""
-
+    let listItem = ""
+    if (value[2] && value[3]) {attunedCount+= 1}
     if (value[2]) {attunement = '<p title="Requires Attunement">A</p>'} else {attunement = '<p></p>'};
     if (value[3]) {equipped = '<div class="isEquipped equipped" title="Equip/Unequip Item"></div>'} else {equipped = '<div class="isEquipped" title="Equip/Unequip Item"></div>'}
-
-    const itemDetail = `<li class="row"><p>${value[1]}x</p>${value[0]}${attunement}${equipped}</li>`
+    if (value[3]) {listItem = '<li class="row equippedList">'} else {listItem = '<li class="row">'}
+    const itemDetail = `${listItem}<p>${value[1]}x</p>${value[0]}${attunement}${equipped}</li>`
     $('#inventory').append(itemDetail);
 });
+if (attunedCount > 0) {$('#inventory').parent().prepend(`<div class="attunement" title="Items Attuned">${attunedCount}</div>`)}
 
-//<li class="row"><p>1x</p>Special Sword<p title="Requires Attunement">A</p><div class="isEquipped equipped" title="Equip/Unequip Item"></div>
+    //Populate Spells List
+let memorizedCount = 0
+$.each(currentCharacter.spells.spellsList, function(spellLvl, value){
+    $(value).each(function(key2, spellDetails){
+        let isRitual = ""
+        let isConcentration = ""
+        let isMemorized = ""
+        if (spellDetails[1]) {isRitual = '<p title="Ritual Spell">R</p>'} else {isRitual = '<p></p>'};
+        if (spellDetails[2]) {isConcentration = '<p title="Requires Concentration">C</p>'} else {isConcentration = '<p></p>'};
+        if (spellDetails[3]) {
+            isMemorized = '<li>';
+            if (spellLvl !== "spellCantrip") {memorizedCount += 1;}
+        } else {isMemorized = '<li class="notMemorized">'};
+        let spellInfo = `${isMemorized}${spellDetails[0]}${isRitual}${isConcentration}<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell"></li>`
+        $(`#${spellLvl}`).append(spellInfo);
+    });
+});
+$('#spellMemorized').text(memorizedCount);
+
+    //Populate Spells Slots
+$.each(currentCharacter.spells.spellCasts, function(key, value){
+    console.log(key + ": " + value);
+    $(`#${key}`).append(`${value[0]} / ${value[1]}`);
+    if (value[1] === 0) {$(`#${key}`).parent().parent().hide()};
+});
+
+//TEST
+$('#characterXP').val(7500);

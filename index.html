@@ -11,6 +11,7 @@
 
 
 	<section id="charHeader" class="sectWrapper row">
+		<img class="settingsIcon" src="img/Gear.png" alt="Character Settings" title="Character Settings">
 		<article class="charName">
 			<div id="characterName" class="infoInput" title="Character's Name">
 
@@ -51,14 +52,11 @@
 				Alignment
 			</div>
 		</article>
-		<article class="charExperience">
-			<div id="characterXP" class="infoInput" title="Experience Total">
-				7500
-			</div>
-			<div class="infoTitle">
-				Experience
-			</div>
-		</article>
+		<form class="charExperience">
+			<input type="text" id="characterXP" class="infoInput" title="Experience Total">
+			<label id="xpLabel" class="infoTitle" for="characterXP">Experience</label>
+			<input type="submit" style="display: none;">
+		</form>
 	</section>
 
 
@@ -409,19 +407,19 @@
 				<article class="badges grow20">
 					Hit Dice
 					<div id="hitDice" class="infoInput row" title="Remaining Hit Dice">
-						7d10
+						7d10, 1d6
 					</div>
 				</article>
 				<article class="badges grow20">
 					Speed
 					<div id="speed" class="infoInput row" title="Character Speed">
-						50 Walk, 60 Fly, 40 Swim
+						30
 					</div>
 				</article>
 				<article class="badges grow20">
 					Vision
 					<div id="vision" class="infoInput row" title="Character Vision">
-						Darkvision 60, Blindsight 60
+						Darkvision 60
 					</div>
 				</article>
 				<article class="badges grow20" style="display: none;">
@@ -513,12 +511,6 @@
 							1000
 						</div>
 					</span>
-					<span class="row" title="Electrum Pieces">
-						EP
-						<div id="epAmount" class="infoInput">
-							50
-						</div>
-					</span>
 					<span class="row" title="Silver Pieces">
 						SP
 						<div id="spAmount" class="infoInput">
@@ -540,9 +532,6 @@
 						1GP : 1GP
 					</span>
 					<span class="ratio">
-						1GP : 2EP
-					</span>
-					<span class="ratio">
 						1GP : 10SP
 					</span>
 					<span class="ratio">
@@ -553,6 +542,7 @@
 		</section>
 
 		<section id="spellWrapper" class="column">
+			<img class="settingsIcon" src="img/Gear.png" alt="Spell Settings" title="Spell Settings">
 
 			<article class="sectWrapper row spellStats">
 				<span class="column">
@@ -567,95 +557,74 @@
 						16
 					</div>
 				</span>
+				<span class="column">
+					Memorized
+					<div id = "spellMemorized" class="infoInput grow20">
+						1
+					</div>
+				</span>
 
 			</article>
 
 			<article id="spellList" class="sectWrapper column">
 				Spells List
-				<img class="settingsIcon" src="img/Gear.png" alt="Spell List Settings" title="Spell List Settings">
 				<span class="scroll">
 					<span>
 						Cantrips
 						<ul id="spellCantrip" class="detailInfo">
-							<li>
-								Frostbite
-								<p></p>
-								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
-							</li>
-							<li>
-								Shocking Grasp
-								<p></p>
-								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
-							</li>
-							<li>
-								Dancing Lignts
-								<p title="Requires Concentration">C</p>
-								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
-							</li>
+
 						</ul>
 					</span>
-					<span style="display: block;">
-						<section class = "row">1st Level Spells<div id="spellSecondCasts"> 3 / 3 </div></section>
+					<span>
+						<section class = "row">1st Level Spells<div id="spellFirstCasts"></div></section>
 						<ul id="spellFirst" class="detailInfo">
-							<li>
-								<input class="spellMemorized" id="spellFirst1" type="checkbox">
-								<label for="spellFirst1">Identify</label>
-								<p title="Ritual Spell">R</p>
-								<p></p>
-								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
-							</li>
+
 						</ul>
 					</span>
-					<span style="display: block;">
-						<section class = "row">2nd Level Spells<div id="spellSecondCasts"> 1 / 1 </div></section>
+					<span>
+						<section class = "row">2nd Level Spells<div id="spellSecondCasts"></div></section>
 						<ul id="spellSecond" class="detailInfo">
-							<li>
-								<input class="spellMemorized" id="spellSecond1" type="checkbox">
-								<label for="spellSecond1">Darkness</label>
-								<p></p>
-								<p title="Requires Concentration">C</p>
-								<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell">
-							</li>
+
 						</ul>
 					</span>
-					<span style="display: block;">
-						<section class = "row">3rd Level Spells<div id="spellThirdCasts"> 1 / 1 </div></section>
+					<span>
+						<section class = "row">3rd Level Spells<div id="spellThirdCasts"></div></section>
 						<ul id="spellThird" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: block;">
-						<section class = "row">4th Level Spells<div id="spellFourthCasts"> 1 / 1 </div></section>
+					<span>
+						<section class = "row">4th Level Spells<div id="spellFourthCasts"></div></section>
 						<ul id="spellFourth" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: block;">
-						<section class = "row">5th Level Spells<div id="spellFifthCasts"> 1 / 1 </div></section>
+					<span>
+						<section class = "row">5th Level Spells<div id="spellFifthCasts"></div></section>
 						<ul id="spellFifth" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: block;">
-						<section class = "row">6th Level Spells<div id="spellSixthCasts"> 1 / 1 </div></section>
+					<span>
+						<section class = "row">6th Level Spells<div id="spellSixthCasts"></div></section>
 						<ul id="spellSixth" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: block;">
-						<section class = "row">7th Level Spells<div id="spellSeventhCasts"> 1 / 1 </div></section>
+					<span>
+						<section class = "row">7th Level Spells<div id="spellSeventhCasts"></div></section>
 						<ul id="spellSeventh" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: block;">
-						<section class = "row">8th Level Spells<div id="spellEighthCasts"> 1 / 1 </div></section>
+					<span>
+						<section class = "row">8th Level Spells<div id="spellEighthCasts"></div></section>
 						<ul id="spellEighth" class="detailInfo">
 
 						</ul>
 					</span>
-					<span style="display: block;">
-						<section class = "row">9th Level Spells<div id="spellNinthCasts"> 1 / 1 </div></section>
+					<span>
+						<section class = "row">9th Level Spells<div id="spellNinthCasts"></div></section>
 						<ul id="spellNinth" class="detailInfo">
 
 						</ul>
