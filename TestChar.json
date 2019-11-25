@@ -36,7 +36,7 @@
         "investigationSkill":[0,3,0],
         "medicineSkill":[0,4,0],
         "natureSkill":[0,3,0],
-        "perceptionSkill":[0,4,0],
+        "perceptionSkill":[1,4,0],
         "performanceSkill":[0,5,0],
         "persuasionSkill":[0.5,5,0],
         "religionSkill":[0,3,0],
@@ -65,7 +65,7 @@
         ["Potion of Healing - 2d4+2",3,false,false]
     ],
     "spells":{
-        "spellStats":{"score":"intelligence","atkBon":0,"dcBon":0,"spellReset":"longRest"},
+        "spellStats":[3,0,0,"longRest"],
         "spellCasts":{
             "spellFirstCasts":[3,3],
             "spellSecondCasts":[1,1],
@@ -102,9 +102,12 @@
         }
     },
     "misc":{
+        "xp":7500,
         "coin":[100,1000,200,10],
-        "passivePerception":[6,0],
+        "passivePerceptionBonus":[6,0],
+        "proficiencyBonus":0,
         "initiative":[6,0],
+        "armorClass":[14,2,2,0,0,6],
         "hitPoints":[60,60,0,0],
         "hitDice":[7,7,"d10",1,1,"d6"],
         "speed":"30",

@@ -9,6 +9,7 @@ const currentCharacter = JSON.parse(request.responseText);
 
 //Populate Sheet
 
+
     //Populate Character Info
 let characterLevelTotal = 0
 $.each(currentCharacter.charInfo, function(key, value){
@@ -25,6 +26,7 @@ $.each(currentCharacter.charInfo, function(key, value){
     $(`#${key}`).text(value);
     }
 });
+$('#characterXP').val(currentCharacter.misc.xp);
 
 
     //Polulate Ability Scores & Generate Ability Modifiers
@@ -40,10 +42,11 @@ $.each(currentCharacter.abilityScores, function(key, value){
     $(`#${key}`).text(value);
     $(`#${abilityModName}`).text(abilityModNum);
 });
+abilityModifiers.push(0)
 
 
     //Generate Proficiency Bonus
-const proficiencyModifier = Math.floor((characterLevelTotal-1)/4)+2
+const proficiencyModifier = Math.floor((characterLevelTotal - 1) / 4) + 2 + currentCharacter.misc.proficiencyBonus;
 $('#profBonus').text(`+${proficiencyModifier}`);
 
 
@@ -68,6 +71,7 @@ $.each(currentCharacter.savingThrows, function(key, value){
     $(`#${key}`).parent().prepend(profImg);
 });
 
+
     //Populate Skills
 $.each(currentCharacter.skills, function(key, value){
     const scoreLookup = value[1];
@@ -87,6 +91,28 @@ $.each(currentCharacter.skills, function(key, value){
 });
 
 
+    //Generate Passive Perception
+const passivePerception = 10 + Math.floor(proficiencyModifier * currentCharacter.skills.perceptionSkill[0])+ abilityModifiers[currentCharacter.skills.perceptionSkill[1]] + currentCharacter.skills.perceptionSkill[2] + abilityModifiers[currentCharacter.misc.passivePerceptionBonus[0]] + currentCharacter.misc.passivePerceptionBonus[1];
+$('#passivePerception').text(passivePerception);
+
+
+    //Populate Badges
+
+        //Initiative Badge
+let initBonus = abilityModifiers[1] + abilityModifiers[currentCharacter.misc.initiative[0]] + currentCharacter.misc.initiative[1];
+if (initBonus > 0) {initBonus = "+" + initBonus};
+$('#initiativeBonus').text(initBonus);
+
+        //Armor Class Badge
+armor = function() {
+    if (currentCharacter.misc.armorClass[1] > abilityModifiers[1]) {
+        dexBon = abilityModifiers[1]} else {dexBon = currentCharacter.misc.armorClass[1]};
+    const armor = currentCharacter.misc.armorClass[0] + dexBon + currentCharacter.misc.armorClass[2] + currentCharacter.misc.armorClass[3] + currentCharacter.misc.armorClass[4] + abilityModifiers[currentCharacter.misc.armorClass[5]];
+    return armor
+}
+$('#armorClass').text(armor);
+
+
     //Populate Attacks
 $.each(currentCharacter.attacks, function(key, value){
     const scoreLookup = value[1];
@@ -103,6 +129,7 @@ $.each(currentCharacter.details, function(key, value){
     $('#charInfoList').append(detailArticle);
 });
 
+
     //Populate Inventory
 let attunedCount = 0
 $.each(currentCharacter.inventory, function(key, value){
@@ -112,11 +139,26 @@ $.each(currentCharacter.inventory, function(key, value){
     if (value[2] && value[3]) {attunedCount+= 1}
     if (value[2]) {attunement = '<p title="Requires Attunement">A</p>'} else {attunement = '<p></p>'};
     if (value[3]) {equipped = '<div class="isEquipped equipped" title="Equip/Unequip Item"></div>'} else {equipped = '<div class="isEquipped" title="Equip/Unequip Item"></div>'}
-    if (value[3]) {listItem = '<li class="row equippedList">'} else {listItem = '<li class="row">'}
+    if (value[3]) {listItem = '<li class="row growText equippedList">'} else {listItem = '<li class="row growText">'}
     const itemDetail = `${listItem}<p>${value[1]}x</p>${value[0]}${attunement}${equipped}</li>`
     $('#inventory').append(itemDetail);
 });
 if (attunedCount > 0) {$('#inventory').parent().prepend(`<div class="attunement" title="Items Attuned">${attunedCount}</div>`)}
+
+
+    //Populate Coin
+$('#ppAmount').val(currentCharacter.misc.coin[0]);
+$('#gpAmount').val(currentCharacter.misc.coin[1]);
+$('#spAmount').val(currentCharacter.misc.coin[2]);
+$('#cpAmount').val(currentCharacter.misc.coin[3]);
+
+
+    //Populate Spell Attack & DC
+let spellAtk = proficiencyModifier + abilityModifiers[currentCharacter.spells.spellStats[0]] + currentCharacter.spells.spellStats[1];
+if (spellAtk > 0) {spellAtk = "+" + spellAtk}
+$('#spellAttack1').text(spellAtk);
+$('#spellDC1').text(8 + proficiencyModifier + abilityModifiers[currentCharacter.spells.spellStats[0]] + currentCharacter.spells.spellStats[2] )
+
 
     //Populate Spells List
 let memorizedCount = 0
@@ -128,14 +170,15 @@ $.each(currentCharacter.spells.spellsList, function(spellLvl, value){
         if (spellDetails[1]) {isRitual = '<p title="Ritual Spell">R</p>'} else {isRitual = '<p></p>'};
         if (spellDetails[2]) {isConcentration = '<p title="Requires Concentration">C</p>'} else {isConcentration = '<p></p>'};
         if (spellDetails[3]) {
-            isMemorized = '<li>';
+            isMemorized = '<span>';
             if (spellLvl !== "spellCantrip") {memorizedCount += 1;}
-        } else {isMemorized = '<li class="notMemorized">'};
-        let spellInfo = `${isMemorized}${spellDetails[0]}${isRitual}${isConcentration}<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell"></li>`
+        } else {isMemorized = '<span class="notMemorized">'};
+        let spellInfo = `<li>${isMemorized}${spellDetails[0]}</span>${isRitual}${isConcentration}<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell"></li>`
         $(`#${spellLvl}`).append(spellInfo);
     });
 });
 $('#spellMemorized').text(memorizedCount);
+
 
     //Populate Spells Slots
 $.each(currentCharacter.spells.spellCasts, function(key, value){
@@ -143,6 +186,3 @@ $.each(currentCharacter.spells.spellCasts, function(key, value){
     $(`#${key}`).append(`${value[0]} / ${value[1]}`);
     if (value[1] === 0) {$(`#${key}`).parent().parent().hide()};
 });
-
-//TEST
-$('#characterXP').val(7500);
