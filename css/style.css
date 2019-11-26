@@ -146,19 +146,6 @@ body {
     box-shadow: inset 0px 0px 15px rgba(0, 0, 0, .35);
 }
 
-.profCheck {
-    margin-left: 5px;
-}
-
-button {
-    background: rgb(245, 245, 245);
-    border-radius: 3px;
-    border-bottom: 1px solid rgb(150, 150, 150);
-    border-right: 1px solid rgb(150, 150, 150);
-    border-top: 1px solid white;
-    border-left: 1px solid white;
-}
-
 .styled-checkbox,
 .spellMemorized,
 .switch-input,
@@ -168,24 +155,6 @@ button {
     opacity: 0;
     height: 0;
     width: 0;
-}
-
-.styled-checkbox + label {
-    position: relative;
-    cursor: pointer;
-    padding: 0;
-}
-
-.styled-checkbox + label:before {
-    content: '';
-    margin-left: 2px;
-    margin-bottom: 2px;
-    display: inline-block;
-    vertical-align: text-top;
-    width: 25px;
-    height: 15px;
-    border-radius: 7px;
-    border: 1px solid rgb(150, 150, 150);
 }
 
 .trash:hover,
@@ -492,36 +461,6 @@ button:hover,
     font-size: 1.1rem;
 }
 
-.deathsave {
-    font-size: .85rem;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.success {
-    margin-top: 3px;
-}
-
-.failure {
-    margin-bottom: 3px;
-}
-
-.deathSuccess + label:before {
-    background: rgb(170, 200, 170);
-}
-
-.deathSuccess:checked + label:before {
-    background: rgb(50, 170, 50);
-}
-
-.deathFailure + label:before {
-    background: rgb(200, 170, 170);
-}
-
-.deathFailure:checked + label:before {
-    background: rgb(170, 50, 50);
-}
-
 #hitDice,
 #speed {
     font-size: .8rem;
@@ -588,9 +527,6 @@ button:hover,
     text-transform: none;
     padding: 1px 0;
     font-size: 1.1rem;
-}
-
-.detailHeader span {
 }
 
 .edit {
@@ -708,12 +644,6 @@ button:hover,
     color: rgb(100, 100, 100);
     text-decoration: line-through;
     padding-left: 15px;
-}
-
-.spellMemorized:checked + label {
-    color: black;
-    text-decoration: none;
-    padding-left: 0;
 }
 
 #spellList p {
