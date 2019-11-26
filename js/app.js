@@ -1,14 +1,27 @@
+//  Initialize Firebase
+firebase.initializeApp({
+    apiKey: "AIzaSyAWuZWgghzD0ap5b7FQeqOkQwjXZq1B8ik",
+    authDomain: "charactersheet5e.firebaseapp.com",
+    projectId: "charactersheet5e",
+    messagingSenderId: "542586822557",
+    appId: "1:542586822557:web:b7f1eb1e7e4a2e52315974",
+    measurementId: "G-DG0PD1Z4X0"
+});
 
-//Load Test Character and Parse
+//  Firebase Ref
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+//  Load Test Character and Parse
 const request = new XMLHttpRequest();
-request.open("GET", "../TestChar.json", false);
+request.open("GET", "TestChar.json", false);
 request.send(null)
 const currentCharacter = JSON.parse(request.responseText);
 
 
 function populateSheet() {
-    //Populate Sheet
-        //Populate Character Info
+    //  Populate Sheet
+        //  Populate Character Info
     let characterLevelTotal = 0
     $.each(currentCharacter.charInfo, function(key, value){
         if (key === "characterLevel") {
@@ -26,7 +39,7 @@ function populateSheet() {
     });
     $('#characterXP').val(currentCharacter.misc.xp);
 
-        //Polulate Ability Scores & Generate Ability Modifiers
+        //  Polulate Ability Scores & Generate Ability Modifiers
     const abilityModifiers = []
     const abilityRef = ["Str","Dex","Con","Int","Wis","Cha","None"]
     $.each(currentCharacter.abilityScores, function(key, value){
@@ -42,11 +55,11 @@ function populateSheet() {
     });
     abilityModifiers.push(0)
 
-        //Generate Proficiency Bonus
+        //  Generate Proficiency Bonus
     const proficiencyModifier = Math.floor((characterLevelTotal - 1) / 4) + 2 + currentCharacter.misc.proficiencyBonus;
     $('#profBonus').text(`+${proficiencyModifier}`);
 
-        //Populate Saving Throws
+        //  Populate Saving Throws
     $.each(currentCharacter.savingThrows, function(key, value){
         const scoreLookup = value[1];
         const bonusLookup = value[3];
@@ -67,7 +80,7 @@ function populateSheet() {
         $(`#${key}`).parent().prepend(profImg);
     });
 
-        //Populate Skills & Passive Perception
+        //  Populate Skills & Passive Perception
     let passivePerception = 0
     $.each(currentCharacter.skills, function(key, value){
         const modRef = abilityRef[value[2]];
@@ -91,13 +104,13 @@ function populateSheet() {
     });
     $('#passivePerception').text(passivePerception);
 
-        //Populate Badges
-            //Initiative Badge
+        //  Populate Badges
+            //  Initiative Badge
     let initBonus = abilityModifiers[1] + abilityModifiers[currentCharacter.misc.initiative[0]] + currentCharacter.misc.initiative[1];
     if (initBonus > 0) {initBonus = "+" + initBonus};
     $('#initiativeBonus').text(initBonus);
 
-            //Armor Class Badge
+            //  Armor Class Badge
     armor = function() {
         if (currentCharacter.misc.armorClass[1] > abilityModifiers[1]) {
             dexBon = abilityModifiers[1]} else {dexBon = currentCharacter.misc.armorClass[1]};
@@ -106,10 +119,10 @@ function populateSheet() {
     }
     $('#armorClass').text(armor);
 
-            //HP Badge
+            //  HP Badge
     $('#hitPoints').text(currentCharacter.misc.hitPoints[1] + currentCharacter.misc.hitPoints[2] + currentCharacter.misc.hitPoints[3]);
 
-            //Hit Dice Badge
+            //  Hit Dice Badge
     currentHitDice = function() {
         let hdString = ""
         $.each(currentCharacter.misc.hitDice, function(key, value){
@@ -128,11 +141,11 @@ function populateSheet() {
     });
     $('#hitDice').text(currentHitDice);
 
-            //Speed & Vision Badge
+            //  Speed & Vision Badge
     $('#speed').text(currentCharacter.misc.speed);
     $('#vision').text(currentCharacter.misc.vision);
 
-        //Populate Attacks
+        //  Populate Attacks
     $.each(currentCharacter.attacks, function(key, value){
         const scoreLookup = value[1];
         const atkBonus = value[0] * proficiencyModifier + abilityModifiers[scoreLookup] + value[2];
@@ -141,13 +154,13 @@ function populateSheet() {
         $('#attackWrapper').append(attackSpan);
     });
 
-        //Populate Character Details
+        //  Populate Character Details
     $.each(currentCharacter.details, function(key, value){
         const detailArticle = `<article class="detailHeader"><span class="row"><img class="edit" src="img/Pencil-Grey.png" alt="Edit Entry" title="Edit Entry">${key}</span><div class="detailInfo growText">${value}</div></article>`
         $('#charInfoList').append(detailArticle);
     });
 
-        //Populate Inventory
+        //  Populate Inventory
     let attunedCount = 0
     $.each(currentCharacter.inventory, function(key, value){
         let attunement = ""
@@ -162,19 +175,19 @@ function populateSheet() {
     });
     if (attunedCount > 0) {$('#inventory').parent().prepend(`<div class="attunement" title="Items Attuned">${attunedCount}</div>`)}
 
-        //Populate Coin
+        //  Populate Coin
     $('#ppAmount').val(currentCharacter.misc.coin[0]);
     $('#gpAmount').val(currentCharacter.misc.coin[1]);
     $('#spAmount').val(currentCharacter.misc.coin[2]);
     $('#cpAmount').val(currentCharacter.misc.coin[3]);
 
-        //Populate Spell Attack & DC
+        //  Populate Spell Attack & DC
     let spellAtk = proficiencyModifier + abilityModifiers[currentCharacter.spells.spellStats[0]] + currentCharacter.spells.spellStats[1];
     if (spellAtk > 0) {spellAtk = "+" + spellAtk}
     $('#spellAttack1').text(spellAtk);
     $('#spellDC1').text(8 + proficiencyModifier + abilityModifiers[currentCharacter.spells.spellStats[0]] + currentCharacter.spells.spellStats[2] )
 
-        //Populate Spells List
+        //  Populate Spells List
     let memorizedCount = 0
     $.each(currentCharacter.spells.spellsList, function(spellLvl, value){
         $(value).each(function(key2, spellDetails){
@@ -193,7 +206,7 @@ function populateSheet() {
     });
     $('#spellMemorized').text(memorizedCount);
 
-        //Populate Spells Slots
+        //  Populate Spells Slots
     $.each(currentCharacter.spells.spellCasts, function(key, value){
         $(`#${key}`).append(`${value[0]} / ${value[1]}`);
         if (value[1] === 0) {$(`#${key}`).parent().parent().hide()};
