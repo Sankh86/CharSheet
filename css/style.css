@@ -3,6 +3,10 @@
 * {
     box-sizing: border-box;
     transition: all .1s ease-in-out;
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
 }
 
 * input[type="text"]:focus {
@@ -728,7 +732,7 @@ button:hover,
 }
 
 #addItemForm {
-    width: 284px;
+    width: 295px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -739,7 +743,7 @@ button:hover,
 }
 
 #addItemName {
-    width: 220px;
+    width: 240px;
 }
 
 .addItemAttuned {
@@ -747,7 +751,7 @@ button:hover,
 }
 
 .qtyLabel {
-    width: 30px;
+    width: 41px;
     text-align: right;
 }
 

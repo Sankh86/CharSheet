@@ -13,8 +13,9 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 //  Load Test Character and Parse
-let curretnCharacter = ""
-db.collection("testUser").doc("testUID").collection("Characters").doc("TestCharacter").get().then((snapshot) => {
+
+dbCharRef = db.collection("testUser").doc("testUID").collection("Characters").doc("TestCharacter")
+dbCharRef.get().then((snapshot) => {
     currentCharacter = snapshot.data();
     populateSheet();
 });
@@ -60,6 +61,7 @@ function populateSheet() {
     $('#profBonus').text(`+${proficiencyModifier}`);
 
         //  Populate Saving Throws
+    $.each(currentCharacter.savingThrows, function(key, value){$(`#${key}`).parent().children('img').remove()});
     $.each(currentCharacter.savingThrows, function(key, value){
         const scoreLookup = value[1];
         const bonusLookup = value[3];
@@ -82,6 +84,7 @@ function populateSheet() {
 
         //  Populate Skills & Passive Perception
     let passivePerception = 0
+    $('#skillsInfoList').empty();
     $.each(currentCharacter.skills, function(key, value){
         const modRef = abilityRef[value[2]];
         let profImg = "";
@@ -146,6 +149,7 @@ function populateSheet() {
     $('#vision').text(currentCharacter.misc.vision);
 
         //  Populate Attacks
+    $('#attackWrapper').children('span').not('span:first').remove();
     $.each(currentCharacter.attacks, function(key, value){
         const scoreLookup = value[1];
         const atkBonus = value[0] * proficiencyModifier + abilityModifiers[scoreLookup] + value[2];
@@ -155,6 +159,7 @@ function populateSheet() {
     });
 
         //  Populate Character Details
+    $('#charInfoList').empty();
     $.each(currentCharacter.details, function(key, value){
         const detailArticle = `<article class="detailHeader"><span class="row"><img class="edit" src="img/Pencil-Grey.png" alt="Edit Entry" title="Edit Entry">${key}</span><div class="detailInfo growText">${value}</div></article>`
         $('#charInfoList').append(detailArticle);
@@ -162,6 +167,7 @@ function populateSheet() {
 
         //  Populate Inventory
     let attunedCount = 0
+    $('#inventory').empty();
     $.each(currentCharacter.inventory, function(key, value){
         let attunement = ""
         let equipped = ""
@@ -189,6 +195,7 @@ function populateSheet() {
 
         //  Populate Spells List
     let memorizedCount = 0
+    $.each(currentCharacter.spells.spellsList, function(spellLvl, value){$(`#${spellLvl}`).empty();});
     $.each(currentCharacter.spells.spellsList, function(spellLvl, value){
         $.each(currentCharacter.spells.spellsList[spellLvl], function(key2, spellDetails){
             let isRitual = "";
@@ -207,9 +214,27 @@ function populateSheet() {
     $('#spellMemorized').text(memorizedCount);
 
         //  Populate Spells Slots
+    $.each(currentCharacter.spells.spellCasts, function(key, value){$(`#${key}`).empty();});
     $.each(currentCharacter.spells.spellCasts, function(key, value){
         $(`#${key}`).append(`${value[0]} / ${value[1]}`);
         if (value[1] === 0) {$(`#${key}`).parent().parent().hide()};
     });
 }
 
+$('#addItemForm input[type="submit"]').on('click', function(e){
+    e.preventDefault();
+    const itemName = $('#addItemName').val();
+    let itemAmt = parseInt($('#addItemAmount').val());
+    const itemAtune = $('#addItemAttunement').prop('checked');
+    if (itemName !== "") {
+        if (isNaN(itemAmt) || itemAmt === "" || itemAmt === null) {itemAmt = 1}
+        $('#addItemAmount').val(null);
+        $('#addItemName').val(null);
+        $('#addItemAttunement').prop('checked', false);
+        currentCharacter.inventory[itemName] = [itemAmt,itemAtune,false];
+        const update = {}
+        update['inventory'] = currentCharacter.inventory
+        dbCharRef.set(update,{merge:true})
+        populateSheet();
+    }
+});
