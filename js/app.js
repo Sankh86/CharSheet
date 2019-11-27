@@ -13,11 +13,11 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 //  Load Test Character and Parse
-const request = new XMLHttpRequest();
-request.open("GET", "TestChar.json", false);
-request.send(null)
-const currentCharacter = JSON.parse(request.responseText);
-
+let curretnCharacter = ""
+db.collection("testUser").doc("testUID").collection("Characters").doc("TestCharacter").get().then((snapshot) => {
+    currentCharacter = snapshot.data();
+    populateSheet();
+});
 
 function populateSheet() {
     //  Populate Sheet
@@ -26,9 +26,9 @@ function populateSheet() {
     $.each(currentCharacter.charInfo, function(key, value){
         if (key === "characterLevel") {
             let classLevelText = ""
-            $(value).each(function(key2, classDetails){
-                classLevelText += `${classDetails[0]} ${classDetails[1]}, `;
-                characterLevelTotal += classDetails[1];
+            $.each(currentCharacter.charInfo[key], function(key2, classDetails){
+                classLevelText += `${key2} ${classDetails[0]}, `;
+                characterLevelTotal += classDetails[0];
             });
             classLevelText = classLevelText.slice(0, -2);
             classLevelText+= ` [${characterLevelTotal}]`
@@ -85,21 +85,21 @@ function populateSheet() {
     $.each(currentCharacter.skills, function(key, value){
         const modRef = abilityRef[value[2]];
         let profImg = "";
-        if (value[1] === 2) {
+        if (value[0] === 2) {
             profImg = '<img class="profImg" src="img/Blades-Solid-Shield.png" alt="Expertise" title="Expertise"></img>'
-        } else if (value[1] === 1){
+        } else if (value[0] === 1){
             profImg = '<img class="profImg" src="img/Solid-Shield.png" alt="Proficient" title="Proficient"></img>'
-        } else if (value[1] === 0.5){
+        } else if (value[0] === 0.5){
             profImg = '<img class="profImg" src="img/Blades-Hollow-Shield.png" alt="Half-Proficient" title="Half-Proficient"></img>'
         } else {
         profImg = '<img class="profImg" src="img/Hollow-Shield.png" alt="Non-Proficient" title="Non-Proficient">'
         }
-        let skillBonus = Math.floor(proficiencyModifier * value[1]) + abilityModifiers[value[2]] + value[3];
-        if (value[0] === "Perception") {
+        let skillBonus = Math.floor(proficiencyModifier * value[0]) + abilityModifiers[value[1]] + value[2];
+        if (key === "Perception") {
             passivePerception = 10 + skillBonus + abilityModifiers[currentCharacter.misc.passivePerceptionBonus[0]] + currentCharacter.misc.passivePerceptionBonus[1];
         };
 
-        skillString = `<span class="row skillItm">${profImg}<span class="skillTitle">${value[0]} (${modRef})</span><div class="skillEntry infoInput" title="${value[0]} Skill Bonus">${skillBonus}</div>`
+        skillString = `<span class="row skillItm">${profImg}<span class="skillTitle">${key} (${modRef})</span><div class="skillEntry infoInput" title="${key} Skill Bonus">${skillBonus}</div>`
         $('#skillsInfoList').append(skillString);
     });
     $('#passivePerception').text(passivePerception);
@@ -166,11 +166,11 @@ function populateSheet() {
         let attunement = ""
         let equipped = ""
         let listItem = ""
-        if (value[2] && value[3]) {attunedCount+= 1}
-        if (value[2]) {attunement = '<p title="Requires Attunement">A</p>'} else {attunement = '<p></p>'};
-        if (value[3]) {equipped = '<div class="isEquipped equipped" title="Equip/Unequip Item"></div>'} else {equipped = '<div class="isEquipped" title="Equip/Unequip Item"></div>'}
-        if (value[3]) {listItem = '<li class="row growText equippedList">'} else {listItem = '<li class="row growText">'}
-        const itemDetail = `${listItem}<p>${value[1]}x</p>${value[0]}${attunement}${equipped}</li>`
+        if (value[1] && value[2]) {attunedCount+= 1}
+        if (value[1]) {attunement = '<p title="Requires Attunement">A</p>'} else {attunement = '<p></p>'};
+        if (value[2]) {equipped = '<div class="isEquipped equipped" title="Equip/Unequip Item"></div>'} else {equipped = '<div class="isEquipped" title="Equip/Unequip Item"></div>'}
+        if (value[2]) {listItem = '<li class="row growText equippedList">'} else {listItem = '<li class="row growText">'}
+        const itemDetail = `${listItem}<p>${value[0]}x</p>${key}${attunement}${equipped}</li>`
         $('#inventory').append(itemDetail);
     });
     if (attunedCount > 0) {$('#inventory').parent().prepend(`<div class="attunement" title="Items Attuned">${attunedCount}</div>`)}
@@ -190,17 +190,17 @@ function populateSheet() {
         //  Populate Spells List
     let memorizedCount = 0
     $.each(currentCharacter.spells.spellsList, function(spellLvl, value){
-        $(value).each(function(key2, spellDetails){
-            let isRitual = ""
-            let isConcentration = ""
-            let isMemorized = ""
-            if (spellDetails[1]) {isRitual = '<p title="Ritual Spell">R</p>'} else {isRitual = '<p></p>'};
-            if (spellDetails[2]) {isConcentration = '<p title="Requires Concentration">C</p>'} else {isConcentration = '<p></p>'};
-            if (spellDetails[3]) {
+        $.each(currentCharacter.spells.spellsList[spellLvl], function(key2, spellDetails){
+            let isRitual = "";
+            let isConcentration = "";
+            let isMemorized = "";
+            if (spellDetails[0]) {isRitual = '<p title="Ritual Spell">R</p>'} else {isRitual = '<p></p>'};
+            if (spellDetails[1]) {isConcentration = '<p title="Requires Concentration">C</p>'} else {isConcentration = '<p></p>'};
+            if (spellDetails[2]) {
                 isMemorized = '<span>';
                 if (spellLvl !== "spellCantrip") {memorizedCount += 1;}
             } else {isMemorized = '<span class="notMemorized">'};
-            let spellInfo = `<li>${isMemorized}${spellDetails[0]}</span>${isRitual}${isConcentration}<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell"></li>`
+            let spellInfo = `<li>${isMemorized}${key2}</span>${isRitual}${isConcentration}<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell"></li>`
             $(`#${spellLvl}`).append(spellInfo);
         });
     });
@@ -213,4 +213,3 @@ function populateSheet() {
     });
 }
 
-window.onload = populateSheet();

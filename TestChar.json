@@ -1,120 +1,89 @@
-{   "charInfo":{
-        "characterName":"Obiliviaron",
-        "characterLevel":[
-            ["Fighter",3,2],
-            ["Wizard",5,0],
-            ["Ranger",2,2]
-        ],
-        "characterRace":"Human",
-        "characterBackground":"Outlander",
-        "characterAlignment":"Chaotic-Good"
-    },
-    "abilityScores":{
-        "strScore":17,
-        "dexScore":14,
-        "conScore":14,
-        "intScore":15,
-        "wisScore":10,
-        "chaScore":8
-    },
-    "savingThrows":{
-        "strSave":[1,0,0,6],
-        "dexSave":[0,1,0,6],
-        "conSave":[1,2,0,6],
-        "intSave":[0,3,0,6],
-        "wisSave":[0,4,0,6],
-        "chaSave":[0,5,0,6]
-    },
-    "skills":[
-        ["Acrobatics",0,1,0],
-        ["Animal Handling",0,5,0],
-        ["Arcana",0,3,0],
-        ["Athletics",1,0,0],
-        ["Deception",0,5,0],
-        ["History",0,3,0],
-        ["Insight",0,4,0],
-        ["Intimidation",0,5,0],
-        ["Investigation",0,3,0],
-        ["Medicine",0,4,0],
-        ["Nature",0,3,0],
-        ["Perception",1,4,0],
-        ["Performance",0,5,0],
-        ["Persuasion",0.5,5,0],
-        ["Religion",0,3,0],
-        ["Sleight of Hand",0,1,0],
-        ["Stealth",2,1,0],
-        ["Survival",1,4,0]
-    ],
-    "attacks":{
-        "Flame-Tongue":[1,0,0,0,"1d8+2d6(Fire)","Melee"],
-        "Longbow +1":[1,1,1,1,"1d8","150/600"],
-        "Dagger":[1,0,0,0,"1d4","20/60"]
-    },
-    "details":{
-        "Proficiencies":"Light Armor, Medium Armor, Heavy Armor, Simple Weapons, Martial Weapons, Guitar",
-        "Languages":"Common, Elven, Dwarven",
-        "Background Feature":"You have an excellent memory for maps and geography, and you can always recall the general layout of terrain, settlements, and other features around you. In addition, you can find food and fresh water for yourself and up to five other people each day, provided that the land offers berries, small game, water, and so forth.",
-        "Fighting Style - Archery":"You gain a +2 bonus to Attack rolls you make with Ranged Weapons.",
-        "Second Wind":"You have a limited well of stamina that you can draw on to protect yourself from harm. On Your Turn, you can use a Bonus Action to regain Hit Points equal to 1d10 + your Fighter level. Once you use this feature, you must finish a short or Long Rest before you can use it again."
-    },
-    "inventory":[
-        ["Flame-Tongue",1,true,true],
-        ["Breastplate",1,false,true],
-        ["Longbow +1",1,false,true],
-        ["Arrows",100,false,true],
-        ["Dagger",1,false,true],
-        ["Potion of Healing - 2d4+2",3,false,false]
-    ],
-    "spells":{
-        "spellStats":[3,0,0,"longRest"],
-        "spellCasts":{
-            "spellFirstCasts":[3,3],
-            "spellSecondCasts":[1,1],
-            "spellThirdCasts":[0,0],
-            "spellFourthCasts":[0,0],
-            "spellFifthCasts":[0,0],
-            "spellSixthCasts":[0,0],
-            "spellSeventhCasts":[0,0],
-            "spellEighthCasts":[0,0],
-            "spellNinthCasts":[0,0]
+{
+    "testChar":{
+        "charInfo":{
+            "characterName":"",
+            "characterLevel":{},
+            "characterRace":"",
+            "characterBackground":"",
+            "characterAlignment":""
         },
-        "spellsList":{
-            "spellCantrip":[
-                ["Frostbite",false, false, true],
-                ["Shocking Grasp", false, false, true],
-                ["Dancing Lights", false, true, true]
-            ],
-            "spellFirst":[
-                ["Shield", false, false, true],
-                ["Detect Magic", true, true, false],
-                ["Feather Fall", false, false, true]
-            ],
-            "spellSecond":[
-                ["Darkness", false, true, true],
-                ["Earthbind", false, true, true]
-            ],
-            "spellThird":[],
-            "spellFourth":[],
-            "spellFifth":[],
-            "spellSixth":[],
-            "spellSeventh":[],
-            "spellEighth":[],
-            "spellNinth":[]
+        "abilityScores":{
+            "strScore":8,
+            "dexScore":8,
+            "conScore":8,
+            "intScore":8,
+            "wisScore":8,
+            "chaScore":8
+        },
+        "savingThrows":{
+            "strSave":[0,0,0,6],
+            "dexSave":[0,1,0,6],
+            "conSave":[1,2,0,6],
+            "intSave":[0,3,0,6],
+            "wisSave":[0,4,0,6],
+            "chaSave":[0,5,0,6]
+        },
+        "skills":{
+            "Acrobatics":[0,1,0],
+            "Animal Handling":[0,5,0],
+            "Arcana":[0,3,0],
+            "Athletics":[0,0,0],
+            "Deception":[0,5,0],
+            "History":[0,3,0],
+            "Insight":[0,4,0],
+            "Intimidation":[0,5,0],
+            "Investigation":[0,3,0],
+            "Medicine":[0,4,0],
+            "Nature":[0,3,0],
+            "Perception":[0,4,0],
+            "Performance":[0,5,0],
+            "Persuasion":[0,5,0],
+            "Religion":[0,3,0],
+            "Sleight of Hand":[0,1,0],
+            "Stealth":[0,1,0],
+            "Survival":[0,4,0]
+        },
+        "attacks":{},
+        "details":{},
+        "inventory":{},
+        "spells":{
+            "spellStats":[0,0,0,"longRest"],
+            "spellCasts":{
+                "spellFirstCasts":[0,0],
+                "spellSecondCasts":[0,0],
+                "spellThirdCasts":[0,0],
+                "spellFourthCasts":[0,0],
+                "spellFifthCasts":[0,0],
+                "spellSixthCasts":[0,0],
+                "spellSeventhCasts":[0,0],
+                "spellEighthCasts":[0,0],
+                "spellNinthCasts":[0,0]
+            },
+            "spellsList":{
+                "spellCantrip":{},
+                "spellFirst":{},
+                "spellSecond":{},
+                "spellThird":{},
+                "spellFourth":{},
+                "spellFifth":{},
+                "spellSixth":{},
+                "spellSeventh":{},
+                "spellEighth":{},
+                "spellNinth":{}
+            }
+        },
+        "misc":{
+            "xp":0,
+            "coin":[0,0,0,0],
+            "passivePerceptionBonus":[6,0],
+            "proficiencyBonus":0,
+            "initiative":[6,0],
+            "armorClass":[10,10,0,0,6],
+            "hitPoints":[1,1,0,0],
+            "hitDice":[0,0,0,0,"allHD"],
+            "speed":"30",
+            "vision":"",
+            "abilityBadges":{}
         }
-    },
-    "misc":{
-        "xp":7500,
-        "coin":[100,1000,200,10],
-        "passivePerceptionBonus":[6,0],
-        "proficiencyBonus":0,
-        "initiative":[6,0],
-        "armorClass":[14,2,2,0,6],
-        "hitPoints":[60,60,0,0],
-        "hitDice":[5,0,5,0,"allHD"],
-        "speed":"30",
-        "vision":"Darkvision 60",
-        "abilityBadges":[
-            ["Ki"]
-        ]
     }
 }
