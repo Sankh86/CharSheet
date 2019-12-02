@@ -227,7 +227,7 @@ button:hover,
     width: 10%;
 }
 
-.charExperience {
+#charExperience {
     min-width: 90px;
     width: 8%;
     margin-left: auto;
@@ -257,7 +257,7 @@ button:hover,
 
 .background,
 .alignment,
-.charExperience {
+#charExperience {
     display: none;
 }
 
@@ -653,6 +653,7 @@ button:hover,
 #spellList p {
     margin: 0 10px;
     padding: 0 5px;
+    width:25px;
     font-weight: bold;
     text-align: center;
     color: black;
@@ -878,7 +879,7 @@ button:hover,
 
 /* Media Queries */
 @media (min-width: 465px) {
-    .charExperience {
+    #charExperience {
         display: block;
     }
 }

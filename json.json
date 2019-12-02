@@ -1,0 +1,28 @@
+{
+    "spells":{
+        "spellStats":{"score":0,"atkMod":0,"dcMod":0,"reset":"longRest"},
+        "spellCasts":{
+            "spellFirstCasts":{"remain":3,"total":3},
+            "spellSecondCasts":{"remain":1,"total":1},
+            "spellThirdCasts":{"remain":0,"total":0},
+            "spellFourthCasts":{"remain":0,"total":0},
+            "spellFifthCasts":{"remain":0,"total":0},
+            "spellSixthCasts":{"remain":0,"total":0},
+            "spellSeventhCasts":{"remain":0,"total":0},
+            "spellEighthCasts":{"remain":0,"total":0},
+            "spellNinthCasts":{"remain":0,"total":0}
+        },
+        "spellsList":{
+            "spellCantrip":{},
+            "spellFirst":{},
+            "spellSecond":{},
+            "spellThird":{},
+            "spellFourth":{},
+            "spellFifth":{},
+            "spellSixth":{},
+            "spellSeventh":{},
+            "spellEighth":{},
+            "spellNinth":{}
+        }
+    }
+}

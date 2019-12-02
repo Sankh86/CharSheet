@@ -18,12 +18,45 @@
         "chaScore":8
     },
     "savingThrows":{
-        "strSave":[0,0,0,6],
-        "dexSave":[0,1,0,6],
-        "conSave":[1,2,0,6],
-        "intSave":[0,3,0,6],
-        "wisSave":[0,4,0,6],
-        "chaSave":[0,5,0,6]
+        "strSave":{
+            "prof":0,
+            "score":0,
+            "misc":0,
+            "miscScore":6
+        },
+        "dexSave":{
+            "prof":0,
+            "score":1,
+            "misc":0,
+            "miscScore":6
+        },
+        "conSave":{
+            "prof":0,
+            "score":2,
+            "misc":0,
+            "miscScore":6
+        },
+        "intSave":{
+            "prof":0,
+            "score":3,
+            "misc":0,
+            "miscScore":6
+        },
+        "wisSave":{
+            "prof":0,
+            "score":4,
+            "misc":0,
+            "miscScore":6
+        },
+        "chaSave":{
+            "prof":0,
+            "score":5,
+            "misc":0,
+            "miscScore":6
+        }
+        
+
+
     },
     "skills":{
         "Acrobatics":[0,1,0],
@@ -51,15 +84,15 @@
     "spells":{
         "spellStats":[0,0,0,"longRest"],
         "spellCasts":{
-            "spellFirstCasts":[0,0],
-            "spellSecondCasts":[0,0],
-            "spellThirdCasts":[0,0],
-            "spellFourthCasts":[0,0],
-            "spellFifthCasts":[0,0],
-            "spellSixthCasts":[0,0],
-            "spellSeventhCasts":[0,0],
-            "spellEighthCasts":[0,0],
-            "spellNinthCasts":[0,0]
+            "spellFirstCasts":{"remain":3,"total":3},
+            "spellSecondCasts":{"remain":1,"total":1},
+            "spellThirdCasts":{"remain":0,"total":0},
+            "spellForuthCasts":{"remain":0,"total":0},
+            "spellFifthCasts":{"remain":0,"total":0},
+            "spellSixthCasts":{"remain":0,"total":0},
+            "spellSeventhCasts":{"remain":0,"total":0},
+            "spellEighthCasts":{"remain":0,"total":0},
+            "spellNinthCasts":{"remain":0,"total":0}
         },
         "spellsList":{
             "spellCantrip":{},
