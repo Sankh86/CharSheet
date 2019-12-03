@@ -177,19 +177,27 @@ function populateSheet() {
 
         //  Populate Inventory
     $('#inventory').empty();
+    let equippedItems = "";
+    let unequippedItems = "";
     $.each(currentCharacter.inventory, function(key, value){
-        const cInv = currentCharacter.inventory
-        let attunement = ""
-        let equipped = ""
-        let listItem = ""
-        if (cInv[key]['attune'] && cInv[key]['equipped']) {attunedCount+= 1}
+        const cInv = currentCharacter.inventory;
+        let attunement = "";
+        let equipped = "";
+        let listItem = "";
+        if (cInv[key]['attune'] && cInv[key]['equipped']) {attunedCount+= 1};
         if (cInv[key]['attune']) {attunement = '<p title="Requires Attunement">A</p>'} else {attunement = '<p></p>'};
-        if (cInv[key]['equipped']) {equipped = '<div class="isEquipped equipped" title="Equip/Unequip Item"></div>'} else {equipped = '<div class="isEquipped" title="Equip/Unequip Item"></div>'}
-        if (cInv[key]['equipped']) {listItem = '<li class="row growText equippedList">'} else {listItem = '<li class="row growText">'}
-        const itemDetail = `${listItem}<p>${cInv[key]['qty']}x</p>${key}${attunement}${equipped}</li>`
-        $('#inventory').append(itemDetail);
+        if (cInv[key]['equipped']) {
+            equipped = '<div class="isEquipped equipped" title="Equip/Unequip Item"></div>';
+            listItem = '<li class="row growText equippedList">'
+        } else {
+            equipped = '<div class="isEquipped" title="Equip/Unequip Item"></div>'
+            listItem = '<li class="row growText">'
+        };
+        const itemDetail = `${listItem}<p>${cInv[key]['qty']}x</p><span>${key}</span>${attunement}${equipped}</li>`;
+        if (cInv[key]['equipped']) {equippedItems += itemDetail} else {unequippedItems += itemDetail};
     });
-    if (attunedCount > 0) {$('#inventory').parent().prepend(`<div class="attunement" title="Items Attuned">${attunedCount}</div>`)}
+    $('#inventory').append(equippedItems).append(unequippedItems);
+    if (attunedCount > 0) {$('#inventory').parent().prepend(`<div class="attunement" title="Items Attuned">${attunedCount}</div>`)};
 
         //  Populate Coin
     $('#ppAmount').val(currentCharacter.misc.coin['pp']);
@@ -206,6 +214,8 @@ function populateSheet() {
         //  Populate Spells List
     $.each(currentCharacter.spells.spellsList, function(key, value){$(`#${key}`).empty();});
     $.each(currentCharacter.spells.spellsList, function(key, value){
+        let memSpells = ""
+        let unmemSpells = ""
         $.each(currentCharacter.spells.spellsList[key], function(key2, value2){
             cSpell = currentCharacter.spells.spellsList[key];
             let isRitual = "";
@@ -217,9 +227,10 @@ function populateSheet() {
                 isMemorized = '<article>';
                 if (key !== "spellCantrip") {memorizedCount += 1;}
             } else {isMemorized = '<article class="notMemorized">'};
-            let spellInfo = `<li>${isMemorized}${key2}</article>${isRitual}${isConcentration}<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell"></li>`
-            $(`#${key}`).append(spellInfo);
+            let spellInfo = `<li>${isMemorized}${key2}</article>${isRitual}${isConcentration}<img class="trash" src="img/trash.png" alt="Remove Spell" title="Remove Spell"></li>`;
+            if (cSpell[key2]['isMem']) {memSpells += spellInfo} else {unmemSpells += spellInfo};
         });
+        $(`#${key}`).append(memSpells).append(unmemSpells);
     });
     $('#spellMemorized').text(memorizedCount);
 
@@ -268,17 +279,72 @@ $('#addItemForm input[type="submit"]').on('click', function(e){
     const itemName = $('#addItemName').val();
     let itemAmt = parseInt($('#addItemAmount').val());
     const itemAtune = $('#addItemAttunement').prop('checked');
-    if (itemName !== "") {
-        if (isNaN(itemAmt) || itemAmt === "" || itemAmt === null) {itemAmt = 1}
-        $('#addItemAmount').val(null);
-        $('#addItemName').val(null);
-        $('#addItemAttunement').prop('checked', false);
-        currentCharacter.inventory[itemName] = {'qty':itemAmt,'attune':itemAtune,'equipped':false};
-        const update = {}
-        update['inventory'] = currentCharacter.inventory
-        dbCharRef.set(update,{merge:true})
-        populateSheet();
-    }
+    if (currentCharacter.inventory.hasOwnProperty(itemName)) {
+        alert("Item already on list!");
+    } else {
+        if (itemName !== "") {
+            if (isNaN(itemAmt) || itemAmt === "" || itemAmt === null) {itemAmt = 1};
+            $('#addItemAmount').val(null);
+            $('#addItemName').val(null);
+            $('#addItemAttunement').prop('checked', false);
+            currentCharacter.inventory[itemName] = {'qty':itemAmt,'attune':itemAtune,'equipped':false};
+            const update = {};
+            update['inventory'] = currentCharacter.inventory;
+            dbCharRef.set(update,{merge:true});
+            populateSheet();
+        };
+    };
+});
+
+
+//  Toggle Equipped
+$('#inventory').on('click','div', function(){
+    const itemName = $(this).parent().children('span').text();
+    console.log(itemName);
+    let toggle = true;
+    if(currentCharacter.inventory[itemName]['equipped'] === true) {
+        currentCharacter.inventory[itemName]['equipped'] = false;
+        toggle = false;
+    } else {
+        currentCharacter.inventory[itemName]['equipped'] = true;
+    };
+    const update = {}
+    update['inventory.'+itemName+'.equipped'] = toggle
+    dbCharRef.update(update);
+    populateSheet();
+});
+
+
+//  Update Currency
+$('#money input[type="submit"]').on('click', function(e){
+    e.preventDefault();
+    const ppAmount = $('#ppAmount').val();
+    const gpAmount = $('#gpAmount').val();
+    const spAmount = $('#spAmount').val();
+    const cpAmount = $('#cpAmount').val();
+    currentCharacter.misc.coin.pp = ppAmount;
+    currentCharacter.misc.coin.gp = gpAmount;
+    currentCharacter.misc.coin.sp = spAmount;
+    currentCharacter.misc.coin.cp = cpAmount;
+    $('#money input[type="text"]').blur();
+    const update = {};
+    update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
+    dbCharRef.update(update);
+    populateSheet();
+});
+$('#money input[type="text"]').on('focusout', function(){
+    const ppAmount = $('#ppAmount').val();
+    const gpAmount = $('#gpAmount').val();
+    const spAmount = $('#spAmount').val();
+    const cpAmount = $('#cpAmount').val();
+    currentCharacter.misc.coin.pp = ppAmount;
+    currentCharacter.misc.coin.gp = gpAmount;
+    currentCharacter.misc.coin.sp = spAmount;
+    currentCharacter.misc.coin.cp = cpAmount;
+    const update = {};
+    update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
+    dbCharRef.update(update);
+    populateSheet();
 });
 
 

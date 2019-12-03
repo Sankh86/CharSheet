@@ -854,7 +854,7 @@ button:hover,
 }
 
 .coinpurse label {
-    margin-left: 5px;
+    margin-left: 2px;
 }
 
 .coinpurse label:first-of-type {
@@ -874,8 +874,25 @@ button:hover,
     width: 100%;
     border-bottom: solid 1px darkgrey;
     border-radius: 3px;
+    margin-left: 2px;
 }
 
+/* Form Control */
+.qtyForm {
+    position: absolute;
+    width:200px;
+    height: 100px;
+    padding: 2px;
+}
+
+.qtyForm * {
+    margin: 1px;
+    font-size: 1rem;
+}
+
+.qtyForm input[type=number] {
+    width: 50px;
+}
 
 /* Media Queries */
 @media (min-width: 465px) {
