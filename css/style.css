@@ -240,11 +240,65 @@ header h2 {
     display: none;
 }
 
+header h3:first-of-type {
+    margin-left: auto;
+}
+
+header h3 {
+    font-size: 1rem;
+    margin: 0;
+    padding: 10px 15px 2px 15px;
+    text-align: center;
+    display: none;
+    border-radius: 0 0 0 5px;
+}
+
+header h3:last-of-type {
+    margin-right: 5px;
+}
+
+header h4 {
+    font-size: 1rem;
+    margin: 0;
+    padding: 10px;
+    border-top: 1px solid rgb(150, 60, 170);
+}
+
+header h4:first-of-type {
+    border-top: none;
+}
+
 .burgerMenu {
-    height: 24px;
-    width: 30px;
-    margin: auto 0 auto auto;
-    padding: 3px;
+    height: 33px;
+    width: 45px;
+    margin: auto 5px auto auto;
+    padding: 8px 10px;
+}
+
+header h3:hover,
+.burgerMenu:hover {
+    background: rgb(60, 40, 70);
+    box-shadow: 5px 0px 0 0 rgb(150, 60, 170),-5px 0px 0 0 rgb(150, 60, 170);
+}
+
+header h4:hover {
+    background: rgb(150, 60, 170);
+}
+
+#restButton {
+    position: relative;
+}
+
+#restMenu {
+    background: rgb(60, 40, 70);
+    position:absolute;
+    width:80px;
+    z-index: 1000;
+    top: 33px;
+    right: 0;
+    border-radius: 5px 0 5px 5px;
+    box-shadow: 5px 0px 0 0 rgb(150, 60, 170),-5px 0px 0 0 rgb(150, 60, 170);
+    display: none;
 }
 
     /* Character Info */
@@ -994,8 +1048,12 @@ footer p:first-of-type {
         display: block;
     }
 
-    header h2 {
+    header h3 {
         display: block;
+    }
+
+    .burgerMenu {
+        display: none
     }
 }
 
@@ -1012,6 +1070,10 @@ footer p:first-of-type {
 
 @media (min-width: 645px) {
     .alignment {
+        display: block;
+    }
+
+    header h2 {
         display: block;
     }
 }

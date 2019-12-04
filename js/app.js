@@ -250,6 +250,15 @@ function sortObjKeysAlphabetically(obj) {
     return ordered;
   }
 
+
+//  Rest Menu
+$('#restButton').on('mouseover', function(){
+    $('#restMenu').show();
+});
+$('#restButton').on('mouseleave', function(){
+    $('#restMenu').hide();
+});
+
 //  Update XP Total
 $('#charExperience input[type="submit"]').on('click', function(e){
     e.preventDefault();
