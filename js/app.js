@@ -193,7 +193,7 @@ function populateSheet() {
             equipped = '<div class="isEquipped" title="Equip/Unequip Item"></div>'
             listItem = '<li class="row growText">'
         };
-        const itemDetail = `${listItem}<p>${cInv[key]['qty']}x</p><span>${key}</span>${attunement}${equipped}</li>`;
+        const itemDetail = `${listItem}<p class="rel">${cInv[key]['qty']}x</p><span>${key}</span>${attunement}${equipped}</li>`;
         if (cInv[key]['equipped']) {equippedItems += itemDetail} else {unequippedItems += itemDetail};
     });
     $('#inventory').append(equippedItems).append(unequippedItems);
@@ -254,7 +254,6 @@ function sortObjKeysAlphabetically(obj) {
 $('#charExperience input[type="submit"]').on('click', function(e){
     e.preventDefault();
     const xpTotal = $('#characterXP').val();
-    console.log(xpTotal);
     currentCharacter.misc.xp = xpTotal;
     $('#characterXP').blur();
     const update = {}
@@ -264,7 +263,6 @@ $('#charExperience input[type="submit"]').on('click', function(e){
 });
 $('#characterXP').on('focusout', function(){
     const xpTotal = $('#characterXP').val();
-    console.log(xpTotal);
     currentCharacter.misc.xp = xpTotal;
     const update = {}
     update['misc.xp'] = currentCharacter.misc.xp;
@@ -272,8 +270,8 @@ $('#characterXP').on('focusout', function(){
     populateSheet();
 });
 
-
-//  Add Item to Inventory
+//Inventory Management
+    //  Add Item to Inventory
 $('#addItemForm input[type="submit"]').on('click', function(e){
     e.preventDefault();
     const itemName = $('#addItemName').val();
@@ -282,7 +280,7 @@ $('#addItemForm input[type="submit"]').on('click', function(e){
     if (currentCharacter.inventory.hasOwnProperty(itemName)) {
         alert("Item already on list!");
     } else {
-        if (itemName !== "") {
+        if (itemName !== "" && itemAmt !== 0) {
             if (isNaN(itemAmt) || itemAmt === "" || itemAmt === null) {itemAmt = 1};
             $('#addItemAmount').val(null);
             $('#addItemName').val(null);
@@ -297,10 +295,69 @@ $('#addItemForm input[type="submit"]').on('click', function(e){
 });
 
 
-//  Toggle Equipped
+    //  Change Quantity - Insert Qty Changer Element
+$('#inventory').on('click', '.rel', function(){
+    const itemName = $(this).parent().children('span').text();
+    const itemQty = currentCharacter.inventory[itemName]['qty'];
+    const qtyForm = `<form class="sectWrapper" id="qtyForm"><h3>${itemName}</h3><input type="number" id="newQty" class=""><input type="image" class="checkmark" name="submit" src="img/checkmark.png" alt="Submit" title="Submit"><img class="cancel" src="img/xmark.png" alt="Cancel" title="Cancel"><img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item"></form>`
+    $(this).parent().append(qtyForm);
+    $(this).parent().children('#qtyForm').children('#newQty').val(itemQty);
+    $(this).parent().children('#qtyForm').focus();
+});
+
+    //  Change Quantity - Remove Item
+$('#inventory').on('click', '.trash', function(){
+    const itemName = $(this).parent().parent().children('span').text();
+    console.log(itemName);
+    $('#qtyForm').remove()
+    delete currentCharacter.inventory[itemName];
+    const remove = {};
+    remove['inventory.'+itemName] = firebase.firestore.FieldValue.delete();
+    dbCharRef.update(remove);
+    populateSheet();
+});
+
+    //  Change Quantity - Cancel
+$('#inventory').on('click', '.cancel', function(){
+    $('#qtyForm').remove()
+});
+
+//  Change Quantity - Remove Qty Changer Element on Focus Out
+$(document).mouseup(function(e){
+    if (!$('#qtyForm').is(e.target) && $('#qtyForm').has(e.target).length === 0) {
+        $('#qtyForm').remove();
+    }
+});
+
+    //  Change Quantity - Modify Amount
+$('#inventory').on('click', 'input[type="image"]', function(e){
+    e.preventDefault();
+    const itemName = $(this).parent().parent().children('span').text();
+    const currentQty = currentCharacter.inventory[itemName]['qty'];
+    let newQty = parseInt($(this).parent().children('input[type="number"]').val());
+    const update = {};
+    console.log(itemName+" "+currentQty+" "+newQty);
+    if (isNaN(newQty) || newQty === "" || newQty === null) {newQty = currentQty};
+    if (newQty === 0) {
+        delete currentCharacter.inventory[itemName];
+        update['inventory.'+itemName] = firebase.firestore.FieldValue.delete();
+        dbCharRef.update(update);
+        populateSheet();
+    }
+    if (newQty !== currentQty && newQty !== 0) {
+        currentCharacter.inventory[itemName]['qty'] = newQty;
+        update['inventory.'+itemName+'.qty'] = newQty;
+        dbCharRef.update(update);
+        populateSheet();
+    }
+    console.log(update);
+    $('#qtyForm').remove();
+});
+
+
+    //  Toggle Equipped
 $('#inventory').on('click','div', function(){
     const itemName = $(this).parent().children('span').text();
-    console.log(itemName);
     let toggle = true;
     if(currentCharacter.inventory[itemName]['equipped'] === true) {
         currentCharacter.inventory[itemName]['equipped'] = false;
@@ -318,37 +375,53 @@ $('#inventory').on('click','div', function(){
 //  Update Currency
 $('#money input[type="submit"]').on('click', function(e){
     e.preventDefault();
-    const ppAmount = $('#ppAmount').val();
-    const gpAmount = $('#gpAmount').val();
-    const spAmount = $('#spAmount').val();
-    const cpAmount = $('#cpAmount').val();
-    currentCharacter.misc.coin.pp = ppAmount;
-    currentCharacter.misc.coin.gp = gpAmount;
-    currentCharacter.misc.coin.sp = spAmount;
-    currentCharacter.misc.coin.cp = cpAmount;
-    $('#money input[type="text"]').blur();
-    const update = {};
-    update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
-    dbCharRef.update(update);
-    populateSheet();
+    const prevPP = currentCharacter.misc.coin.pp;
+    const prevGP = currentCharacter.misc.coin.gp;
+    const prevSP = currentCharacter.misc.coin.sp;
+    const prevCP = currentCharacter.misc.coin.cp;
+    const ppAmount = parseInt($('#ppAmount').val());
+    const gpAmount = parseInt($('#gpAmount').val());
+    const spAmount = parseInt($('#spAmount').val());
+    const cpAmount = parseInt($('#cpAmount').val());
+    if (isNaN(ppAmount) || isNaN(gpAmount) || isNaN(spAmount) || isNaN(cpAmount)) {
+        alert('Not a number.  Try Again')
+    } else if (prevPP !== ppAmount || prevGP !== gpAmount || prevSP !== spAmount || prevCP !== cpAmount)  {
+        currentCharacter.misc.coin.pp = ppAmount;
+        currentCharacter.misc.coin.gp = gpAmount;
+        currentCharacter.misc.coin.sp = spAmount;
+        currentCharacter.misc.coin.cp = cpAmount;
+        $('#money input[type="text"]').blur();
+        const update = {};
+        update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
+        dbCharRef.update(update);
+        populateSheet();
+    }
 });
 $('#money input[type="text"]').on('focusout', function(){
+    const prevPP = currentCharacter.misc.coin.pp;
+    const prevGP = currentCharacter.misc.coin.gp;
+    const prevSP = currentCharacter.misc.coin.sp;
+    const prevCP = currentCharacter.misc.coin.cp;
     const ppAmount = $('#ppAmount').val();
     const gpAmount = $('#gpAmount').val();
     const spAmount = $('#spAmount').val();
     const cpAmount = $('#cpAmount').val();
-    currentCharacter.misc.coin.pp = ppAmount;
-    currentCharacter.misc.coin.gp = gpAmount;
-    currentCharacter.misc.coin.sp = spAmount;
-    currentCharacter.misc.coin.cp = cpAmount;
-    const update = {};
-    update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
-    dbCharRef.update(update);
-    populateSheet();
+    if (isNaN(ppAmount) || isNaN(gpAmount) || isNaN(spAmount) || isNaN(cpAmount)) {
+        alert('Not a number.  Try Again')
+    } else if (prevPP !== ppAmount || prevGP !== gpAmount || prevSP !== spAmount || prevCP !== cpAmount) {
+        currentCharacter.misc.coin.pp = ppAmount;
+        currentCharacter.misc.coin.gp = gpAmount;
+        currentCharacter.misc.coin.sp = spAmount;
+        currentCharacter.misc.coin.cp = cpAmount;
+        const update = {};
+        update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
+        dbCharRef.update(update);
+        populateSheet();
+    }
 });
 
-
-//  Add Spell to List
+//Spell Management
+    //  Add Spell to List
 $('#addSpellForm input[type="submit"]').on('click', function(e){
     e.preventDefault();
     const spellName = $('#addSpellName').val();
@@ -370,7 +443,7 @@ $('#addSpellForm input[type="submit"]').on('click', function(e){
     }
 });
 
-//  Remove Spell from List
+    //  Remove Spell from List
 $('#spellList').on('click', '.trash', function(){
     const spellName = $(this).parent().children('article:first').text();
     const spellLvl = $(this).parent().parent().attr('id');
@@ -381,7 +454,7 @@ $('#spellList').on('click', '.trash', function(){
     populateSheet();
 });
 
-//  Toggle Memorization
+    //  Toggle Memorization
 $('#spellList').on('click','article', function(){
     const spellName = $(this).text();
     const spellLvl = $(this).parent().parent().attr('id');

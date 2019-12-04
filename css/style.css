@@ -36,6 +36,10 @@ body {
     background: rgba(0, 0, 0, .55);
 }
 
+.rel {
+    position: relative;
+}
+
 .grow20:hover {
     transform: scale(1.2);
 }
@@ -120,7 +124,7 @@ body {
 #combatFeatures,
 #spellWrapper,
 #inventoryWrapper {
-    height: calc( 100vh - 70px);
+    height: calc( 100vh - 123px);
     justify-content: space-between;
 }
 
@@ -161,6 +165,8 @@ body {
     width: 0;
 }
 
+.checkmark:hover,
+.cancel:hover,
 .trash:hover,
 .settingsIcon:hover,
 button:hover,
@@ -175,13 +181,26 @@ button:hover,
         0 0 3px 2px rgb(120, 120, 120);
 }
 
-.trash {
+.checkmark,
+.trash,
+.cancel {
     height: 20px;
     width: 22px;
     padding: 2px 3px;
-    background: rgb(215, 90, 90);
     border-radius: 2px;
     margin: 1px;
+}
+
+.trash {
+    background: rgb(215, 90, 90);
+}
+
+.cancel {
+    background: rgb(206, 199, 199);
+}
+
+.checkmark {
+    background: rgb(163, 189, 152);
 }
 
 .settingsIcon {
@@ -194,6 +213,39 @@ button:hover,
     right: 2px;
 }
 
+    /* Sheet Header */
+header {
+    background: black;
+    color: white;
+    height: 33px;
+    display: flex;
+}
+
+.bannerPicture {
+    height: 30px;
+    width: 32px;
+    margin: auto 0 auto 2px;
+    padding: 0;
+}
+
+header h1 {
+    font-family: 'Days One', sans-serif;
+    font-size: 1.6rem;
+    margin:0 0 0 2px;
+}
+
+header h2 {
+    font-size: 1.1rem;
+    margin: 8px 0 0 10px;
+    display: none;
+}
+
+.burgerMenu {
+    height: 24px;
+    width: 30px;
+    margin: auto 0 auto auto;
+    padding: 3px;
+}
 
     /* Character Info */
 
@@ -266,7 +318,7 @@ button:hover,
 
 #abilityScores {
     min-height: 556px;
-    height: calc( 100vh - 76px );
+    height: calc( 100vh - 129px );
     width: 84px;
     align-items: center;
 }
@@ -304,6 +356,9 @@ button:hover,
 
 
     /* Proficiency Bonus, Saves, & Skills Panel */
+#profSavesSkills {
+    flex: 1;
+}
 
 #profBonusWrapper,
 #savingThrowsWrapper,
@@ -878,25 +933,68 @@ button:hover,
 }
 
 /* Form Control */
-.qtyForm {
+#qtyForm {
     position: absolute;
-    width:200px;
-    height: 100px;
+    width:150px;
     padding: 2px;
+    z-index: 100;
 }
 
-.qtyForm * {
+#qtyForm * {
     margin: 1px;
     font-size: 1rem;
 }
 
-.qtyForm input[type=number] {
+#qtyForm h3 {
+    text-align: center;
+    margin: 0;
+    font-weight: normal;
+}
+
+#qtyForm input[type=number] {
     width: 50px;
+    height: 27px;
+    text-align: center;
+}
+
+#qtyForm .checkmark,
+#qtyForm .cancel,
+#qtyForm .trash {
+    margin-top: 3.5px;
+    height: 20px;
+    width: 23px;
+}
+
+
+#qtyForm .checkmark {
+    margin-left: 3px;
+}
+
+#qtyForm .trash {
+    margin-left:10px;
+}
+
+/* Footer */
+footer {
+    background: black;
+    color: white;
+    height: 20px;
+}
+
+footer p:first-of-type {
+    font-size: .9rem;
+    text-align: center;
+    margin: auto;
+    padding: 0;
 }
 
 /* Media Queries */
 @media (min-width: 465px) {
     #charExperience {
+        display: block;
+    }
+
+    header h2 {
         display: block;
     }
 }
