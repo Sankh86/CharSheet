@@ -250,7 +250,7 @@ header h3 {
     padding: 10px 15px 2px 15px;
     text-align: center;
     display: none;
-    border-radius: 0 0 0 5px;
+    position: relative;
 }
 
 header h3:last-of-type {
@@ -277,28 +277,44 @@ header h4:first-of-type {
 
 header h3:hover,
 .burgerMenu:hover {
-    background: rgb(60, 40, 70);
-    box-shadow: 5px 0px 0 0 rgb(150, 60, 170),-5px 0px 0 0 rgb(150, 60, 170);
+    background: rgb(75, 50, 100);
+    box-shadow: 5px 0px 0 0 rgb(160, 60, 200);
 }
 
-header h4:hover {
-    background: rgb(150, 60, 170);
+header h4:hover,
+#createNewCharacter:hover {
+    background: rgb(160, 60, 200);;
 }
 
-#restButton {
+/* #restButton,
+#characterButton {
     position: relative;
-}
+} */
 
-#restMenu {
-    background: rgb(60, 40, 70);
+#restMenu,
+#characterMenu {
+    background: rgb(75, 50, 100);
     position:absolute;
-    width:80px;
     z-index: 1000;
     top: 33px;
     right: 0;
-    border-radius: 5px 0 5px 5px;
-    box-shadow: 5px 0px 0 0 rgb(150, 60, 170),-5px 0px 0 0 rgb(150, 60, 170);
+    border-radius: 0 0 5px 5px;
+    box-shadow: 5px 0px 0 0 rgb(160, 60, 200), -1px 0px 0 0 rgb(160, 60, 200);
     display: none;
+}
+
+#restMenu {
+    width: 90px;
+    background: rgb(75, 50, 100);
+}
+
+#characterMenu {
+    width: 200px;
+}
+
+#createNewCharacter {
+    background: rgb(55, 30, 80);
+    border-top: 1px solid rgb(150, 60, 170);
 }
 
     /* Character Info */
@@ -354,7 +370,7 @@ header h4:hover {
 }
 
 #characterXP:hover {
-    transform: scale(1.5) translate(-25px, -3px);
+    transform: scale(1.5) translate(-17%, -15%);
 }
 
 #characterName {

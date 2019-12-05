@@ -259,6 +259,15 @@ $('#restButton').on('mouseleave', function(){
     $('#restMenu').hide();
 });
 
+//  Character Menu
+$('#characterButton').on('mouseover', function(){
+    $('#characterMenu').show();
+});
+$('#characterButton').on('mouseleave', function(){
+    $('#characterMenu').hide();
+});
+
+
 //  Update XP Total
 $('#charExperience input[type="submit"]').on('click', function(e){
     e.preventDefault();
