@@ -17,6 +17,19 @@ body {
     font-family: 'PT Sans Narrow', sans-serif;
 }
 
+.settingsIcon,
+.trash,
+.isEquippedBtn,
+.relQty,
+.cancel,
+.addItemAttuned,
+.ritualCheck,
+.concentrationCheck,
+#addSpellLevel,
+header h4 {
+    cursor: pointer;
+}
+
 ::-webkit-scrollbar {
     width: 5px;
 }
@@ -36,7 +49,7 @@ body {
     background: rgba(0, 0, 0, .55);
 }
 
-.rel {
+.relQty {
     position: relative;
 }
 
@@ -59,7 +72,6 @@ body {
     padding: 5px;
     margin: 3px;
     border: 2px solid rgb(150, 150, 150);
-    cursor: default;
 }
 
 .sectWrapper {
@@ -88,7 +100,6 @@ body {
 .infoTitle {
     font-size: .8rem;
     width: 100%;
-    cursor: default;
 }
 
 #profBonusWrapper,
@@ -120,11 +131,13 @@ body {
     text-transform: uppercase;
 }
 
+
 #profSavesSkills,
 #combatFeatures,
 #spellWrapper,
 #inventoryWrapper {
-    height: calc( 100vh - 123px);
+    /* FitScreen */
+    height: calc( 100vh - 125px);
     justify-content: space-between;
 }
 
@@ -142,7 +155,6 @@ body {
     border-top: 1px solid darkgray;
     border-left: 1px solid darkgray;
     border-right: 1px solid darkgray;
-    cursor: default;
 }
 
 .infoInput,
@@ -175,7 +187,7 @@ button:hover,
 #addSpellForm select:hover,
 .addSpellCheckbox + label:hover,
 #addItemForm input[type=submit]:hover,
-.isEquipped:hover,
+.isEquippedBtn:hover,
 .edit:hover {
     box-shadow: inset 0 0 10px 1px rgba(255, 255, 255, 0.8),
         0 0 3px 2px rgb(120, 120, 120);
@@ -217,8 +229,9 @@ button:hover,
 header {
     background: black;
     color: white;
-    height: 33px;
+    height: 35px;
     display: flex;
+    border-top: 3px solid rgb(150, 60, 170);
 }
 
 .bannerPicture {
@@ -240,17 +253,26 @@ header h2 {
     display: none;
 }
 
-header h3:first-of-type {
+header span {
     margin-left: auto;
+    background: black;
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    width: 100px;
+    top: 35px;
+    right: 5px;
+    box-shadow: 5px 0px 0 0 rgb(160, 60, 200);
+    border-bottom-right-radius: 5px;
 }
 
 header h3 {
     font-size: 1rem;
     margin: 0;
-    padding: 10px 15px 2px 15px;
+    padding: 10px;
     text-align: center;
-    display: none;
     position: relative;
+    border-top-right-radius: 5px;
 }
 
 header h3:last-of-type {
@@ -282,38 +304,74 @@ header h3:hover,
 }
 
 header h4:hover,
-#createNewCharacter:hover {
+#createNewCharacter:hover,
+#newUserBtn:hover,
+#loginForm input[type=submit]:hover {
     background: rgb(160, 60, 200);;
 }
 
-/* #restButton,
-#characterButton {
-    position: relative;
-} */
-
 #restMenu,
-#characterMenu {
+#characterMenu,
+#accountMenu,
+#loginMenu {
     background: rgb(75, 50, 100);
     position:absolute;
     z-index: 1000;
-    top: 33px;
+    top: 32px;
     right: 0;
     border-radius: 0 0 5px 5px;
-    box-shadow: 5px 0px 0 0 rgb(160, 60, 200), -1px 0px 0 0 rgb(160, 60, 200);
+    box-shadow: 5px 0px 0 0 rgb(160, 60, 200), -2px 0px 0 0 rgb(160, 60, 200);
     display: none;
 }
 
 #restMenu {
     width: 90px;
-    background: rgb(75, 50, 100);
 }
 
 #characterMenu {
-    width: 200px;
+    width: 220px;
 }
 
-#createNewCharacter {
-    background: rgb(55, 30, 80);
+#createNewCharacter,
+#newUserBtn {
+    background: rgb(30, 15, 50);
+    border-top: 1px solid rgb(150, 60, 170);
+}
+
+#accountMenu {
+    width: 90px;
+}
+
+#loginMenu {
+    width: 275px;
+}
+
+#loginForm {
+    text-align:right;
+}
+
+#loginForm input[type=email],
+#loginForm input[type=password] {
+    margin: 10px 7px 0 3px;
+    padding: 1px 2px;
+    color: black;
+}
+
+#loginForm input[type=email]:focus,
+#loginForm input[type=password]:focus {
+    outline: 5px solid rgb(160, 60, 200);
+}
+
+#loginForm span {
+    text-align: center;
+}
+
+#loginForm input[type=submit] {
+    margin: 15px 0 0;
+    padding: 10px;
+    background: rgb(75, 50, 100);
+    width: 100%;
+    border: none;
     border-top: 1px solid rgb(150, 60, 170);
 }
 
@@ -347,6 +405,10 @@ header h4:hover,
 .background {
     min-width: 80px;
     width: 10%;
+}
+
+.race{
+    display: none;
 }
 
 #charExperience {
@@ -385,10 +447,10 @@ header h4:hover,
 
 
     /* Attributes Panel */
-
 #abilityScores {
     min-height: 556px;
-    height: calc( 100vh - 129px );
+    /* FitScreen */
+    height: calc( 100vh - 131px );
     width: 84px;
     align-items: center;
 }
@@ -399,7 +461,6 @@ header h4:hover,
     margin: 0 0 10px;
     width: 100%;
     background: white;
-    cursor: default;
     align-items: center;
 }
 
@@ -945,7 +1006,7 @@ header h4:hover,
     text-align: center;
 }
 
-.isEquipped {
+.isEquippedBtn {
     border: 1px solid rgb(150, 150, 150);
     border-radius: 3px;
     width: 20px;
@@ -1049,6 +1110,7 @@ footer {
     background: black;
     color: white;
     height: 20px;
+    border-bottom: 2px solid rgb(150, 60, 170);
 }
 
 footer p:first-of-type {
@@ -1059,13 +1121,29 @@ footer p:first-of-type {
 }
 
 /* Media Queries */
+@media (min-width: 365px) {
+    .race {
+        display: block;
+    }
+}
+
 @media (min-width: 465px) {
     #charExperience {
         display: block;
     }
 
+    header span {
+        display: flex;
+        position: static;
+        background: none;
+        border-bottom-right-radius: 0;
+        width: auto;
+        top: auto;
+        right: auto;
+    }
+
     header h3 {
-        display: block;
+        padding: 10px 15px 2px 15px;
     }
 
     .burgerMenu {

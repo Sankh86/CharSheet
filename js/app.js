@@ -187,13 +187,13 @@ function populateSheet() {
         if (cInv[key]['attune'] && cInv[key]['equipped']) {attunedCount+= 1};
         if (cInv[key]['attune']) {attunement = '<p title="Requires Attunement">A</p>'} else {attunement = '<p></p>'};
         if (cInv[key]['equipped']) {
-            equipped = '<div class="isEquipped equipped" title="Equip/Unequip Item"></div>';
+            equipped = '<div class="isEquippedBtn equipped" title="Equip/Unequip Item"></div>';
             listItem = '<li class="row growText equippedList">'
         } else {
-            equipped = '<div class="isEquipped" title="Equip/Unequip Item"></div>'
+            equipped = '<div class="isEquippedBtn" title="Equip/Unequip Item"></div>'
             listItem = '<li class="row growText">'
         };
-        const itemDetail = `${listItem}<p class="rel">${cInv[key]['qty']}x</p><span>${key}</span>${attunement}${equipped}</li>`;
+        const itemDetail = `${listItem}<p class="relQty">${cInv[key]['qty']}x</p><span>${key}</span>${attunement}${equipped}</li>`;
         if (cInv[key]['equipped']) {equippedItems += itemDetail} else {unequippedItems += itemDetail};
     });
     $('#inventory').append(equippedItems).append(unequippedItems);
@@ -250,23 +250,38 @@ function sortObjKeysAlphabetically(obj) {
     return ordered;
   }
 
+  function checkSize(){
+    if ($('.burgerMenu').css("display") == "none" ) {
+        $('#topMenu').css("display","flex")
+    } else {
+        $('#topMenu').css("display","none")
+    }
 
-//  Rest Menu
-$('#restButton').on('mouseover', function(){
-    $('#restMenu').show();
-});
-$('#restButton').on('mouseleave', function(){
-    $('#restMenu').hide();
-});
+}
 
-//  Character Menu
-$('#characterButton').on('mouseover', function(){
-    $('#characterMenu').show();
-});
-$('#characterButton').on('mouseleave', function(){
-    $('#characterMenu').hide();
+
+$(document).ready(function() {
+    checkSize();
+    $(window).resize(checkSize());
 });
 
+
+
+
+
+
+  //  Menu Burger
+  $('header').on('click', '.burgerMenu', function(){
+    $('#topMenu').toggle();
+});
+
+//  Menu Bar
+$('header').on('mouseover', 'h3', function(){
+    $(this).children().show();
+});
+$('header').on('mouseleave', 'h3', function(){
+    $(this).children().hide();
+});
 
 //  Update XP Total
 $('#charExperience input[type="submit"]').on('click', function(e){
@@ -314,7 +329,7 @@ $('#addItemForm input[type="submit"]').on('click', function(e){
 
 
     //  Change Quantity - Insert Qty Changer Element
-$('#inventory').on('click', '.rel', function(){
+$('#inventory').on('click', '.relQty', function(){
     const itemName = $(this).parent().children('span').text();
     const itemQty = currentCharacter.inventory[itemName]['qty'];
     const qtyForm = `<form class="sectWrapper" id="qtyForm"><h3>${itemName}</h3><input type="number" id="newQty" class=""><input type="image" class="checkmark" name="submit" src="img/checkmark.png" alt="Submit" title="Submit"><img class="cancel" src="img/xmark.png" alt="Cancel" title="Cancel"><img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item"></form>`
