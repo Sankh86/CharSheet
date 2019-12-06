@@ -17,6 +17,11 @@
 	<script src="js/app.js" defer></script>
 </head>
 <body>
+	<section id="howdy">
+		<h2>Simply5e is in development.</h2>
+			<p>Upon release Simply5e will be available for use on PC, Tablet, or Mobile.  Using the cloud you'll have access to your character sheet anywhere you have internet.</p>
+		<p>Feel free to check back from time to time, I'm working on it constantly and will release it as soon as it's ready!</p>
+	</section>
 	<header>
 		<img class="bannerPicture" src="img/icosahedron-wht.png">
 		<h1>Simply5e</h1>
@@ -30,7 +35,7 @@
 				</section>
 			</h3>
 			<h3 id="characterButton">
-				Character
+				Characters
 				<section id="characterMenu">
 					<section id="charactersList">
 						<h4>Test Character 1</h4>
@@ -42,14 +47,14 @@
 					<h4 id="createNewCharacter">New Character</h4>
 				</section>
 			</h3>
-			<h3>
+			<h3 id="acctBtn">
 				Account
 				<section id="accountMenu">
 					<h4>Settings</h4>
-					<h4>Log Out</h4>
+					<h4 id="logoutBtn">Log Out</h4>
 				</section>
 			</h3>
-			<h3 style="display: none">
+			<h3 id="loginBtn">
 				Log In
 				<section id="loginMenu">
 					<form id="loginForm">
@@ -178,7 +183,7 @@
 				<div id="passivePerception" class="infoInput grow20" title="Passive Perception"></div>
 			</article>
 			<article id="skillsWrapper" class="sectWrapper column">
-				Skills
+				Skills/Tools
 				<img class="settingsIcon" src="img/Gear.png" alt="Skill Settings" title="Skill Settings">
 				<section id="skillsInfoList" class="scroll"></section>
 			</article>

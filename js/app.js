@@ -1,4 +1,4 @@
-//  Initialize Firebase
+//  ********** Initialize Firebase **********
 firebase.initializeApp({
     apiKey: "AIzaSyAWuZWgghzD0ap5b7FQeqOkQwjXZq1B8ik",
     authDomain: "charactersheet5e.firebaseapp.com",
@@ -8,20 +8,16 @@ firebase.initializeApp({
     measurementId: "G-DG0PD1Z4X0"
 });
 
-//  Firebase Ref
+
+//  ********** Firebase Ref **********
 const db = firebase.firestore();
 const auth = firebase.auth();
+let dbCharRef = ""
+let loggedIn = false;
 
-//  Load Test Character and Parse
-
-dbCharRef = db.collection("testUser").doc("testUID").collection("Characters").doc("TestCharacter")
-dbCharRef.get().then((snapshot) => {
-    currentCharacter = snapshot.data();
-    populateSheet();
-});
 
 function populateSheet() {
-    //Sheet Variables
+    //  ********** Sheet Variables **********
     let characterLevelTotal = 0;
     const abilityModifiers = [];
     const abilityRef = ["Cha","Con","Dex","Int","Str","Wis","None"];
@@ -33,8 +29,8 @@ function populateSheet() {
     let memorizedCount = 0;
 
 
-    //  Populate Sheet
-        //  Populate Character Info
+    //  ********** Populate Sheet **********
+            //  ***** Populate Character Info *****
     $.each(currentCharacter.charInfo, function(key, value){
         if (key === "characterLevel") {
             const cInfo = currentCharacter.charInfo
@@ -52,7 +48,8 @@ function populateSheet() {
     });
     $('#characterXP').val(currentCharacter.misc.xp);
 
-        //  Polulate Ability Scores & Generate Ability Modifiers
+
+            //  ***** Polulate Ability Scores & Generate Ability Modifiers *****
     $.each(currentCharacter.abilityScores, function(key, value){
         $(`#${key}`).text(value);
         let abilityModNum = Math.floor((parseInt(value)-10)/2);
@@ -66,11 +63,13 @@ function populateSheet() {
     });
     abilityModifiers.push(0)
 
-        //  Generate Proficiency Bonus
+
+            //  ***** Generate Proficiency Bonus *****
     proficiencyModifier = Math.floor((characterLevelTotal - 1) / 4) + 2 + currentCharacter.misc.proficiencyBonus;
     $('#profBonus').text(`+${proficiencyModifier}`);
 
-        //  Populate Saving Throws
+
+            //  ***** Populate Saving Throws *****
     $.each(currentCharacter.savingThrows, function(key, value){$(`#${key}`).parent().children('img').remove()});
     $.each(currentCharacter.savingThrows, function(key, value){
         const cSave = currentCharacter.savingThrows
@@ -93,7 +92,8 @@ function populateSheet() {
         $(`#${key}`).parent().prepend(profImg);
     });
 
-        //  Populate Skills & Passive Perception
+
+            //  ***** Populate Skills & Passive Perception *****
     $('#skillsInfoList').empty();
     $.each(currentCharacter.skills, function(key, value){
         const cSkill = currentCharacter.skills
@@ -118,13 +118,15 @@ function populateSheet() {
     });
     $('#passivePerception').text(passivePerception);
 
-        //  Populate Badges
-            //  Initiative Badge
+
+            //  ***** Populate Badges *****
+                //  ***Initiative Badge ***
     initBonus = abilityModifiers[2] + abilityModifiers[currentCharacter.misc.initiative['miscScore']] + currentCharacter.misc.initiative['misc'];
     if (initBonus > 0) {initBonus = "+" + initBonus};
     $('#initiativeBonus').text(initBonus);
 
-            //  Armor Class Badge
+
+                //  *** Armor Class Badge ***
     armor = function() {
         if (currentCharacter.misc.armorClass['maxDex'] > abilityModifiers[2]) {
             dexBon = abilityModifiers[2]} else {dexBon = currentCharacter.misc.armorClass['maxDex']};
@@ -133,10 +135,12 @@ function populateSheet() {
     }
     $('#armorClass').text(armor);
 
-            //  HP Badge
+
+                //  *** HP Badge ***
     $('#hitPoints').text(currentCharacter.misc.hitPoints['currentHP'] + currentCharacter.misc.hitPoints['tempHP']);
 
-            //  Hit Dice Badge
+
+                //  *** Hit Dice Badge ***
     currentHitDice = function() {
         let hdString = ""
         $.each(currentCharacter.misc.hitDice, function(key, value){
@@ -153,11 +157,14 @@ function populateSheet() {
     });
     $('#hitDice').text(currentHitDice);
 
-            //  Speed & Vision Badge
+
+                //  *** Speed & Vision Badge ***
     $('#speed').text(currentCharacter.misc.speed);
     $('#vision').text(currentCharacter.misc.vision);
+            //  ***** END Populate Badges *****
 
-        //  Populate Attacks
+
+        //  ***** Populate Attacks *****
     $('#attackWrapper').children('span').not('span:first').remove();
     $.each(currentCharacter.attacks, function(key, value){
         const cAtk = currentCharacter.attacks
@@ -168,14 +175,17 @@ function populateSheet() {
         $('#attackWrapper').append(attackSpan);
     });
 
-        //  Populate Character Details
+
+        //  ***** Populate Character Details *****
     $('#charInfoList').empty();
     $.each(currentCharacter.details, function(key, value){
-        const detailArticle = `<article class="detailHeader"><span class="row"><img class="edit" src="img/Pencil-Grey.png" alt="Edit Entry" title="Edit Entry">${key}</span><div class="detailInfo growText">${value}</div></article>`
+        const cDetail = currentCharacter.details
+        const detailArticle = `<article class="detailHeader"><span class="row"><img class="edit" src="img/Pencil-Grey.png" alt="Edit Entry" title="Edit Entry">${cDetail[key]['detailName']}</span><div class="detailInfo growText">${cDetail[key]['detailInfo']}</div></article>`
         $('#charInfoList').append(detailArticle);
     });
 
-        //  Populate Inventory
+
+        //  ***** Populate Inventory *****
     $('#inventory').empty();
     let equippedItems = "";
     let unequippedItems = "";
@@ -199,19 +209,22 @@ function populateSheet() {
     $('#inventory').append(equippedItems).append(unequippedItems);
     if (attunedCount > 0) {$('#inventory').parent().prepend(`<div class="attunement" title="Items Attuned">${attunedCount}</div>`)};
 
-        //  Populate Coin
+
+        //  ***** Populate Coin *****
     $('#ppAmount').val(currentCharacter.misc.coin['pp']);
     $('#gpAmount').val(currentCharacter.misc.coin['gp']);
     $('#spAmount').val(currentCharacter.misc.coin['sp']);
     $('#cpAmount').val(currentCharacter.misc.coin['cp']);
 
-        //  Populate Spell Attack & DC
+
+        //  ***** Populate Spell Attack & DC *****
     let spellAtk = proficiencyModifier + abilityModifiers[currentCharacter.spells.spellStats['score']] + currentCharacter.spells.spellStats['atkMod'];
     if (spellAtk > 0) {spellAtk = "+" + spellAtk}
     $('#spellAttack1').text(spellAtk);
     $('#spellDC1').text(8 + proficiencyModifier + abilityModifiers[currentCharacter.spells.spellStats['score']] + currentCharacter.spells.spellStats['dcMod'] )
 
-        //  Populate Spells List
+
+        //  ***** Populate Spells List *****
     $.each(currentCharacter.spells.spellsList, function(key, value){$(`#${key}`).empty();});
     $.each(currentCharacter.spells.spellsList, function(key, value){
         let memSpells = ""
@@ -234,13 +247,16 @@ function populateSheet() {
     });
     $('#spellMemorized').text(memorizedCount);
 
-        //  Populate Spells Slots
+
+        //  ***** Populate Spells Slots *****
     $.each(currentCharacter.spells.spellCasts, function(key, value){
         cCasts = currentCharacter.spells.spellCasts
         $(`#${key}`).text(`${cCasts[key]['remain']} / ${cCasts[key]['total']}`);
         if (cCasts[key]['total'] === 0) {$(`#${key}`).parent().parent().hide()};
     });
-}
+    //  ********** END Populate Sheet **********
+};
+
 
 function sortObjKeysAlphabetically(obj) {
     const ordered = {};
@@ -248,11 +264,89 @@ function sortObjKeysAlphabetically(obj) {
         ordered[key] = obj[key];
     });
     return ordered;
-  }
+};
 
 
+// ***** Create New User & Log In *****
+// const newuserform = document.querySelector("#newuser-form");
+// newuserform.addEventListener('submit', function (e) {
+//     e.preventDefault();
 
-//  On Click Hooks
+//     let email = document.getElementById("newuser-email").value
+//     let pw = document.getElementById("newuser-pw").value
+//     let firstname = document.getElementById("newuser-firstname").value
+
+//     auth.createUserWithEmailAndPassword(email, pw).then(cred => {
+//         acctform.style.display = "none";
+//         newuserform.reset();
+
+//         let user = auth.currentUser;
+//         let uid = user.uid;
+
+//         user.updateProfile({displayName: firstname});
+//         db.collection("Users").doc(uid).set({ complete: [ ], critnpress: [ ], critpress: [ ], ncritnpress: [ ], ncritpress: [ ] });
+
+//     //   .catch(function(error) {
+//     //     // Handle Errors here.
+//     //     var errorCode = error.code;
+//     //     var errorMessage = error.message;
+//     //     // ...
+//     //   });
+
+//         console.log("User Created");
+//     });
+// });
+
+
+//  ********** Login **********
+$('#loginForm input[type="submit"]').on('click', function(e){
+    e.preventDefault();
+    const loginEmail = $('#loginEmail').val();
+    const loginPW = $('#loginPW').val();
+    auth.signInWithEmailAndPassword(loginEmail, loginPW).then(cred => {
+        console.log("User Logged In");
+        $('#loginEmail').val(null);
+        $('#loginPW').val(null);
+    });
+});
+
+
+//  ********** Logout **********
+$('#logoutBtn').on('click', function(){
+    auth.signOut().then(() => {console.log('User Logged Out')});
+});
+
+
+// ***** Auth State Changes *****
+    auth.onAuthStateChanged(user => {
+        if(user) {
+            uid = user.uid;
+            const displayName = user.displayName;
+            loggedIn = true;
+            $('#loginBtn').css('display','none');
+            $('#characterButton').css('display','inline-block');
+            $('#acctBtn').css('display','inline-block');
+            $('#howdy').hide();
+            dbCharRef = db.collection("Users").doc(uid).collection('Characters').doc('Obliviaron')
+            dbCharRef.get().then((snapshot) => {
+                currentCharacter = snapshot.data();
+                populateSheet();
+            });
+
+        } else {
+            uid = "";
+            loggedIn = false;
+            $('#loginBtn').css('display','inline-block');
+            $('#characterButton').css('display','none');
+            $('#acctBtn').css('display','none');
+            $('#howdy').show();
+            currentCharacter = {"abilityScores":{"chaScore":8,"conScore":15,"dexScore":13,"intScore":16,"strScore":18,"wisScore":10},"attacks":{"Longsword":{"atkBon":0,"damage":"1d8","dmgBon":0,"prof":1,"range":"Melee","score":4}},"charInfo":{"characterAlignment":"Chaotic-Good","characterBackground":"Outlander","characterLevel":{"Fighter":{"hd":2,"lvl":3},"Rogue":{"hd":1,"lvl":2},"Wizard":{"hd":0,"lvl":5}},"characterName":"Obliviaron","characterRace":"Human"},"details":{"1":{"detailInfo":"You have an excellent memory for maps and geography, and you can always recall the general layout of terrain, settlements, and other features around you. In addition, you can find food and fresh water for yourself and up to five other people each day, provided that the land offers berries, small game, water, and so forth.","detailName":"Outlander"},"0":{"detailInfo":"Light Armor, Medium Armor, Heavy Armor, Shields, Simple Weapons, Martial Weapons, Flute","detailName":"Proficiencies"}},"inventory":{"Breastplate":{"attune":false,"equipped":true,"qty":1},"Longbow":{"attune":false,"equipped":true,"qty":1},"Longsword":{"attune":false,"equipped":true,"qty":1},"Potion of Healing - 2d4+2":{"attune":false,"equipped":false,"qty":3}},"misc":{"abilityBadges":{},"armorClass":{"armor":15,"maxDex":2,"misc":0,"miscScore":6,"shield":2},"coin":{"cp":"50","gp":"500","pp":"50","sp":"200"},"hitDice":{"d10":3,"d12":0,"d6":5,"d8":2,"recover":"half"},"hitPoints":{"currentHP":70,"maxHP":70,"maxMod":0,"tempHP":0},"initiative":{"misc":0,"miscScore":6},"passivePerceptionBonus":{"misc":0,"miscScore":6},"proficiencyBonus":0,"speed":"30","vision":"Darkvision 60","xp":"7500"},"savingThrows":{"chaSave":{"misc":0,"miscScore":6,"prof":0,"score":0},"conSave":{"misc":0,"miscScore":6,"prof":1,"score":1},"dexSave":{"misc":0,"miscScore":6,"prof":0,"score":2},"intSave":{"misc":0,"miscScore":6,"prof":0,"score":3},"strSave":{"misc":0,"miscScore":6,"prof":1,"score":4},"wisSave":{"misc":0,"miscScore":6,"prof":0,"score":5}},"skills":{"Acrobatics":{"misc":0,"prof":1,"score":2},"Arcana":{"misc":0,"prof":1,"score":3},"Athletics":{"misc":0,"prof":2,"score":4},"Deception":{"misc":0,"prof":0,"score":0},"History":{"misc":0,"prof":0,"score":3},"Insight":{"misc":0,"prof":0,"score":5},"Intimidation":{"misc":0,"prof":0,"score":0},"Investigation":{"misc":0,"prof":0,"score":3},"Medicine":{"misc":0,"prof":0,"score":5},"Nature":{"misc":0,"prof":0,"score":3},"Perception":{"misc":0,"prof":1,"score":5},"Performance":{"misc":0,"prof":0,"score":0},"Persuasion":{"misc":0,"prof":0,"score":0},"Religion":{"misc":0,"prof":0,"score":3},"Sleight of Hand":{"misc":0,"prof":0,"score":2},"Stealth":{"misc":0,"prof":2,"score":2},"Survival":{"misc":0,"prof":0,"score":5}},"spells":{"spellCasts":{"spellEighthCasts":{"remain":0,"total":0},"spellFifthCasts":{"remain":0,"total":0},"spellFirstCasts":{"remain":4,"total":4},"spellFourthCasts":{"remain":0,"total":0},"spellNinthCasts":{"remain":0,"total":0},"spellSecondCasts":{"remain":3,"total":3},"spellSeventhCasts":{"remain":0,"total":0},"spellSixthCasts":{"remain":0,"total":0},"spellThirdCasts":{"remain":2,"total":2}},"spellStats":{"atkMod":0,"dcMod":0,"reset":"longRest","score":3},"spellsList":{"spellCantrip":{"Dancing Lights":{"isConc":true,"isMem":true,"isRitual":false},"Firebolt":{"isConc":false,"isMem":true,"isRitual":false},"Green-Flame Blade":{"isConc":false,"isMem":true,"isRitual":false},"Mending":{"isConc":false,"isMem":true,"isRitual":false}},"spellEighth":{},"spellFifth":{},"spellFirst":{"Chromatic Orb":{"isConc":false,"isMem":true,"isRitual":false},"Comprehend Languages":{"isConc":false,"isMem":false,"isRitual":true},"Detect Magic":{"isConc":true,"isMem":true,"isRitual":true},"Expeditious Retreat":{"isConc":true,"isMem":true,"isRitual":false},"Identify":{"isConc":false,"isMem":false,"isRitual":true},"Magic Missile":{"isConc":false,"isMem":true,"isRitual":false},"Shield":{"isConc":false,"isMem":false,"isRitual":false}},"spellFourth":{},"spellNinth":{},"spellSecond":{"Invisibility":{"isConc":true,"isMem":true,"isRitual":false},"Shatter":{"isConc":false,"isMem":false,"isRitual":false},"Spider Climb":{"isConc":true,"isMem":false,"isRitual":false},"Web":{"isConc":true,"isMem":true,"isRitual":false}},"spellSeventh":{},"spellSixth":{},"spellThird":{"Fireball":{"isConc":false,"isMem":true,"isRitual":false},"Haste":{"isConc":true,"isMem":true,"isRitual":false},"Leomund's Tiny Hut":{"isConc":false,"isMem":false,"isRitual":true}}}}}
+            populateSheet();
+        }
+    });
+
+
+//  ********** On Click Hooks **********
 $(document).mouseup(function(e){
     //  Change Quantity - Remove Qty Changer Element on Focus Out
     if (!$('#qtyForm').is(e.target) && $('#qtyForm').has(e.target).length === 0) {
@@ -261,13 +355,13 @@ $(document).mouseup(function(e){
 });
 
 
-
-  //  Menu Burger
+//  ********** Menu Burger **********
   $('header').on('click', '.burgerMenu', function(){
     $('#topMenu').toggleClass('isActive');
 });
 
-//  Menu Bar
+
+//  ********** Menu Bar **********
 $('header').on('mouseover', 'h3', function(){
     $(this).children().show();
 });
@@ -275,15 +369,16 @@ $('header').on('mouseleave', 'h3', function(){
     $(this).children().hide();
 });
 
-//  Update XP Total
+
+//  ********** Update XP Total **********
 $('#charExperience input[type="submit"]').on('click', function(e){
     e.preventDefault();
-    const xpTotal = $('#characterXP').val();
+    const xpTotal = parseInt($('#characterXP').val());
     currentCharacter.misc.xp = xpTotal;
     $('#characterXP').blur();
     const update = {}
     update['misc.xp'] = currentCharacter.misc.xp;
-    dbCharRef.update(update);
+    if (loggedIn) {dbCharRef.update(update)};
     populateSheet();
 });
 $('#characterXP').on('focusout', function(){
@@ -291,12 +386,13 @@ $('#characterXP').on('focusout', function(){
     currentCharacter.misc.xp = xpTotal;
     const update = {}
     update['misc.xp'] = currentCharacter.misc.xp;
-    dbCharRef.update(update);
+    if (loggedIn) {dbCharRef.update(update)};
     populateSheet();
 });
 
-//Inventory Management
-    //  Add Item to Inventory
+
+//  ********** Inventory Management **********
+        //  ***** Add Item to Inventory *****
 $('#addItemForm input[type="submit"]').on('click', function(e){
     e.preventDefault();
     const itemName = $('#addItemName').val();
@@ -313,14 +409,14 @@ $('#addItemForm input[type="submit"]').on('click', function(e){
             currentCharacter.inventory[itemName] = {'qty':itemAmt,'attune':itemAtune,'equipped':false};
             const update = {};
             update['inventory'] = currentCharacter.inventory;
-            dbCharRef.set(update,{merge:true});
+            if (loggedIn) {dbCharRef.set(update,{merge:true})};
             populateSheet();
         };
     };
 });
 
 
-    //  Change Quantity - Insert Qty Changer Element
+        //  ***** Change Quantity - Insert Qty Changer Element *****
 $('#inventory').on('click', '.relQty', function(){
     const itemName = $(this).parent().children('span').text();
     const itemQty = currentCharacter.inventory[itemName]['qty'];
@@ -330,51 +426,50 @@ $('#inventory').on('click', '.relQty', function(){
     $(this).parent().children('#qtyForm').focus();
 });
 
-    //  Change Quantity - Remove Item
+
+        //  ***** Change Quantity - Remove Item *****
 $('#inventory').on('click', '.trash', function(){
     const itemName = $(this).parent().parent().children('span').text();
-    console.log(itemName);
     $('#qtyForm').remove()
     delete currentCharacter.inventory[itemName];
     const remove = {};
     remove['inventory.'+itemName] = firebase.firestore.FieldValue.delete();
-    dbCharRef.update(remove);
+    if (loggedIn) {dbCharRef.update(remove)};
     populateSheet();
 });
 
-    //  Change Quantity - Cancel
+
+        //  ***** Change Quantity - Cancel *****
 $('#inventory').on('click', '.cancel', function(){
     $('#qtyForm').remove()
 });
 
 
-    //  Change Quantity - Modify Amount
+        //  ***** Change Quantity - Modify Amount *****
 $('#inventory').on('click', 'input[type="image"]', function(e){
     e.preventDefault();
     const itemName = $(this).parent().parent().children('span').text();
     const currentQty = currentCharacter.inventory[itemName]['qty'];
     let newQty = parseInt($(this).parent().children('input[type="number"]').val());
     const update = {};
-    console.log(itemName+" "+currentQty+" "+newQty);
     if (isNaN(newQty) || newQty === "" || newQty === null) {newQty = currentQty};
     if (newQty === 0) {
         delete currentCharacter.inventory[itemName];
         update['inventory.'+itemName] = firebase.firestore.FieldValue.delete();
-        dbCharRef.update(update);
+        if (loggedIn) {dbCharRef.update(update)};
         populateSheet();
     }
     if (newQty !== currentQty && newQty !== 0) {
         currentCharacter.inventory[itemName]['qty'] = newQty;
         update['inventory.'+itemName+'.qty'] = newQty;
-        dbCharRef.update(update);
+        if (loggedIn) {dbCharRef.update(update)};
         populateSheet();
     }
-    console.log(update);
     $('#qtyForm').remove();
 });
 
 
-    //  Toggle Equipped
+        //  ***** Toggle Equipped *****
 $('#inventory').on('click','div', function(){
     const itemName = $(this).parent().children('span').text();
     let toggle = true;
@@ -386,12 +481,13 @@ $('#inventory').on('click','div', function(){
     };
     const update = {}
     update['inventory.'+itemName+'.equipped'] = toggle
-    dbCharRef.update(update);
+    if (loggedIn) {dbCharRef.update(update)};
     populateSheet();
 });
+//  ********** END Inventory Management **********
 
 
-//  Update Currency
+//  ********** Update Currency **********
 $('#money input[type="submit"]').on('click', function(e){
     e.preventDefault();
     const prevPP = currentCharacter.misc.coin.pp;
@@ -412,7 +508,7 @@ $('#money input[type="submit"]').on('click', function(e){
         $('#money input[type="text"]').blur();
         const update = {};
         update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
-        dbCharRef.update(update);
+        if (loggedIn) {dbCharRef.update(update)};
         populateSheet();
     }
 });
@@ -434,13 +530,14 @@ $('#money input[type="text"]').on('focusout', function(){
         currentCharacter.misc.coin.cp = cpAmount;
         const update = {};
         update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
-        dbCharRef.update(update);
+        if (loggedIn) {dbCharRef.update(update)};
         populateSheet();
     }
 });
 
-//Spell Management
-    //  Add Spell to List
+
+//  ********** Spell Management **********
+        //  ***** Add Spell to List ******
 $('#addSpellForm input[type="submit"]').on('click', function(e){
     e.preventDefault();
     const spellName = $('#addSpellName').val();
@@ -457,23 +554,25 @@ $('#addSpellForm input[type="submit"]').on('click', function(e){
         currentCharacter.spells.spellsList[spellLvl] = sortObjKeysAlphabetically(currentCharacter.spells.spellsList[spellLvl]);
         const update = {}
         update['spells.spellsList.'+spellLvl+'.'+spellName] = {'isRitual':spellRitual,'isConc':spellConcentration,'isMem':spellMem}
-        dbCharRef.update(update);
+        if (loggedIn) {dbCharRef.update(update)};
         populateSheet();
     }
 });
 
-    //  Remove Spell from List
+
+        //  ***** Remove Spell from List *****
 $('#spellList').on('click', '.trash', function(){
     const spellName = $(this).parent().children('article:first').text();
     const spellLvl = $(this).parent().parent().attr('id');
     delete currentCharacter.spells.spellsList[spellLvl][spellName]
     const remove = {};
     remove['spells.spellsList.'+spellLvl+'.'+spellName] = firebase.firestore.FieldValue.delete();
-    dbCharRef.update(remove);
+    if (loggedIn) {dbCharRef.update(remove)};
     populateSheet();
 });
 
-    //  Toggle Memorization
+
+        //  ***** Toggle Memorization *****
 $('#spellList').on('click','article', function(){
     const spellName = $(this).text();
     const spellLvl = $(this).parent().parent().attr('id');
@@ -486,6 +585,7 @@ $('#spellList').on('click','article', function(){
     };
     const update = {}
     update['spells.spellsList.'+spellLvl+'.'+spellName+'.isMem'] = toggle
-    dbCharRef.update(update);
+    if (loggedIn) {dbCharRef.update(update)};
     populateSheet();
 });
+//  ********** END Spell Management **********

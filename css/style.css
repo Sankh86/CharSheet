@@ -1,4 +1,24 @@
     /* Sheet Settings */
+#howdy {
+    min-width: 300px;
+    width: 40%;
+    max-width: 1000px;
+    background: black;
+    color: white;
+    position: absolute;
+    z-index: 10;
+    border-radius:20px;
+    padding: 20px;
+    top: 20%;
+    left: 5%;
+    border: 5px solid rgb(150, 60, 170);
+    box-shadow: 0 0 0 2px black, 10px 10px 5px 3px rgba(0, 0, 0, .55);
+}
+
+#howdy p {
+    font-size: 1.2rem;
+}
+
 
 * {
     box-sizing: border-box;
