@@ -250,29 +250,21 @@ function sortObjKeysAlphabetically(obj) {
     return ordered;
   }
 
-  function checkSize(){
-    if ($('.burgerMenu').css("display") == "none" ) {
-        $('#topMenu').css("display","flex")
-    } else {
-        $('#topMenu').css("display","none")
+
+
+//  On Click Hooks
+$(document).mouseup(function(e){
+    //  Change Quantity - Remove Qty Changer Element on Focus Out
+    if (!$('#qtyForm').is(e.target) && $('#qtyForm').has(e.target).length === 0) {
+        $('#qtyForm').remove();
     }
-
-}
-
-
-$(document).ready(function() {
-    checkSize();
-    $(window).resize(checkSize());
 });
-
-
-
 
 
 
   //  Menu Burger
   $('header').on('click', '.burgerMenu', function(){
-    $('#topMenu').toggle();
+    $('#topMenu').toggleClass('isActive');
 });
 
 //  Menu Bar
@@ -355,12 +347,6 @@ $('#inventory').on('click', '.cancel', function(){
     $('#qtyForm').remove()
 });
 
-//  Change Quantity - Remove Qty Changer Element on Focus Out
-$(document).mouseup(function(e){
-    if (!$('#qtyForm').is(e.target) && $('#qtyForm').has(e.target).length === 0) {
-        $('#qtyForm').remove();
-    }
-});
 
     //  Change Quantity - Modify Amount
 $('#inventory').on('click', 'input[type="image"]', function(e){

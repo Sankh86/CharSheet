@@ -253,17 +253,20 @@ header h2 {
     display: none;
 }
 
-header span {
+nav {
     margin-left: auto;
     background: black;
     display: none;
     z-index: 1000;
     position: absolute;
-    width: 100px;
     top: 35px;
     right: 5px;
     box-shadow: 5px 0px 0 0 rgb(160, 60, 200);
     border-bottom-right-radius: 5px;
+}
+
+.isActive {
+    display:block;
 }
 
 header h3 {
@@ -273,6 +276,7 @@ header h3 {
     text-align: center;
     position: relative;
     border-top-right-radius: 5px;
+    display: inline-block;
 }
 
 header h3:last-of-type {
@@ -1132,8 +1136,8 @@ footer p:first-of-type {
         display: block;
     }
 
-    header span {
-        display: flex;
+    nav {
+        display: block;
         position: static;
         background: none;
         border-bottom-right-radius: 0;
