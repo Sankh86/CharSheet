@@ -190,7 +190,8 @@ header h4 {
 .spellMemorized,
 .switch-input,
 .itemEquipped,
-.addSpellCheckbox {
+.addSpellCheckbox,
+.settingsCheckbox {
     position: absolute;
     opacity: 0;
     height: 0;
@@ -1128,6 +1129,117 @@ header h4:hover,
 #qtyForm .trash {
     margin-left:10px;
 }
+
+
+/* Settings Form */
+.settingsBox {
+    max-width: 90%;
+    max-height: 80%;
+    background: black;
+    color: white;
+    position: absolute;
+    z-index: 10;
+    border-radius:20px;
+    padding: 5px;
+    top: 15%;
+    left: 5%;
+    border: 5px solid rgb(150, 60, 170);
+    box-shadow: 0 0 0 2px black, 10px 10px 5px 3px rgba(0, 0, 0, .55);
+    text-align: center;
+}
+
+.settingsBox h3 {
+    margin: 0;
+}
+
+.settingsBox p {
+    margin: 0;
+}
+
+.settingsBox div {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.settingsBox section *,
+.settingsBox div * {
+    display: inline-block;
+    margin: 2px 3px;
+    padding: 1px 2px;
+}
+
+.settingsBox input[type="number"] {
+    color: black;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.settingsCheckbox + label {
+    color: gray;
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 3px;
+    text-align: center;
+}
+
+.settingsCheckbox:checked + label {
+    color: white;
+    background: rgb(75, 50, 100);;
+    border: 1px solid white;
+    font-weight: bold;
+}
+
+.settingsBox select {
+    color: black;
+    border-radius: 5px;
+}
+
+.settingsBox input[type="submit"],
+.settingsBox button {
+    margin-top: 5px;
+    color: black;
+    border-radius: 5px;
+}
+
+.settingsBox form h3 {
+    margin-top: 10px;
+}
+/* Settings Saving Throws Form */
+.saveC1 {
+    width: 85px;
+    text-align: left;
+}
+
+.saveC2 {
+    width: 80px;
+}
+
+.saveC3 {
+    width: 45px;
+}
+
+.saveC2-C3 {
+    width: 120px;
+}
+
+/* Settings Saving Throws Form */
+.spellC1 {
+    width: 100px;
+}
+
+.spellC2,
+.spellC3 {
+    width: 60px;
+}
+
+.spellC2-C3 {
+    width: 120px;
+}
+
+.spellSubHeader {
+
+}
+
+
 
 /* Footer */
 footer {

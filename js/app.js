@@ -323,6 +323,7 @@ $('#logoutBtn').on('click', function(){
             uid = user.uid;
             const displayName = user.displayName;
             loggedIn = true;
+            $('#restButton').css('display','inline-block');
             $('#loginBtn').css('display','none');
             $('#characterButton').css('display','inline-block');
             $('#acctBtn').css('display','inline-block');
@@ -336,11 +337,12 @@ $('#logoutBtn').on('click', function(){
         } else {
             uid = "";
             loggedIn = false;
+            $('#restButton').css('display','none');
             $('#loginBtn').css('display','inline-block');
             $('#characterButton').css('display','none');
             $('#acctBtn').css('display','none');
             $('#howdy').show();
-            currentCharacter = {"abilityScores":{"chaScore":8,"conScore":15,"dexScore":13,"intScore":16,"strScore":18,"wisScore":10},"attacks":{"Longsword":{"atkBon":0,"damage":"1d8","dmgBon":0,"prof":1,"range":"Melee","score":4}},"charInfo":{"characterAlignment":"Chaotic-Good","characterBackground":"Outlander","characterLevel":{"Fighter":{"hd":2,"lvl":3},"Rogue":{"hd":1,"lvl":2},"Wizard":{"hd":0,"lvl":5}},"characterName":"Obliviaron","characterRace":"Human"},"details":{"1":{"detailInfo":"You have an excellent memory for maps and geography, and you can always recall the general layout of terrain, settlements, and other features around you. In addition, you can find food and fresh water for yourself and up to five other people each day, provided that the land offers berries, small game, water, and so forth.","detailName":"Outlander"},"0":{"detailInfo":"Light Armor, Medium Armor, Heavy Armor, Shields, Simple Weapons, Martial Weapons, Flute","detailName":"Proficiencies"}},"inventory":{"Breastplate":{"attune":false,"equipped":true,"qty":1},"Longbow":{"attune":false,"equipped":true,"qty":1},"Longsword":{"attune":false,"equipped":true,"qty":1},"Potion of Healing - 2d4+2":{"attune":false,"equipped":false,"qty":3}},"misc":{"abilityBadges":{},"armorClass":{"armor":15,"maxDex":2,"misc":0,"miscScore":6,"shield":2},"coin":{"cp":"50","gp":"500","pp":"50","sp":"200"},"hitDice":{"d10":3,"d12":0,"d6":5,"d8":2,"recover":"half"},"hitPoints":{"currentHP":70,"maxHP":70,"maxMod":0,"tempHP":0},"initiative":{"misc":0,"miscScore":6},"passivePerceptionBonus":{"misc":0,"miscScore":6},"proficiencyBonus":0,"speed":"30","vision":"Darkvision 60","xp":"7500"},"savingThrows":{"chaSave":{"misc":0,"miscScore":6,"prof":0,"score":0},"conSave":{"misc":0,"miscScore":6,"prof":1,"score":1},"dexSave":{"misc":0,"miscScore":6,"prof":0,"score":2},"intSave":{"misc":0,"miscScore":6,"prof":0,"score":3},"strSave":{"misc":0,"miscScore":6,"prof":1,"score":4},"wisSave":{"misc":0,"miscScore":6,"prof":0,"score":5}},"skills":{"Acrobatics":{"misc":0,"prof":1,"score":2},"Arcana":{"misc":0,"prof":1,"score":3},"Athletics":{"misc":0,"prof":2,"score":4},"Deception":{"misc":0,"prof":0,"score":0},"History":{"misc":0,"prof":0,"score":3},"Insight":{"misc":0,"prof":0,"score":5},"Intimidation":{"misc":0,"prof":0,"score":0},"Investigation":{"misc":0,"prof":0,"score":3},"Medicine":{"misc":0,"prof":0,"score":5},"Nature":{"misc":0,"prof":0,"score":3},"Perception":{"misc":0,"prof":1,"score":5},"Performance":{"misc":0,"prof":0,"score":0},"Persuasion":{"misc":0,"prof":0,"score":0},"Religion":{"misc":0,"prof":0,"score":3},"Sleight of Hand":{"misc":0,"prof":0,"score":2},"Stealth":{"misc":0,"prof":2,"score":2},"Survival":{"misc":0,"prof":0,"score":5}},"spells":{"spellCasts":{"spellEighthCasts":{"remain":0,"total":0},"spellFifthCasts":{"remain":0,"total":0},"spellFirstCasts":{"remain":4,"total":4},"spellFourthCasts":{"remain":0,"total":0},"spellNinthCasts":{"remain":0,"total":0},"spellSecondCasts":{"remain":3,"total":3},"spellSeventhCasts":{"remain":0,"total":0},"spellSixthCasts":{"remain":0,"total":0},"spellThirdCasts":{"remain":2,"total":2}},"spellStats":{"atkMod":0,"dcMod":0,"reset":"longRest","score":3},"spellsList":{"spellCantrip":{"Dancing Lights":{"isConc":true,"isMem":true,"isRitual":false},"Firebolt":{"isConc":false,"isMem":true,"isRitual":false},"Green-Flame Blade":{"isConc":false,"isMem":true,"isRitual":false},"Mending":{"isConc":false,"isMem":true,"isRitual":false}},"spellEighth":{},"spellFifth":{},"spellFirst":{"Chromatic Orb":{"isConc":false,"isMem":true,"isRitual":false},"Comprehend Languages":{"isConc":false,"isMem":false,"isRitual":true},"Detect Magic":{"isConc":true,"isMem":true,"isRitual":true},"Expeditious Retreat":{"isConc":true,"isMem":true,"isRitual":false},"Identify":{"isConc":false,"isMem":false,"isRitual":true},"Magic Missile":{"isConc":false,"isMem":true,"isRitual":false},"Shield":{"isConc":false,"isMem":false,"isRitual":false}},"spellFourth":{},"spellNinth":{},"spellSecond":{"Invisibility":{"isConc":true,"isMem":true,"isRitual":false},"Shatter":{"isConc":false,"isMem":false,"isRitual":false},"Spider Climb":{"isConc":true,"isMem":false,"isRitual":false},"Web":{"isConc":true,"isMem":true,"isRitual":false}},"spellSeventh":{},"spellSixth":{},"spellThird":{"Fireball":{"isConc":false,"isMem":true,"isRitual":false},"Haste":{"isConc":true,"isMem":true,"isRitual":false},"Leomund's Tiny Hut":{"isConc":false,"isMem":false,"isRitual":true}}}}}
+            currentCharacter = {"abilityScores":{"chaScore":8,"conScore":15,"dexScore":13,"intScore":16,"strScore":18,"wisScore":10},"attacks":{"Longsword":{"atkBon":0,"damage":"1d8","dmgBon":0,"prof":1,"range":"Melee","score":4}},"charInfo":{"characterAlignment":"Chaotic-Good","characterBackground":"Outlander","characterLevel":{"Fighter":{"hd":2,"lvl":3},"Rogue":{"hd":1,"lvl":2},"Wizard":{"hd":0,"lvl":5}},"characterName":"Obliviaron","characterRace":"Human"},"details":{"1":{"detailInfo":"You are good with maps and places, and generally have a firm understanding of your surroundings. You can also find food and fresh water for yourself and up to five others each day, provided the land can sustain such goods.","detailName":"Outlander"},"0":{"detailInfo":"Light Armor, Medium Armor, Heavy Armor, Shields, Simple Weapons, Martial Weapons, Flute","detailName":"Proficiencies"}},"inventory":{"Breastplate":{"attune":false,"equipped":true,"qty":1},"Longbow":{"attune":false,"equipped":true,"qty":1},"Longsword":{"attune":false,"equipped":true,"qty":1},"Potion of Healing - 2d4+2":{"attune":false,"equipped":false,"qty":3}},"misc":{"abilityBadges":{},"armorClass":{"armor":15,"maxDex":2,"misc":0,"miscScore":6,"shield":2},"coin":{"cp":"50","gp":"500","pp":"50","sp":"200"},"hitDice":{"d10":3,"d12":0,"d6":5,"d8":2,"recover":"half"},"hitPoints":{"currentHP":70,"maxHP":70,"maxMod":0,"tempHP":0},"initiative":{"misc":0,"miscScore":6},"passivePerceptionBonus":{"misc":0,"miscScore":6},"proficiencyBonus":0,"speed":"30","vision":"Darkvision 60","xp":"7500"},"savingThrows":{"chaSave":{"misc":0,"miscScore":6,"prof":0,"score":0},"conSave":{"misc":0,"miscScore":6,"prof":1,"score":1},"dexSave":{"misc":0,"miscScore":6,"prof":0,"score":2},"intSave":{"misc":0,"miscScore":6,"prof":0,"score":3},"strSave":{"misc":0,"miscScore":6,"prof":1,"score":4},"wisSave":{"misc":0,"miscScore":6,"prof":0,"score":5}},"skills":{"Acrobatics":{"misc":0,"prof":1,"score":2},"Arcana":{"misc":0,"prof":1,"score":3},"Athletics":{"misc":0,"prof":2,"score":4},"Deception":{"misc":0,"prof":0,"score":0},"History":{"misc":0,"prof":0,"score":3},"Insight":{"misc":0,"prof":0,"score":5},"Intimidation":{"misc":0,"prof":0,"score":0},"Investigation":{"misc":0,"prof":0,"score":3},"Medicine":{"misc":0,"prof":0,"score":5},"Nature":{"misc":0,"prof":0,"score":3},"Perception":{"misc":0,"prof":1,"score":5},"Performance":{"misc":0,"prof":0,"score":0},"Persuasion":{"misc":0,"prof":0,"score":0},"Religion":{"misc":0,"prof":0,"score":3},"Sleight of Hand":{"misc":0,"prof":0,"score":2},"Stealth":{"misc":0,"prof":2,"score":2},"Survival":{"misc":0,"prof":0,"score":5}},"spells":{"spellCasts":{"spellEighthCasts":{"remain":0,"total":0},"spellFifthCasts":{"remain":0,"total":0},"spellFirstCasts":{"remain":4,"total":4},"spellFourthCasts":{"remain":0,"total":0},"spellNinthCasts":{"remain":0,"total":0},"spellSecondCasts":{"remain":3,"total":3},"spellSeventhCasts":{"remain":0,"total":0},"spellSixthCasts":{"remain":0,"total":0},"spellThirdCasts":{"remain":2,"total":2}},"spellStats":{"atkMod":0,"dcMod":0,"reset":"longRest","score":3},"spellsList":{"spellCantrip":{"Dancing Lights":{"isConc":true,"isMem":true,"isRitual":false},"Firebolt":{"isConc":false,"isMem":true,"isRitual":false},"Green-Flame Blade":{"isConc":false,"isMem":true,"isRitual":false},"Mending":{"isConc":false,"isMem":true,"isRitual":false}},"spellEighth":{},"spellFifth":{},"spellFirst":{"Chromatic Orb":{"isConc":false,"isMem":true,"isRitual":false},"Comprehend Languages":{"isConc":false,"isMem":false,"isRitual":true},"Detect Magic":{"isConc":true,"isMem":true,"isRitual":true},"Expeditious Retreat":{"isConc":true,"isMem":true,"isRitual":false},"Identify":{"isConc":false,"isMem":false,"isRitual":true},"Magic Missile":{"isConc":false,"isMem":true,"isRitual":false},"Shield":{"isConc":false,"isMem":false,"isRitual":false}},"spellFourth":{},"spellNinth":{},"spellSecond":{"Invisibility":{"isConc":true,"isMem":true,"isRitual":false},"Shatter":{"isConc":false,"isMem":false,"isRitual":false},"Spider Climb":{"isConc":true,"isMem":false,"isRitual":false},"Web":{"isConc":true,"isMem":true,"isRitual":false}},"spellSeventh":{},"spellSixth":{},"spellThird":{"Fireball":{"isConc":false,"isMem":true,"isRitual":false},"Haste":{"isConc":true,"isMem":true,"isRitual":false},"Leomund's Tiny Hut":{"isConc":false,"isMem":false,"isRitual":true}}}}}
             populateSheet();
         }
     });
@@ -351,6 +353,10 @@ $(document).mouseup(function(e){
     //  Change Quantity - Remove Qty Changer Element on Focus Out
     if (!$('#qtyForm').is(e.target) && $('#qtyForm').has(e.target).length === 0) {
         $('#qtyForm').remove();
+    }
+    //  Settings Form - Remove Element on Focus Out
+    if (!$('.settingsBox').is(e.target) && $('.settingsBox').has(e.target).length === 0) {
+        $('.settingsBox').remove();
     }
 });
 
@@ -389,6 +395,234 @@ $('#characterXP').on('focusout', function(){
     if (loggedIn) {dbCharRef.update(update)};
     populateSheet();
 });
+
+
+//  ********** Settings Form **********
+    //  ***** Settings Form - Cancel Button *****
+$('body').on('click', '.settingsCancel', function(e){
+    e.preventDefault();
+    $('.settingsBox').remove();
+});
+
+    //  ***** Settings Form - Click Settings Icon *****
+$('body').on('click', '.settingsIcon', function(){
+    $('.settingsBox').remove();
+    $('body').append(`<section class="settingsBox"><form class="scroll"></form></section>`);
+    const settingsTitle = $(this).attr('title');
+    let settingsHeader = `<h3>${settingsTitle}</h3>`
+
+
+        //  *** Saving Throws ***
+    if (settingsTitle === "Saving Throw Settings") {
+        settingsHeader += `<div><p class="saveC1">Ability</p><p class="saveC2">Proficiency</p><p class="saveC3">Bonus</p></div>`
+        $('.settingsBox').prepend(settingsHeader);
+        settingsForm = `<section>
+                            <p class="saveC1">Strength</p>
+                            <input type="checkbox" id="strSaveProf" class="settingsCheckbox">
+                            <label for="strSaveProf" class="saveC2">Proficient</label>
+                            <input type="number" id="strSaveMod" class="saveC3">
+                        </section>
+                        <section>
+                            <p class="saveC1">Dexterity</p>
+                            <input type="checkbox" id="dexSaveProf" class="settingsCheckbox">
+                            <label for="dexSaveProf" class="saveC2">Proficient</label>
+                            <input type="number" id="dexSaveMod" class="saveC3">
+                        </section>
+                        <section>
+                            <p class="saveC1">Constitution</p>
+                            <input type="checkbox" id="conSaveProf" class="settingsCheckbox">
+                            <label for="conSaveProf" class="saveC2">Proficient</label>
+                            <input type="number" id="conSaveMod" class="saveC3">
+                        </section>
+                        <section>
+                            <p class="saveC1">Intelligence</p>
+                            <input type="checkbox" id="intSaveProf" class="settingsCheckbox">
+                            <label for="intSaveProf" class="saveC2">Proficient</label>
+                            <input type="number" id="intSaveMod" class="saveC3">
+                        </section>
+                        <section>
+                            <p class="saveC1">Wisdom</p>
+                            <input type="checkbox" id="wisSaveProf" class="settingsCheckbox">
+                            <label for="wisSaveProf" class="saveC2">Proficient</label>
+                            <input type="number" id="wisSaveMod" class="saveC3">
+                        </section>
+                        <section>
+                            <p class="saveC1">Charisma</p>
+                            <input type="checkbox" id="chaSaveProf" class="settingsCheckbox">
+                            <label for="chaSaveProf" class="saveC2">Proficient</label>
+                            <input type="number" id="chaSaveMod" class="saveC3">
+                        </section>
+                        <section>
+                            <label for="addToSaves" class="saveC1">Add to Saves:</label>
+                            <select id="addToSaves" class="saveC2-C3">
+						        <option value=6>None</option>
+						        <option value=4>Strength</option>
+						        <option value=2>Dexterity</option>
+						        <option value=1>Constitution</option>
+						        <option value=3>Intelligence</option>
+						        <option value=5>Wisdom</option>
+						        <option value=0>Charisma</option>
+                            </select>
+                        </section>
+                        <input type="submit" value="Update">
+                        <button class="settingsCancel">Cancel</button>`
+        $('.settingsBox form').append(settingsForm);
+        if (currentCharacter.savingThrows.strSave.prof === 1) {$('#strSaveProf').prop('checked', true)};
+        if (currentCharacter.savingThrows.dexSave.prof === 1) {$('#dexSaveProf').prop('checked', true)};
+        if (currentCharacter.savingThrows.conSave.prof === 1) {$('#conSaveProf').prop('checked', true)};
+        if (currentCharacter.savingThrows.intSave.prof === 1) {$('#intSaveProf').prop('checked', true)};
+        if (currentCharacter.savingThrows.wisSave.prof === 1) {$('#wisSaveProf').prop('checked', true)};
+        if (currentCharacter.savingThrows.chaSave.prof === 1) {$('#chaSaveProf').prop('checked', true)};
+        $('#strSaveMod').val(currentCharacter.savingThrows.strSave.misc);
+        $('#dexSaveMod').val(currentCharacter.savingThrows.dexSave.misc);
+        $('#conSaveMod').val(currentCharacter.savingThrows.conSave.misc);
+        $('#intSaveMod').val(currentCharacter.savingThrows.intSave.misc);
+        $('#wisSaveMod').val(currentCharacter.savingThrows.wisSave.misc);
+        $('#chaSaveMod').val(currentCharacter.savingThrows.chaSave.misc);
+        $('#addToSaves').val(currentCharacter.savingThrows.strSave.miscScore);
+        $('.settingsBox input[type="submit"]').on('click', function(e){
+            e.preventDefault();
+            const saveSnapshot = JSON.stringify(currentCharacter.savingThrows);
+            if ($('#strSaveProf').prop('checked')) {currentCharacter.savingThrows.strSave.prof = 1} else {currentCharacter.savingThrows.strSave.prof = 0};
+            if ($('#dexSaveProf').prop('checked')) {currentCharacter.savingThrows.dexSave.prof = 1} else {currentCharacter.savingThrows.dexSave.prof = 0};
+            if ($('#conSaveProf').prop('checked')) {currentCharacter.savingThrows.conSave.prof = 1} else {currentCharacter.savingThrows.conSave.prof = 0};
+            if ($('#intSaveProf').prop('checked')) {currentCharacter.savingThrows.intSave.prof = 1} else {currentCharacter.savingThrows.intSave.prof = 0};
+            if ($('#wisSaveProf').prop('checked')) {currentCharacter.savingThrows.wisSave.prof = 1} else {currentCharacter.savingThrows.wisSave.prof = 0};
+            if ($('#chaSaveProf').prop('checked')) {currentCharacter.savingThrows.chaSave.prof = 1} else {currentCharacter.savingThrows.chaSave.prof = 0};
+            currentCharacter.savingThrows.strSave.misc = parseInt($('#strSaveMod').val());
+            currentCharacter.savingThrows.dexSave.misc = parseInt($('#dexSaveMod').val());
+            currentCharacter.savingThrows.conSave.misc = parseInt($('#conSaveMod').val());
+            currentCharacter.savingThrows.intSave.misc = parseInt($('#intSaveMod').val());
+            currentCharacter.savingThrows.wisSave.misc = parseInt($('#wisSaveMod').val());
+            currentCharacter.savingThrows.chaSave.misc = parseInt($('#chaSaveMod').val());
+            currentCharacter.savingThrows.strSave.miscScore = parseInt($('#addToSaves').val());
+            currentCharacter.savingThrows.dexSave.miscScore = parseInt($('#addToSaves').val());
+            currentCharacter.savingThrows.conSave.miscScore = parseInt($('#addToSaves').val());
+            currentCharacter.savingThrows.intSave.miscScore = parseInt($('#addToSaves').val());
+            currentCharacter.savingThrows.wisSave.miscScore = parseInt($('#addToSaves').val());
+            currentCharacter.savingThrows.chaSave.miscScore = parseInt($('#addToSaves').val());
+            const isEqual = saveSnapshot === JSON.stringify (currentCharacter.savingThrows);
+            const update = {};
+            update['savingThrows'] = currentCharacter.savingThrows;
+            if (loggedIn && !(isEqual)) {dbCharRef.set(update,{merge:true})};
+            populateSheet();
+            $('.settingsBox').remove();
+        });
+    }
+
+    if (settingsTitle === "Spell Settings") {
+        settingsHeader += `<div><p class="spellC1">Casting Ability</p><p class="spellC2">Atk Mod</p><p class="spellC3">DC Mod</p></div>`
+        $('.settingsBox').prepend(settingsHeader);
+        settingsForm = `<section>
+                            <select id="spellAbility" class="spellC1">
+						        <option value=6>None</option>
+						        <option value=4>Strength</option>
+						        <option value=2>Dexterity</option>
+					            <option value=1>Constitution</option>
+					            <option value=3>Intelligence</option>
+					            <option value=5>Wisdom</option>
+					            <option value=0>Charisma</option>
+                            </select>
+                            <input type="number" id="spellAtk" class="spellC2">
+                            <input type="number" id="spellDC" class="spellC3">
+                        </section>
+                        <section>
+                            <label for="spellRecover" class="spellC1">Spell Recovery:</label>
+                            <select id="spellRecover" class="spellC2&3">
+						        <option value="longRest">Long Rest</option>
+                                <option value="shortRest">Short Rest</option>
+                            </select>
+                        </section>
+                        <h3>Spells Per Rest</h3>
+                        <div>
+                            <p class="spellC1">Spell Level</p>
+                            <p class="spellC3"># Casts</p>
+                        </div>
+                        <section>
+                            <label for="spellFirstPR" class="spellC1">1st Level</label>
+                            <input type="number" id="spellFirstPR" class="spellC3">
+                        </section>
+                        <section>
+                            <label for="spellSecondPR" class="spellC1">2nd Level</label>
+                            <input type="number" id="spellSecondPR" class="spellC3">
+                        </section>
+                        <section>
+                            <label for="spellThirdPR" class="spellC1">3rd Level</label>
+                            <input type="number" id="spellThirdPR" class="spellC3">
+                        </section>
+                        <section>
+                            <label for="spellFourthPR" class="spellC1">4th Level</label>
+                            <input type="number" id="spellFourthPR" class="spellC3">
+                        </section>
+                        <section>
+                            <label for="spellFifthPR" class="spellC1">5th Level</label>
+                            <input type="number" id="spellFifthPR" class="spellC3">
+                        </section>
+                        <section>
+                            <label for="spellSixthPR" class="spellC1">6th Level</label>
+                            <input type="number" id="spellSixthPR" class="spellC3">
+                        </section>
+                        <section>
+                            <label for="spellSeventhPR" class="spellC1">7th Level</label>
+                            <input type="number" id="spellSeventhPR" class="spellC3">
+                        </section>
+                        <section>
+                            <label for="spellEighthPR" class="spellC1">8th Level</label>
+                            <input type="number" id="spellEighthPR" class="spellC3">
+                        </section>
+                        <section>
+                            <label for="spellNinthPR" class="spellC1">9th Level</label>
+                            <input type="number" id="spellNinthPR" class="spellC3">
+                        </section>
+                        <input type="submit" value="Update">
+                        <button class="settingsCancel">Cancel</button>`
+        $('.settingsBox form').append(settingsForm);
+        $('#spellAbility').val(currentCharacter.spells.spellStats.score);
+        $('#spellAtk').val(currentCharacter.spells.spellStats.atkMod);
+        $('#spellDC').val(currentCharacter.spells.spellStats.dcMod);
+        $('#spellRecover').val(currentCharacter.spells.spellStats.reset);
+        $('#spellFirstPR').val(currentCharacter.spells.spellCasts.spellFirstCasts.total);
+        $('#spellSecondPR').val(currentCharacter.spells.spellCasts.spellSecondCasts.total);
+        $('#spellThirdPR').val(currentCharacter.spells.spellCasts.spellThirdCasts.total);
+        $('#spellFourthPR').val(currentCharacter.spells.spellCasts.spellFourthCasts.total);
+        $('#spellFifthPR').val(currentCharacter.spells.spellCasts.spellFifthCasts.total);
+        $('#spellSixthPR').val(currentCharacter.spells.spellCasts.spellSixthCasts.total);
+        $('#spellSeventhPR').val(currentCharacter.spells.spellCasts.spellSeventhCasts.total);
+        $('#spellEighthPR').val(currentCharacter.spells.spellCasts.spellEighthCasts.total);
+        $('#spellNinthPR').val(currentCharacter.spells.spellCasts.spellNinthCasts.total);
+        $('.settingsBox input[type="submit"]').on('click', function(e){
+            e.preventDefault();
+            const saveSnapshot = JSON.stringify(currentCharacter.spells);
+            currentCharacter.spells.spellStats.score = parseInt($('#spellAbility').val());
+            currentCharacter.spells.spellStats.atkMod = parseInt($('#spellAtk').val());
+            currentCharacter.spells.spellStats.dcMod = parseInt($('#spellDC').val());
+            currentCharacter.spells.spellStats.reset = $('#spellRecover').val();
+            currentCharacter.spells.spellCasts.spellFirstCasts.total = parseInt($('#spellFirstPR').val());
+            currentCharacter.spells.spellCasts.spellSecondCasts.total = parseInt($('#spellSecondPR').val());
+            currentCharacter.spells.spellCasts.spellThirdCasts.total = parseInt($('#spellThirdPR').val());
+            currentCharacter.spells.spellCasts.spellFourthCasts.total = parseInt($('#spellFourthPR').val());
+            currentCharacter.spells.spellCasts.spellFifthCasts.total = parseInt($('#spellFifthPR').val());
+            currentCharacter.spells.spellCasts.spellSixthCasts.total = parseInt($('#spellSixthPR').val());
+            currentCharacter.spells.spellCasts.spellSeventhCasts.total = parseInt($('#spellSeventhPR').val());
+            currentCharacter.spells.spellCasts.spellEighthCasts.total = parseInt($('#spellEighthPR').val());
+            currentCharacter.spells.spellCasts.spellNinthCasts.total = parseInt($('#spellNinthPR').val());
+            const isEqual = saveSnapshot === JSON.stringify (currentCharacter.spells);
+            const update = {};
+            update['spells.'+'spellCasts'] = currentCharacter.spells.spellCasts;
+            // update['spells.'+'spellStats'] = currentCharacter.spells.spellStats;
+            if (loggedIn && !(isEqual)) {dbCharRef.set(update,{merge:true})};
+            populateSheet();
+            $('.settingsBox').remove();
+        });
+    }
+});
+
+    //  ***** Settings Form - Submit Saving Throws *****
+$('body').on('click', '.settingsCancel', function(e){
+    e.preventDefault();
+    $('.settingsBox').remove();
+});
+
 
 
 //  ********** Inventory Management **********
