@@ -229,8 +229,8 @@ function populateSheet() {
     $.each(currentCharacter.spells.spellsList, function(key, value){
         let memSpells = ""
         let unmemSpells = ""
+        let cSpell = currentCharacter.spells.spellsList[key];
         $.each(currentCharacter.spells.spellsList[key], function(key2, value2){
-            cSpell = currentCharacter.spells.spellsList[key];
             let isRitual = "";
             let isConcentration = "";
             let isMemorized = "";
@@ -244,15 +244,23 @@ function populateSheet() {
             if (cSpell[key2]['isMem']) {memSpells += spellInfo} else {unmemSpells += spellInfo};
         });
         $(`#${key}`).append(memSpells).append(unmemSpells);
+        if(Object.keys(cSpell).length === 0) {$(`#${key}`).hide()} else {$(`#${key}`).show()}
     });
     $('#spellMemorized').text(memorizedCount);
 
 
         //  ***** Populate Spells Slots *****
     $.each(currentCharacter.spells.spellCasts, function(key, value){
-        cCasts = currentCharacter.spells.spellCasts
+        const cCasts = currentCharacter.spells.spellCasts;
+        const cSpellLvl = $(`#${key}`).parent().parent().children('ul').attr('id');
+        const cSpell = currentCharacter.spells.spellsList[cSpellLvl];
         $(`#${key}`).text(`${cCasts[key]['remain']} / ${cCasts[key]['total']}`);
-        if (cCasts[key]['total'] === 0) {$(`#${key}`).parent().parent().hide()};
+        if (Object.keys(cSpell).length === 0 && cCasts[key]['total'] === 0) {$(`#${key}`).parent().parent().hide()} else {$(`#${key}`).parent().parent().show()};
+        if (Object.keys(cSpell).length === 0) {
+            $(`#${key}`).css({'border-bottom':'1px solid rgb(150, 150, 150)','border-bottom-left-radius':'5px','border-bottom-right-radius':'5px'})
+        } else {
+            $(`#${key}`).css({'border-bottom':'initial','border-bottom-left-radius':'0','border-bottom-right-radius':'0'})
+        };
     });
     //  ********** END Populate Sheet **********
 };
@@ -304,7 +312,6 @@ $('#loginForm input[type="submit"]').on('click', function(e){
     const loginEmail = $('#loginEmail').val();
     const loginPW = $('#loginPW').val();
     auth.signInWithEmailAndPassword(loginEmail, loginPW).then(cred => {
-        console.log("User Logged In");
         $('#loginEmail').val(null);
         $('#loginPW').val(null);
     });
@@ -313,7 +320,7 @@ $('#loginForm input[type="submit"]').on('click', function(e){
 
 //  ********** Logout **********
 $('#logoutBtn').on('click', function(){
-    auth.signOut().then(() => {console.log('User Logged Out')});
+    auth.signOut();
 });
 
 
@@ -407,7 +414,7 @@ $('body').on('click', '.settingsCancel', function(e){
     //  ***** Settings Form - Click Settings Icon *****
 $('body').on('click', '.settingsIcon', function(){
     $('.settingsBox').remove();
-    $('body').append(`<section class="settingsBox"><form class="scroll"></form></section>`);
+    $('body').append(`<section class="settingsBox"><form class="scroll2"></form></section>`);
     const settingsTitle = $(this).attr('title');
     let settingsHeader = `<h3>${settingsTitle}</h3>`
 
@@ -504,7 +511,7 @@ $('body').on('click', '.settingsIcon', function(){
             const isEqual = saveSnapshot === JSON.stringify (currentCharacter.savingThrows);
             const update = {};
             update['savingThrows'] = currentCharacter.savingThrows;
-            if (loggedIn && !(isEqual)) {dbCharRef.set(update,{merge:true})};
+            if (loggedIn && !(isEqual)) {dbCharRef.update(update)};
             populateSheet();
             $('.settingsBox').remove();
         });
@@ -608,9 +615,9 @@ $('body').on('click', '.settingsIcon', function(){
             currentCharacter.spells.spellCasts.spellNinthCasts.total = parseInt($('#spellNinthPR').val());
             const isEqual = saveSnapshot === JSON.stringify (currentCharacter.spells);
             const update = {};
-            update['spells.'+'spellCasts'] = currentCharacter.spells.spellCasts;
-            // update['spells.'+'spellStats'] = currentCharacter.spells.spellStats;
-            if (loggedIn && !(isEqual)) {dbCharRef.set(update,{merge:true})};
+            update['spells.spellCasts'] = currentCharacter.spells.spellCasts;
+            update['spells.spellStats'] = currentCharacter.spells.spellStats;
+            if (loggedIn && !(isEqual)) {dbCharRef.update(update)};
             populateSheet();
             $('.settingsBox').remove();
         });
@@ -622,7 +629,6 @@ $('body').on('click', '.settingsCancel', function(e){
     e.preventDefault();
     $('.settingsBox').remove();
 });
-
 
 
 //  ********** Inventory Management **********
