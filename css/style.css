@@ -151,7 +151,9 @@ header h4 {
 .spellStats,
 #spellList,
 #addSpellForm label,
-.itemBox {
+.itemBox,
+.settingsBox div,
+.settingsBox p {
     text-transform: uppercase;
 }
 
@@ -206,6 +208,7 @@ header h4 {
 .cancel:hover,
 .trash:hover,
 .settingsIcon:hover,
+.sortIcon:hover,
 button:hover,
 .styled-checkbox:hover + label:before,
 #addSpellForm input[type=submit]:hover,
@@ -240,14 +243,23 @@ button:hover,
     background: rgb(163, 189, 152);
 }
 
-.settingsIcon {
+.settingsIcon,
+.sortIcon {
     height: 20px;
     width: 20px;
     padding: 2px;
     border-radius: 50%;
     position: absolute;
+}
+
+.settingsIcon {
     top: 2px;
     right: 2px;
+}
+
+.sortIcon {
+    top: 2px;
+    right: 25px;
 }
 
     /* Sheet Header */
@@ -1137,8 +1149,9 @@ header h4:hover,
 
 /* Settings Form */
 .settingsBox {
-    max-width: 90%;
-    max-height: 85%;
+    max-width: 90vw;
+    max-height: 85vh;
+    width: max-content;
     background: black;
     color: white;
     position: fixed;
@@ -1160,11 +1173,10 @@ header h4:hover,
 }
 
 .settingsBox p {
-    margin: 0;
+    margin: 0 auto;
 }
 
 .settingsBox div {
-    text-transform: uppercase;
     text-align: center;
 }
 
@@ -1175,9 +1187,18 @@ header h4:hover,
     padding: 1px 2px;
 }
 
-.settingsBox input[type="number"] {
+.settingsBox textarea,
+.settingsBox input[type="submit"],
+.settingsBox button,
+.settingsBox select,
+.settingsBox input[type="number"],
+.settingsBox input[type="text"] {
     color: black;
     border-radius: 5px;
+}
+
+.settingsBox input[type="number"],
+.settingsBox input[type="text"] {
     text-align: center;
 }
 
@@ -1195,55 +1216,72 @@ header h4:hover,
     font-weight: bold;
 }
 
-.settingsBox select {
-    color: black;
-    border-radius: 5px;
-}
-
 .settingsBox input[type="submit"],
 .settingsBox button {
     margin-top: 5px;
-    color: black;
-    border-radius: 5px;
 }
 
 .settingsBox form h3 {
     margin-top: 10px;
 }
-/* Settings Saving Throws Form */
-.saveC1 {
-    width: 85px;
-    text-align: left;
+/* Settings Element Sizers */
+.px20 {
+    width: 20px;
 }
 
-.saveC2 {
-    width: 80px;
-}
-
-.saveC3 {
+.px45 {
     width: 45px;
 }
 
-.saveC2-C3 {
-    width: 120px;
-}
-
-/* Settings Saving Throws Form */
-.spellC1 {
-    width: 100px;
-}
-
-.spellC2,
-.spellC3 {
+.px60 {
     width: 60px;
 }
 
-.spellC2-C3 {
+.px80 {
+    width: 80px;
+}
+
+.px90 {
+    width: 90px;
+}
+
+.px90L {
+    width: 90px;
+    text-align: left;
+}
+
+.px100 {
+    width: 100px;
+}
+
+.px120 {
     width: 120px;
 }
 
-.spellSubHeader {
+.px140 {
+    width: 140px;
+}
 
+.px200 {
+    width: 200px;
+}
+
+.px240 {
+    width: 240px;
+}
+
+/* Settings - Character Details Form */
+#classLvlBreakout section {
+    display: block;
+    position: relative;
+}
+
+#classLvlBreakout .trash {
+    position: absolute;
+    top: 2px;
+    right: 0px;
+    width: 25px;
+    height: 24px;
 }
 
 

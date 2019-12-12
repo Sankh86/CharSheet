@@ -418,61 +418,199 @@ $('body').on('click', '.settingsIcon', function(){
     const settingsTitle = $(this).attr('title');
     let settingsHeader = `<h3>${settingsTitle}</h3>`
 
-
-        //  *** Saving Throws ***
-    if (settingsTitle === "Saving Throw Settings") {
-        settingsHeader += `<div><p class="saveC1">Ability</p><p class="saveC2">Proficiency</p><p class="saveC3">Bonus</p></div>`
+        //  *** Character Settings ***
+    if (settingsTitle === "Character Settings") {
         $('.settingsBox').prepend(settingsHeader);
-        settingsForm = `<section>
-                            <p class="saveC1">Strength</p>
-                            <input type="checkbox" id="strSaveProf" class="settingsCheckbox">
-                            <label for="strSaveProf" class="saveC2">Proficient</label>
-                            <input type="number" id="strSaveMod" class="saveC3">
-                        </section>
-                        <section>
-                            <p class="saveC1">Dexterity</p>
-                            <input type="checkbox" id="dexSaveProf" class="settingsCheckbox">
-                            <label for="dexSaveProf" class="saveC2">Proficient</label>
-                            <input type="number" id="dexSaveMod" class="saveC3">
-                        </section>
-                        <section>
-                            <p class="saveC1">Constitution</p>
-                            <input type="checkbox" id="conSaveProf" class="settingsCheckbox">
-                            <label for="conSaveProf" class="saveC2">Proficient</label>
-                            <input type="number" id="conSaveMod" class="saveC3">
-                        </section>
-                        <section>
-                            <p class="saveC1">Intelligence</p>
-                            <input type="checkbox" id="intSaveProf" class="settingsCheckbox">
-                            <label for="intSaveProf" class="saveC2">Proficient</label>
-                            <input type="number" id="intSaveMod" class="saveC3">
-                        </section>
-                        <section>
-                            <p class="saveC1">Wisdom</p>
-                            <input type="checkbox" id="wisSaveProf" class="settingsCheckbox">
-                            <label for="wisSaveProf" class="saveC2">Proficient</label>
-                            <input type="number" id="wisSaveMod" class="saveC3">
-                        </section>
-                        <section>
-                            <p class="saveC1">Charisma</p>
-                            <input type="checkbox" id="chaSaveProf" class="settingsCheckbox">
-                            <label for="chaSaveProf" class="saveC2">Proficient</label>
-                            <input type="number" id="chaSaveMod" class="saveC3">
-                        </section>
-                        <section>
-                            <label for="addToSaves" class="saveC1">Add to Saves:</label>
-                            <select id="addToSaves" class="saveC2-C3">
-						        <option value=6>None</option>
-						        <option value=4>Strength</option>
-						        <option value=2>Dexterity</option>
-						        <option value=1>Constitution</option>
-						        <option value=3>Intelligence</option>
-						        <option value=5>Wisdom</option>
-						        <option value=0>Charisma</option>
-                            </select>
-                        </section>
-                        <input type="submit" value="Update">
-                        <button class="settingsCancel">Cancel</button>`
+        const settingsForm = `  <p class="px140">Name</p>
+                                <input type="text" id="charNameEntry" class="px140">
+                                <p class="px140">Race</p>
+                                <input type="text" id="charRaceEntry" class="px140">
+                                <p class="px140">Background</p>
+                                <input type="text" id="charBgEntry" class="px140">
+                                <p class="px140">Alignment</p>
+                                <input type="text" id="charAlignmentEntry" class="px140">
+                                <section>
+                                    <p class="px100">Class</p>
+                                    <p class="px45">Level</p>
+                                    <p class="px60">Hit Die</p>
+                                    <p class="px20"></p>
+                                </section>
+                                <section id="classLvlBreakout">
+
+                                </section>
+                                <button id="addNewClass">Add New Class</button>
+                                <section>
+                                    <p class="px60">Str</p>
+                                    <p class="px60">Dex</p>
+                                    <p class="px60">Con</p>
+                                </section>
+                                <section>
+                                    <input type="number" id="strStat" class="px60">
+                                    <input type="number" id="dexStat" class="px60">
+                                    <input type="number" id="conStat" class="px60">
+                                </section>
+                                <section>
+                                    <p class="px60">Int</p>
+                                    <p class="px60">Wis</p>
+                                    <p class="px60">Cha</p>
+                                </section>
+                                <section>
+                                    <input type="number" id="intStat" class="px60">
+                                    <input type="number" id="wisStat" class="px60">
+                                    <input type="number" id="chaStat" class="px60">
+                                </section>
+                                <input type="submit" value="Update">
+                                <button class="settingsCancel">Cancel</button>  `
+        $('.settingsBox form').append(settingsForm);
+
+
+        $.each(currentCharacter.charInfo.characterLevel, function(key, value){
+            const classNum = $('#classLvlBreakout').children().length;
+            const levelSettings = ` <section>
+                                        <input type="text" id="${classNum}Class" class="px100"></input>
+                                        <input type="number" id="${classNum}Lvl" class="px45">
+                                        <select id="${classNum}HD" class="px60">
+                                            <option value=0>d6</option>
+                                            <option value=1>d8</option>
+                                            <option value=2>d10</option>
+                                            <option value=3>d12</option>
+                                        </select>
+                                        <p class="px20"></p><img class="trash" src="img/trash.png" alt="Remove Class" title="Remove Class">
+                                    </section>  `
+            $('#classLvlBreakout').append(levelSettings);
+            $(`#${classNum}Class`).val(key);
+            $(`#${classNum}Lvl`).val(currentCharacter.charInfo.characterLevel[key]['lvl']);
+            $(`#${classNum}HD`).val(currentCharacter.charInfo.characterLevel[key]['hd']);
+        });
+        $('#charNameEntry').val(currentCharacter.charInfo.characterName);
+        $('#charRaceEntry').val(currentCharacter.charInfo.characterRace);
+        $('#charBgEntry').val(currentCharacter.charInfo.characterBackground);
+        $('#charAlignmentEntry').val(currentCharacter.charInfo.characterAlignment);
+        $('#strStat').val(currentCharacter.abilityScores.strScore);
+        $('#dexStat').val(currentCharacter.abilityScores.dexScore);
+        $('#conStat').val(currentCharacter.abilityScores.conScore);
+        $('#intStat').val(currentCharacter.abilityScores.intScore);
+        $('#wisStat').val(currentCharacter.abilityScores.wisScore);
+        $('#chaStat').val(currentCharacter.abilityScores.chaScore);
+            //  *** Add New Class Button ***
+        $('.settingsBox').on('click', '#addNewClass', function(e){
+            e.preventDefault();
+            const classNum = $('#classLvlBreakout').children().length;
+            const newClass = `  <section>
+                                    <input type="text" id="${classNum}Class" class="px100"></input>
+                                    <input type="number" id="${classNum}Lvl" class="px45">
+                                    <select id="${classNum}HD" class="px60">
+                                        <option value=0>d6</option>
+                                        <option value=1>d8</option>
+                                        <option value=2>d10</option>
+                                        <option value=3>d12</option>
+                                    </select>
+                                    <p class="px20"></p><img class="trash" src="img/trash.png" alt="Remove Class" title="Remove Class">
+                                </section>  `
+            $('#classLvlBreakout').append(newClass);
+        });
+            //  *** Remove Class Button ***
+        $('.settingsBox').on('click', '.trash', function(){
+            const className = $(this).parent().children('input[type="text"]').val();
+            if(className !== "") {
+                delete currentCharacter.charInfo.characterLevel[className];
+                const update = {};
+                update['charInfo.characterLevel.'+className] = firebase.firestore.FieldValue.delete();
+                dbCharRef.update(update)
+            }
+            populateSheet();
+            $('.settingsBox').remove();
+        });
+            //  *** Submit Character Settings ***
+        $('.settingsBox input[type="submit"]').on('click', function(e){
+            e.preventDefault();
+            const saveSnapshotScores = JSON.stringify(currentCharacter.abilityScores);
+            const saveSnapshotCharInfo = JSON.stringify(currentCharacter.charInfo);
+            currentCharacter.charInfo.characterName = $('#charNameEntry').val();
+            currentCharacter.charInfo.characterRace = $('#charRaceEntry').val();
+            currentCharacter.charInfo.characterBackground = $('#charBgEntry').val();
+            currentCharacter.charInfo.characterAlignment = $('#charAlignmentEntry').val();
+            currentCharacter.abilityScores.strScore = parseInt($('#strStat').val());
+            currentCharacter.abilityScores.dexScore = parseInt($('#dexStat').val());
+            currentCharacter.abilityScores.conScore = parseInt($('#conStat').val());
+            currentCharacter.abilityScores.intScore = parseInt($('#intStat').val());
+            currentCharacter.abilityScores.wisScore = parseInt($('#wisStat').val());
+            currentCharacter.abilityScores.chaScore = parseInt($('#chaStat').val());
+            $('#classLvlBreakout').children().each(function(i){
+                if($(`#${i}Class`).val() !== "" && $(`#${i}Lvl`).val() !== "") {
+                    const className = $(`#${i}Class`).val();
+                    const classLvl = parseInt($(`#${i}Lvl`).val());
+                    const classHD = parseInt($(`#${i}HD`).val());
+                    currentCharacter.charInfo.characterLevel[className] = {'lvl': classLvl, 'hd': classHD};
+                };
+            });
+            const isEqualScores = saveSnapshotScores === JSON.stringify (currentCharacter.abilityScores);
+            const isEqualCharInfo = saveSnapshotCharInfo === JSON.stringify (currentCharacter.charInfo);
+            const update = {};
+            if (!(isEqualScores)) {update['abilityScores'] = currentCharacter.abilityScores};
+            if (!(isEqualCharInfo)) {update['charInfo'] = currentCharacter.charInfo};
+            if (loggedIn && (!(isEqualScores) || !(isEqualCharInfo))) {dbCharRef.update(update)};
+            populateSheet();
+            $('.settingsBox').remove();
+        });
+    }
+
+
+
+        //  *** Saving Throw Settings ***
+    if (settingsTitle === "Saving Throw Settings") {
+        settingsHeader += `<div><p class="px90">Ability</p><p class="px80">Proficiency</p><p class="px45">Bonus</p></div>`
+        $('.settingsBox').prepend(settingsHeader);
+        const settingsForm = `  <section>
+                                <label class="px90L">Strength</label>
+                                <input type="checkbox" id="strSaveProf" class="settingsCheckbox">
+                                <label for="strSaveProf" class="px80">Proficient</label>
+                                <input type="number" id="strSaveMod" class="px45">
+                            </section>
+                            <section>
+                                <label class="px90L">Dexterity</label>
+                                <input type="checkbox" id="dexSaveProf" class="settingsCheckbox">
+                                <label for="dexSaveProf" class="px80">Proficient</label>
+                                <input type="number" id="dexSaveMod" class="px45">
+                            </section>
+                            <section>
+                                <label class="px90L">Constitution</label>
+                                <input type="checkbox" id="conSaveProf" class="settingsCheckbox">
+                                <label for="conSaveProf" class="px80">Proficient</label>
+                                <input type="number" id="conSaveMod" class="px45">
+                            </section>
+                            <section>
+                                <label class="px90L">Intelligence</label>
+                                <input type="checkbox" id="intSaveProf" class="settingsCheckbox">
+                                <label for="intSaveProf" class="px80">Proficient</label>
+                                <input type="number" id="intSaveMod" class="px45">
+                            </section>
+                            <section>
+                                <label class="px90L">Wisdom</label>
+                                <input type="checkbox" id="wisSaveProf" class="settingsCheckbox">
+                                <label for="wisSaveProf" class="px80">Proficient</label>
+                                <input type="number" id="wisSaveMod" class="px45">
+                            </section>
+                            <section>
+                                <label class="px90L">Charisma</label>
+                                <input type="checkbox" id="chaSaveProf" class="settingsCheckbox">
+                                <label for="chaSaveProf" class="px80">Proficient</label>
+                                <input type="number" id="chaSaveMod" class="px45">
+                            </section>
+                            <section>
+                                <label for="addToSaves" class="px90">Add to Saves:</label>
+                                <select id="addToSaves" class="px120">
+                                    <option value=6>None</option>
+                                    <option value=4>Strength</option>
+                                    <option value=2>Dexterity</option>
+                                    <option value=1>Constitution</option>
+                                    <option value=3>Intelligence</option>
+                                    <option value=5>Wisdom</option>
+                                    <option value=0>Charisma</option>
+                                </select>
+                            </section>
+                            <input type="submit" value="Update">
+                            <button class="settingsCancel">Cancel</button>  `
         $('.settingsBox form').append(settingsForm);
         if (currentCharacter.savingThrows.strSave.prof === 1) {$('#strSaveProf').prop('checked', true)};
         if (currentCharacter.savingThrows.dexSave.prof === 1) {$('#dexSaveProf').prop('checked', true)};
@@ -487,6 +625,7 @@ $('body').on('click', '.settingsIcon', function(){
         $('#wisSaveMod').val(currentCharacter.savingThrows.wisSave.misc);
         $('#chaSaveMod').val(currentCharacter.savingThrows.chaSave.misc);
         $('#addToSaves').val(currentCharacter.savingThrows.strSave.miscScore);
+            //  *** Submit Saving Throw Settings ***
         $('.settingsBox input[type="submit"]').on('click', function(e){
             e.preventDefault();
             const saveSnapshot = JSON.stringify(currentCharacter.savingThrows);
@@ -517,72 +656,105 @@ $('body').on('click', '.settingsIcon', function(){
         });
     }
 
-    if (settingsTitle === "Spell Settings") {
-        settingsHeader += `<div><p class="spellC1">Casting Ability</p><p class="spellC2">Atk Mod</p><p class="spellC3">DC Mod</p></div>`
+        //  *** Spell Settings ***
+    if (settingsTitle === "Add New Info") {
         $('.settingsBox').prepend(settingsHeader);
-        settingsForm = `<section>
-                            <select id="spellAbility" class="spellC1">
-						        <option value=6>None</option>
-						        <option value=4>Strength</option>
-						        <option value=2>Dexterity</option>
-					            <option value=1>Constitution</option>
-					            <option value=3>Intelligence</option>
-					            <option value=5>Wisdom</option>
-					            <option value=0>Charisma</option>
-                            </select>
-                            <input type="number" id="spellAtk" class="spellC2">
-                            <input type="number" id="spellDC" class="spellC3">
-                        </section>
-                        <section>
-                            <label for="spellRecover" class="spellC1">Spell Recovery:</label>
-                            <select id="spellRecover" class="spellC2&3">
-						        <option value="longRest">Long Rest</option>
-                                <option value="shortRest">Short Rest</option>
-                            </select>
-                        </section>
-                        <h3>Spells Per Rest</h3>
-                        <div>
-                            <p class="spellC1">Spell Level</p>
-                            <p class="spellC3"># Casts</p>
-                        </div>
-                        <section>
-                            <label for="spellFirstPR" class="spellC1">1st Level</label>
-                            <input type="number" id="spellFirstPR" class="spellC3">
-                        </section>
-                        <section>
-                            <label for="spellSecondPR" class="spellC1">2nd Level</label>
-                            <input type="number" id="spellSecondPR" class="spellC3">
-                        </section>
-                        <section>
-                            <label for="spellThirdPR" class="spellC1">3rd Level</label>
-                            <input type="number" id="spellThirdPR" class="spellC3">
-                        </section>
-                        <section>
-                            <label for="spellFourthPR" class="spellC1">4th Level</label>
-                            <input type="number" id="spellFourthPR" class="spellC3">
-                        </section>
-                        <section>
-                            <label for="spellFifthPR" class="spellC1">5th Level</label>
-                            <input type="number" id="spellFifthPR" class="spellC3">
-                        </section>
-                        <section>
-                            <label for="spellSixthPR" class="spellC1">6th Level</label>
-                            <input type="number" id="spellSixthPR" class="spellC3">
-                        </section>
-                        <section>
-                            <label for="spellSeventhPR" class="spellC1">7th Level</label>
-                            <input type="number" id="spellSeventhPR" class="spellC3">
-                        </section>
-                        <section>
-                            <label for="spellEighthPR" class="spellC1">8th Level</label>
-                            <input type="number" id="spellEighthPR" class="spellC3">
-                        </section>
-                        <section>
-                            <label for="spellNinthPR" class="spellC1">9th Level</label>
-                            <input type="number" id="spellNinthPR" class="spellC3">
-                        </section>
-                        <input type="submit" value="Update">
-                        <button class="settingsCancel">Cancel</button>`
+        const settingsForm =   `<p class="px240">Title</p>
+                                <section><input type="text" id="newDetailTitle" class="px240"></section>
+                                <p class="px240">Details</p>
+                                <section><textarea id="newDetailInfo" rows="8" cols="40"></textarea></section>
+                                <input type="submit" value="Update">
+                                <button class="settingsCancel">Cancel</button>  `
+        $('.settingsBox form').append(settingsForm);
+        $('.settingsBox input[type="submit"]').on('click', function(e){
+            e.preventDefault();
+            const timestamp = $.now();
+            const detailTitle = $('#newDetailTitle').val();
+            const detailInfo = $('#newDetailInfo').val();
+            if (detailInfo !== "" && detailTitle !== "") {
+                currentCharacter.details[timestamp] = {'detailInfo': detailInfo, 'detailName': detailTitle}
+                const update = {};
+                update['details'] = currentCharacter.details;
+            if (loggedIn) {dbCharRef.update(update)};
+            populateSheet();
+            $('.settingsBox').remove();
+            }
+            $('.settingsBox').remove();
+        });
+    }
+
+
+        //  *** Spell Settings ***
+    if (settingsTitle === "Spell Settings") {
+        $('.settingsBox').prepend(settingsHeader);
+        const settingsForm = `      <div>
+                                        <p class="px100">Casting Ability</p>
+                                        <p class="px60">Atk Mod</p>
+                                        <p class="px60">DC Mod</p>
+                                    </div>
+                                    <section>
+                                    <select id="spellAbility" class="px100">
+                                        <option value=6>None</option>
+                                        <option value=4>Strength</option>
+                                        <option value=2>Dexterity</option>
+                                        <option value=1>Constitution</option>
+                                        <option value=3>Intelligence</option>
+                                        <option value=5>Wisdom</option>
+                                        <option value=0>Charisma</option>
+                                    </select>
+                                    <input type="number" id="spellAtk" class="px60">
+                                    <input type="number" id="spellDC" class="px60">
+                                </section>
+                                <section>
+                                    <label for="spellRecover" class="px100">Spell Recovery:</label>
+                                    <select id="spellRecover" class="px90">
+                                        <option value="longRest">Long Rest</option>
+                                        <option value="shortRest">Short Rest</option>
+                                    </select>
+                                </section>
+                                <h3>Spells Per Rest</h3>
+                                <div>
+                                    <p class="px80">Spell Level</p>
+                                    <p class="px45">Casts</p>
+                                </div>
+                                <section>
+                                    <label for="spellFirstPR" class="px80">1st Level</label>
+                                    <input type="number" id="spellFirstPR" class="px45">
+                                </section>
+                                <section>
+                                    <label for="spellSecondPR" class="px80">2nd Level</label>
+                                    <input type="number" id="spellSecondPR" class="px45">
+                                </section>
+                                <section>
+                                    <label for="spellThirdPR" class="px80">3rd Level</label>
+                                    <input type="number" id="spellThirdPR" class="px45">
+                                </section>
+                                <section>
+                                    <label for="spellFourthPR" class="px80">4th Level</label>
+                                    <input type="number" id="spellFourthPR" class="px45">
+                                </section>
+                                <section>
+                                    <label for="spellFifthPR" class="px80">5th Level</label>
+                                    <input type="number" id="spellFifthPR" class="px45">
+                                </section>
+                                <section>
+                                    <label for="spellSixthPR" class="px80">6th Level</label>
+                                    <input type="number" id="spellSixthPR" class="px45">
+                                </section>
+                                <section>
+                                    <label for="spellSeventhPR" class="px80">7th Level</label>
+                                    <input type="number" id="spellSeventhPR" class="px45">
+                                </section>
+                                <section>
+                                    <label for="spellEighthPR" class="px80">8th Level</label>
+                                    <input type="number" id="spellEighthPR" class="px45">
+                                </section>
+                                <section>
+                                    <label for="spellNinthPR" class="px80">9th Level</label>
+                                    <input type="number" id="spellNinthPR" class="px45">
+                                </section>
+                                <input type="submit" value="Update">
+                                <button class="settingsCancel">Cancel</button>  `
         $('.settingsBox form').append(settingsForm);
         $('#spellAbility').val(currentCharacter.spells.spellStats.score);
         $('#spellAtk').val(currentCharacter.spells.spellStats.atkMod);
@@ -597,6 +769,7 @@ $('body').on('click', '.settingsIcon', function(){
         $('#spellSeventhPR').val(currentCharacter.spells.spellCasts.spellSeventhCasts.total);
         $('#spellEighthPR').val(currentCharacter.spells.spellCasts.spellEighthCasts.total);
         $('#spellNinthPR').val(currentCharacter.spells.spellCasts.spellNinthCasts.total);
+            //  *** Submit Spell Settings ***
         $('.settingsBox input[type="submit"]').on('click', function(e){
             e.preventDefault();
             const saveSnapshot = JSON.stringify(currentCharacter.spells);
