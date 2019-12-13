@@ -12,8 +12,11 @@ firebase.initializeApp({
 //  ********** Firebase Ref **********
 const db = firebase.firestore();
 const auth = firebase.auth();
-let dbCharRef = ""
+let dbUserRef = "";
+let dbCharRef = "";
 let loggedIn = false;
+let userData = "";
+let currentCharacter = "";
 
 
 function populateSheet() {
@@ -61,7 +64,7 @@ function populateSheet() {
         $(`#${key}`).text(value);
         $(`#${abilityModName}`).text(abilityModNum);
     });
-    abilityModifiers.push(0)
+    abilityModifiers.push(0);
 
 
             //  ***** Generate Proficiency Bonus *****
@@ -335,10 +338,15 @@ $('#logoutBtn').on('click', function(){
             $('#characterButton').css('display','inline-block');
             $('#acctBtn').css('display','inline-block');
             $('#howdy').hide();
-            dbCharRef = db.collection("Users").doc(uid).collection('Characters').doc('Obliviaron')
-            dbCharRef.get().then((snapshot) => {
-                currentCharacter = snapshot.data();
-                populateSheet();
+            dbUserRef = db.collection("Users").doc(uid);
+            dbUserRef.get().then((snapshot) => {
+                userData = snapshot.data();
+                const lastSeen = userData.lastCharSeen;
+                dbCharRef = db.collection("Users").doc(uid).collection('Characters').doc(lastSeen);
+                dbCharRef.get().then((snapshot) => {
+                    currentCharacter = snapshot.data();
+                    populateSheet();
+                });
             });
 
         } else {
