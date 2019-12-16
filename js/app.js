@@ -17,6 +17,7 @@ let dbCharRef = "";
 let loggedIn = false;
 let userData = "";
 let currentCharacter = "";
+let showMoveBtn = false
 
 
 function populateSheet() {
@@ -183,7 +184,7 @@ function populateSheet() {
     $('#charInfoList').empty();
     $.each(currentCharacter.details, function(key, value){
         const cDetail = currentCharacter.details
-        const detailArticle = `<article class="detailHeader"><span class="row"><img class="edit" src="img/Pencil-Grey.png" alt="Edit Entry" title="Edit Entry">${cDetail[key]['detailName']}</span><div class="detailInfo growText">${cDetail[key]['detailInfo']}</div></article>`
+        const detailArticle = `<article class="detailHeader"><img class="moveUp" src="img/up-grey.png" title="Move Up"><img class="moveDown" src="img/down-grey.png" title="Move Down"><span class="detailID">${key}</span><span class="row"><img class="edit" src="img/Pencil-Grey.png" alt="Edit Entry" title="Edit Entry">${cDetail[key]['detailName']}</span><div class="detailInfo growText">${cDetail[key]['detailInfo']}</div></article>`
         $('#charInfoList').append(detailArticle);
     });
 
@@ -257,15 +258,26 @@ function populateSheet() {
         const cCasts = currentCharacter.spells.spellCasts;
         const cSpellLvl = $(`#${key}`).parent().parent().children('ul').attr('id');
         const cSpell = currentCharacter.spells.spellsList[cSpellLvl];
-        $(`#${key}`).text(`${cCasts[key]['remain']} / ${cCasts[key]['total']}`);
-        if (Object.keys(cSpell).length === 0 && cCasts[key]['total'] === 0) {$(`#${key}`).parent().parent().hide()} else {$(`#${key}`).parent().parent().show()};
+        const remain = cCasts[key]['lrRemain'] + cCasts[key]['srRemain']
+        const total = cCasts[key]['lrTotal'] + cCasts[key]['srTotal']
+        $(`#${key}`).text(`${remain} / ${total}`);
+        if (Object.keys(cSpell).length === 0 && total === 0) {$(`#${key}`).parent().parent().hide()} else {$(`#${key}`).parent().parent().show()};
         if (Object.keys(cSpell).length === 0) {
             $(`#${key}`).css({'border-bottom':'1px solid rgb(150, 150, 150)','border-bottom-left-radius':'5px','border-bottom-right-radius':'5px'})
         } else {
             $(`#${key}`).css({'border-bottom':'initial','border-bottom-left-radius':'0','border-bottom-right-radius':'0'})
         };
     });
-    //  ********** END Populate Sheet **********
+
+    if(showMoveBtn) {
+        $('#charInfoWrapper .moveDown').show();
+        $('#charInfoWrapper .moveUp').show();
+    } else {
+        $('#charInfoWrapper .moveUp').hide();
+        $('#charInfoWrapper .moveDown').hide();
+    }
+
+    //  ********** END Populate Sheet Function **********
 };
 
 
@@ -363,19 +375,6 @@ $('#logoutBtn').on('click', function(){
     });
 
 
-//  ********** On Click Hooks **********
-$(document).mouseup(function(e){
-    //  Change Quantity - Remove Qty Changer Element on Focus Out
-    if (!$('#qtyForm').is(e.target) && $('#qtyForm').has(e.target).length === 0) {
-        $('#qtyForm').remove();
-    }
-    //  Settings Form - Remove Element on Focus Out
-    if (!$('.settingsBox').is(e.target) && $('.settingsBox').has(e.target).length === 0) {
-        $('.settingsBox').remove();
-    }
-});
-
-
 //  ********** Menu Burger **********
   $('header').on('click', '.burgerMenu', function(){
     $('#topMenu').toggleClass('isActive');
@@ -410,6 +409,104 @@ $('#characterXP').on('focusout', function(){
     if (loggedIn) {dbCharRef.update(update)};
     populateSheet();
 });
+
+
+//  ********** Arrange Details **********
+    //  ***** Show Icons *****
+$('#charInfoWrapper .sortIcon').on('click', function(){
+    if(showMoveBtn) {showMoveBtn = false} else {showMoveBtn = true}
+    populateSheet();
+});
+
+    //  ***** Move Detail - Up *****
+$('#charInfoWrapper').on('click', '.moveUp', function(){
+    const currKey = $(this).parent().children('.detailID').text();
+    const currDetailName = $(this).parent().children('.row').text();
+    const currDetailInfo = $(this).parent().children('.detailInfo').text();
+    const nextKey = $(this).parent().prev().children('.detailID').text();
+    const nextDetailName = $(this).parent().prev().children('.row').text();
+    const nextDetailInfo = $(this).parent().prev().children('.detailInfo').text();
+    console.log(currKey+": "+currDetailName+" - "+currDetailInfo);
+    console.log(nextKey+": "+nextDetailName+" - "+nextDetailInfo);
+    if (nextKey !== "") {
+        currentCharacter.details[currKey] = {'detailInfo': nextDetailInfo, 'detailName': nextDetailName};
+        currentCharacter.details[nextKey] = {'detailInfo': currDetailInfo, 'detailName': currDetailName};
+        const update = {};
+        update['details'] = currentCharacter.details;
+        if (loggedIn) {dbCharRef.update(update)};
+        populateSheet();
+    }
+});
+
+    //  ***** Move Detail - Down *****
+$('#charInfoWrapper').on('click', '.moveDown', function(){
+    const currKey = $(this).parent().children('.detailID').text();
+    const currDetailName = $(this).parent().children('.row').text();
+    const currDetailInfo = $(this).parent().children('.detailInfo').text();
+    const nextKey = $(this).parent().next().children('.detailID').text();
+    const nextDetailName = $(this).parent().next().children('.row').text();
+    const nextDetailInfo = $(this).parent().next().children('.detailInfo').text();
+    console.log(currKey+": "+currDetailName+" - "+currDetailInfo);
+    console.log(nextKey+": "+nextDetailName+" - "+nextDetailInfo);
+    if (nextKey !== "") {
+        currentCharacter.details[currKey] = {'detailInfo': nextDetailInfo, 'detailName': nextDetailName};
+        currentCharacter.details[nextKey] = {'detailInfo': currDetailInfo, 'detailName': currDetailName};
+        const update = {};
+        update['details'] = currentCharacter.details;
+        if (loggedIn) {dbCharRef.update(update)};
+        populateSheet();
+    }
+});
+
+
+
+
+//  ********** Settings Form **********
+$('body').on('click', '.edit', function(){
+    $('body').append(`  <section class="settingsBox">
+                            <form class="scroll2">
+                                <p class="px240">Title</p>
+                                <section>
+                                    <input type="text" id="newDetailTitle" class="px240">
+                                </section>
+                                <p class="px240">Details</p>
+                                <section>
+                                    <textarea id="newDetailInfo" rows="7" cols="40"></textarea>
+                                </section>
+                                <input type="submit" value="Update">
+                                <button class="settingsCancel">Cancel</button>
+                                <button class="settingsDelete">Remove</button>
+                            </form>
+                        </section>  `);
+    const detailID = $(this).parent().parent().children('.detailID').text();
+    const detailTitle1 = $(this).parent().text();
+    const detailInfo1 = $(this).parent().parent().children('.detailInfo').text();
+    $('#newDetailTitle').val(detailTitle1);
+    $('#newDetailInfo').val(detailInfo1);
+    $('.settingsBox input[type="submit"]').on('click', function(e){
+        e.preventDefault();
+        const detailTitle2 = $('#newDetailTitle').val();
+        const detailInfo2 = $('#newDetailInfo').val();
+        if ((detailTitle2 !== "" && detailInfo2 !== "") && (detailTitle2 !== detailTitle1 || detailInfo2 !== detailInfo1)) {
+            currentCharacter.details[detailID] = {'detailInfo': detailInfo2, 'detailName': detailTitle2}
+            const update = {};
+            update['details'] = currentCharacter.details;
+        if (loggedIn) {dbCharRef.update(update)};
+        populateSheet();
+        }
+        $('.settingsBox').remove();
+    });
+    $('.settingsBox .settingsDelete').on('click', function(e){
+        e.preventDefault();
+        delete currentCharacter.details[detailID];
+        const update = {};
+        update['details.'+detailID] = firebase.firestore.FieldValue.delete();
+        if (loggedIn) {dbCharRef.update(update)};
+        populateSheet();
+        $('.settingsBox').remove();
+    });
+});
+
 
 
 //  ********** Settings Form **********
@@ -524,7 +621,7 @@ $('body').on('click', '.settingsIcon', function(){
                 delete currentCharacter.charInfo.characterLevel[className];
                 const update = {};
                 update['charInfo.characterLevel.'+className] = firebase.firestore.FieldValue.delete();
-                dbCharRef.update(update)
+                if (loggedIn) {dbCharRef.update(update)};
             }
             populateSheet();
             $('.settingsBox').remove();
@@ -670,8 +767,8 @@ $('body').on('click', '.settingsIcon', function(){
         const settingsForm =   `<p class="px240">Title</p>
                                 <section><input type="text" id="newDetailTitle" class="px240"></section>
                                 <p class="px240">Details</p>
-                                <section><textarea id="newDetailInfo" rows="8" cols="40"></textarea></section>
-                                <input type="submit" value="Update">
+                                <section><textarea id="newDetailInfo" rows="7" cols="40"></textarea></section>
+                                <input type="submit" value="Add Detail">
                                 <button class="settingsCancel">Cancel</button>  `
         $('.settingsBox form').append(settingsForm);
         $('.settingsBox input[type="submit"]').on('click', function(e){
@@ -713,53 +810,56 @@ $('body').on('click', '.settingsIcon', function(){
                                     <input type="number" id="spellAtk" class="px60">
                                     <input type="number" id="spellDC" class="px60">
                                 </section>
-                                <section>
-                                    <label for="spellRecover" class="px100">Spell Recovery:</label>
-                                    <select id="spellRecover" class="px90">
-                                        <option value="longRest">Long Rest</option>
-                                        <option value="shortRest">Short Rest</option>
-                                    </select>
-                                </section>
                                 <h3>Spells Per Rest</h3>
                                 <div>
                                     <p class="px80">Spell Level</p>
-                                    <p class="px45">Casts</p>
+                                    <p class="px45">Long-Rest</p>
+                                    <p class="px45">Short-Rest</p>
                                 </div>
                                 <section>
-                                    <label for="spellFirstPR" class="px80">1st Level</label>
-                                    <input type="number" id="spellFirstPR" class="px45">
+                                    <label class="px80">1st Level</label>
+                                    <input type="number" id="spellFirstPLR" class="px45">
+                                    <input type="number" id="spellFirstPSR" class="px45">
                                 </section>
                                 <section>
-                                    <label for="spellSecondPR" class="px80">2nd Level</label>
-                                    <input type="number" id="spellSecondPR" class="px45">
+                                    <label class="px80">2nd Level</label>
+                                    <input type="number" id="spellSecondPLR" class="px45">
+                                    <input type="number" id="spellSecondPSR" class="px45">
                                 </section>
                                 <section>
-                                    <label for="spellThirdPR" class="px80">3rd Level</label>
-                                    <input type="number" id="spellThirdPR" class="px45">
+                                    <label class="px80">3rd Level</label>
+                                    <input type="number" id="spellThirdPLR" class="px45">
+                                    <input type="number" id="spellThirdPSR" class="px45">
                                 </section>
                                 <section>
-                                    <label for="spellFourthPR" class="px80">4th Level</label>
-                                    <input type="number" id="spellFourthPR" class="px45">
+                                    <label class="px80">4th Level</label>
+                                    <input type="number" id="spellFourthPLR" class="px45">
+                                    <input type="number" id="spellFourthPSR" class="px45">
                                 </section>
                                 <section>
-                                    <label for="spellFifthPR" class="px80">5th Level</label>
-                                    <input type="number" id="spellFifthPR" class="px45">
+                                    <label class="px80">5th Level</label>
+                                    <input type="number" id="spellFifthPLR" class="px45">
+                                    <input type="number" id="spellFifthPSR" class="px45">
                                 </section>
                                 <section>
-                                    <label for="spellSixthPR" class="px80">6th Level</label>
-                                    <input type="number" id="spellSixthPR" class="px45">
+                                    <label class="px80">6th Level</label>
+                                    <input type="number" id="spellSixthPLR" class="px45">
+                                    <input type="number" id="spellSixthPSR" class="px45">
                                 </section>
                                 <section>
-                                    <label for="spellSeventhPR" class="px80">7th Level</label>
-                                    <input type="number" id="spellSeventhPR" class="px45">
+                                    <label class="px80">7th Level</label>
+                                    <input type="number" id="spellSeventhPLR" class="px45">
+                                    <input type="number" id="spellSeventhPSR" class="px45">
                                 </section>
                                 <section>
-                                    <label for="spellEighthPR" class="px80">8th Level</label>
-                                    <input type="number" id="spellEighthPR" class="px45">
+                                    <label class="px80">8th Level</label>
+                                    <input type="number" id="spellEighthPLR" class="px45">
+                                    <input type="number" id="spellEighthPSR" class="px45">
                                 </section>
                                 <section>
-                                    <label for="spellNinthPR" class="px80">9th Level</label>
-                                    <input type="number" id="spellNinthPR" class="px45">
+                                    <label class="px80">9th Level</label>
+                                    <input type="number" id="spellNinthPLR" class="px45">
+                                    <input type="number" id="spellNinthPSR" class="px45">
                                 </section>
                                 <input type="submit" value="Update">
                                 <button class="settingsCancel">Cancel</button>  `
@@ -767,16 +867,24 @@ $('body').on('click', '.settingsIcon', function(){
         $('#spellAbility').val(currentCharacter.spells.spellStats.score);
         $('#spellAtk').val(currentCharacter.spells.spellStats.atkMod);
         $('#spellDC').val(currentCharacter.spells.spellStats.dcMod);
-        $('#spellRecover').val(currentCharacter.spells.spellStats.reset);
-        $('#spellFirstPR').val(currentCharacter.spells.spellCasts.spellFirstCasts.total);
-        $('#spellSecondPR').val(currentCharacter.spells.spellCasts.spellSecondCasts.total);
-        $('#spellThirdPR').val(currentCharacter.spells.spellCasts.spellThirdCasts.total);
-        $('#spellFourthPR').val(currentCharacter.spells.spellCasts.spellFourthCasts.total);
-        $('#spellFifthPR').val(currentCharacter.spells.spellCasts.spellFifthCasts.total);
-        $('#spellSixthPR').val(currentCharacter.spells.spellCasts.spellSixthCasts.total);
-        $('#spellSeventhPR').val(currentCharacter.spells.spellCasts.spellSeventhCasts.total);
-        $('#spellEighthPR').val(currentCharacter.spells.spellCasts.spellEighthCasts.total);
-        $('#spellNinthPR').val(currentCharacter.spells.spellCasts.spellNinthCasts.total);
+        $('#spellFirstPLR').val(currentCharacter.spells.spellCasts.spellFirstCasts.lrTotal);
+        $('#spellSecondPLR').val(currentCharacter.spells.spellCasts.spellSecondCasts.lrTotal);
+        $('#spellThirdPLR').val(currentCharacter.spells.spellCasts.spellThirdCasts.lrTotal);
+        $('#spellFourthPLR').val(currentCharacter.spells.spellCasts.spellFourthCasts.lrTotal);
+        $('#spellFifthPLR').val(currentCharacter.spells.spellCasts.spellFifthCasts.lrTotal);
+        $('#spellSixthPLR').val(currentCharacter.spells.spellCasts.spellSixthCasts.lrTotal);
+        $('#spellSeventhPLR').val(currentCharacter.spells.spellCasts.spellSeventhCasts.lrTotal);
+        $('#spellEighthPLR').val(currentCharacter.spells.spellCasts.spellEighthCasts.lrTotal);
+        $('#spellNinthPLR').val(currentCharacter.spells.spellCasts.spellNinthCasts.lrTotal);
+        $('#spellFirstPSR').val(currentCharacter.spells.spellCasts.spellFirstCasts.srTotal);
+        $('#spellSecondPSR').val(currentCharacter.spells.spellCasts.spellSecondCasts.srTotal);
+        $('#spellThirdPSR').val(currentCharacter.spells.spellCasts.spellThirdCasts.srTotal);
+        $('#spellFourthPSR').val(currentCharacter.spells.spellCasts.spellFourthCasts.srTotal);
+        $('#spellFifthPSR').val(currentCharacter.spells.spellCasts.spellFifthCasts.srTotal);
+        $('#spellSixthPSR').val(currentCharacter.spells.spellCasts.spellSixthCasts.srTotal);
+        $('#spellSeventhPSR').val(currentCharacter.spells.spellCasts.spellSeventhCasts.srTotal);
+        $('#spellEighthPSR').val(currentCharacter.spells.spellCasts.spellEighthCasts.srTotal);
+        $('#spellNinthPSR').val(currentCharacter.spells.spellCasts.spellNinthCasts.srTotal);
             //  *** Submit Spell Settings ***
         $('.settingsBox input[type="submit"]').on('click', function(e){
             e.preventDefault();
@@ -784,16 +892,24 @@ $('body').on('click', '.settingsIcon', function(){
             currentCharacter.spells.spellStats.score = parseInt($('#spellAbility').val());
             currentCharacter.spells.spellStats.atkMod = parseInt($('#spellAtk').val());
             currentCharacter.spells.spellStats.dcMod = parseInt($('#spellDC').val());
-            currentCharacter.spells.spellStats.reset = $('#spellRecover').val();
-            currentCharacter.spells.spellCasts.spellFirstCasts.total = parseInt($('#spellFirstPR').val());
-            currentCharacter.spells.spellCasts.spellSecondCasts.total = parseInt($('#spellSecondPR').val());
-            currentCharacter.spells.spellCasts.spellThirdCasts.total = parseInt($('#spellThirdPR').val());
-            currentCharacter.spells.spellCasts.spellFourthCasts.total = parseInt($('#spellFourthPR').val());
-            currentCharacter.spells.spellCasts.spellFifthCasts.total = parseInt($('#spellFifthPR').val());
-            currentCharacter.spells.spellCasts.spellSixthCasts.total = parseInt($('#spellSixthPR').val());
-            currentCharacter.spells.spellCasts.spellSeventhCasts.total = parseInt($('#spellSeventhPR').val());
-            currentCharacter.spells.spellCasts.spellEighthCasts.total = parseInt($('#spellEighthPR').val());
-            currentCharacter.spells.spellCasts.spellNinthCasts.total = parseInt($('#spellNinthPR').val());
+            currentCharacter.spells.spellCasts.spellFirstCasts.lrTotal = parseInt($('#spellFirstPLR').val());
+            currentCharacter.spells.spellCasts.spellSecondCasts.lrTotal = parseInt($('#spellSecondPLR').val());
+            currentCharacter.spells.spellCasts.spellThirdCasts.lrTotal = parseInt($('#spellThirdPLR').val());
+            currentCharacter.spells.spellCasts.spellFourthCasts.lrTotal = parseInt($('#spellFourthPLR').val());
+            currentCharacter.spells.spellCasts.spellFifthCasts.lrTotal = parseInt($('#spellFifthPLR').val());
+            currentCharacter.spells.spellCasts.spellSixthCasts.lrTotal = parseInt($('#spellSixthPLR').val());
+            currentCharacter.spells.spellCasts.spellSeventhCasts.lrTotal = parseInt($('#spellSeventhPLR').val());
+            currentCharacter.spells.spellCasts.spellEighthCasts.lrTotal = parseInt($('#spellEighthPLR').val());
+            currentCharacter.spells.spellCasts.spellNinthCasts.lrTotal = parseInt($('#spellNinthPLR').val());
+            currentCharacter.spells.spellCasts.spellFirstCasts.srTotal = parseInt($('#spellFirstPSR').val());
+            currentCharacter.spells.spellCasts.spellSecondCasts.srTotal = parseInt($('#spellSecondPSR').val());
+            currentCharacter.spells.spellCasts.spellThirdCasts.srTotal = parseInt($('#spellThirdPSR').val());
+            currentCharacter.spells.spellCasts.spellFourthCasts.srTotal = parseInt($('#spellFourthPSR').val());
+            currentCharacter.spells.spellCasts.spellFifthCasts.srTotal = parseInt($('#spellFifthPSR').val());
+            currentCharacter.spells.spellCasts.spellSixthCasts.srTotal = parseInt($('#spellSixthPSR').val());
+            currentCharacter.spells.spellCasts.spellSeventhCasts.srTotal = parseInt($('#spellSeventhPSR').val());
+            currentCharacter.spells.spellCasts.spellEighthCasts.srTotal = parseInt($('#spellEighthPSR').val());
+            currentCharacter.spells.spellCasts.spellNinthCasts.srTotal = parseInt($('#spellNinthPSR').val());
             const isEqual = saveSnapshot === JSON.stringify (currentCharacter.spells);
             const update = {};
             update['spells.spellCasts'] = currentCharacter.spells.spellCasts;
@@ -1010,3 +1126,16 @@ $('#spellList').on('click','article', function(){
     populateSheet();
 });
 //  ********** END Spell Management **********
+
+
+//  ********** On Click Hooks **********
+$(document).mouseup(function(e){
+    //  Change Quantity - Remove Qty Changer Element on Focus Out
+    if (!$('#qtyForm').is(e.target) && $('#qtyForm').has(e.target).length === 0) {
+        $('#qtyForm').remove();
+    };
+    //  Settings Form - Remove Element on Focus Out
+    if (!$('.settingsBox').is(e.target) && $('.settingsBox').has(e.target).length === 0) {
+        $('.settingsBox').remove();
+    };
+});

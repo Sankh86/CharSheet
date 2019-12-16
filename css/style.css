@@ -204,6 +204,9 @@ header h4 {
     width: 0;
 }
 
+
+.moveUp:hover,
+.moveDown:hover,
 .checkmark:hover,
 .cancel:hover,
 .trash:hover,
@@ -259,7 +262,7 @@ button:hover,
 
 .sortIcon {
     top: 2px;
-    right: 25px;
+    right: 28px;
 }
 
     /* Sheet Header */
@@ -753,11 +756,34 @@ header h4:hover,
     border-radius: 3px;
 }
 
+.detailID {
+    display: none;
+}
+
 .detailHeader {
     text-align: left;
     text-transform: none;
     padding: 1px 0;
     font-size: 1.1rem;
+    position: relative;
+}
+
+.moveUp,
+.moveDown {
+    position: absolute;
+    height: 22px;
+    width: 24px;
+    padding: 8px 1px 2px;
+    border-radius: 3px;
+    top: 1px;
+}
+
+.moveUp {
+    right: 32px;
+}
+
+.moveDown {
+    right: 5px;
 }
 
 .edit {
@@ -1168,6 +1194,14 @@ header h4:hover,
     flex-direction: column;
 }
 
+.settingsBox input[type="submit"] {
+    background: rgb(80, 150, 80);
+}
+
+.settingsBox .settingsDelete {
+    background: rgb(150, 80, 80);
+}
+
 .settingsBox h3 {
     margin: 0;
 }
@@ -1219,6 +1253,8 @@ header h4:hover,
 .settingsBox input[type="submit"],
 .settingsBox button {
     margin-top: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 .settingsBox form h3 {
