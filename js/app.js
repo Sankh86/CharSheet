@@ -17,7 +17,10 @@ let dbCharRef = "";
 let loggedIn = false;
 let userData = "";
 let currentCharacter = "";
+
+//  ********** Other Ref **********
 let showMoveBtn = false
+const stdSkills = ["Acrobatics", "Animal Handling", "Arcana", "Athletics", "Deception", "History", "Insight", "Intimidation", "Investigation", "Medicine", "Nature", "Perception", "Performance", "Persuasion", "Religion", "Sleight of Hand", "Stealth", "Survival"]
 
 
 function populateSheet() {
@@ -99,6 +102,8 @@ function populateSheet() {
 
             //  ***** Populate Skills & Passive Perception *****
     $('#skillsInfoList').empty();
+    let stdSkillsList = "";
+    let bnsSkillsList = "";
     $.each(currentCharacter.skills, function(key, value){
         const cSkill = currentCharacter.skills
         const modRef = abilityRef[cSkill[key]['score']];
@@ -116,10 +121,11 @@ function populateSheet() {
         if (key === "Perception") {
             passivePerception = 10 + skillBonus + abilityModifiers[currentCharacter.misc.passivePerceptionBonus['miscScore']] + currentCharacter.misc.passivePerceptionBonus['misc'];
         };
-
-        skillString = `<span class="row skillItm">${profImg}<span class="skillTitle">${key} (${modRef})</span><div class="skillEntry infoInput" title="${key} Skill Bonus">${skillBonus}</div>`
-        $('#skillsInfoList').append(skillString);
+        skillString = `<span class="row skillItm">${profImg}<span class="skillTitle">${key} (${modRef})</span><div class="skillEntry infoInput" title="${key} Skill Bonus">${skillBonus}</div></span>`
+        if (stdSkills.indexOf(key) !== -1) {stdSkillsList += skillString} else {bnsSkillsList += skillString};
     });
+    if (bnsSkillsList !== "") {bnsSkillsList = `<section class="skillsDivider"></section>` + bnsSkillsList}
+    $('#skillsInfoList').append(stdSkillsList).append(bnsSkillsList);
     $('#passivePerception').text(passivePerception);
 
 
@@ -369,7 +375,7 @@ $('#logoutBtn').on('click', function(){
             $('#characterButton').css('display','none');
             $('#acctBtn').css('display','none');
             $('#howdy').show();
-            currentCharacter = {"abilityScores":{"chaScore":8,"conScore":15,"dexScore":13,"intScore":16,"strScore":18,"wisScore":10},"attacks":{"Longsword":{"atkBon":0,"damage":"1d8","dmgBon":0,"prof":1,"range":"Melee","score":4}},"charInfo":{"characterAlignment":"Chaotic-Good","characterBackground":"Outlander","characterLevel":{"Fighter":{"hd":2,"lvl":3},"Rogue":{"hd":1,"lvl":2},"Wizard":{"hd":0,"lvl":5}},"characterName":"Obliviaron","characterRace":"Human"},"details":{"1":{"detailInfo":"You are good with maps and places, and generally have a firm understanding of your surroundings. You can also find food and fresh water for yourself and up to five others each day, provided the land can sustain such goods.","detailName":"Outlander"},"0":{"detailInfo":"Light Armor, Medium Armor, Heavy Armor, Shields, Simple Weapons, Martial Weapons, Flute","detailName":"Proficiencies"}},"inventory":{"Breastplate":{"attune":false,"equipped":true,"qty":1},"Longbow":{"attune":false,"equipped":true,"qty":1},"Longsword":{"attune":false,"equipped":true,"qty":1},"Potion of Healing - 2d4+2":{"attune":false,"equipped":false,"qty":3}},"misc":{"abilityBadges":{},"armorClass":{"armor":15,"maxDex":2,"misc":0,"miscScore":6,"shield":2},"coin":{"cp":"50","gp":"500","pp":"50","sp":"200"},"hitDice":{"d10":3,"d12":0,"d6":5,"d8":2,"recover":"half"},"hitPoints":{"currentHP":70,"maxHP":70,"maxMod":0,"tempHP":0},"initiative":{"misc":0,"miscScore":6},"passivePerceptionBonus":{"misc":0,"miscScore":6},"proficiencyBonus":0,"speed":"30","vision":"Darkvision 60","xp":"7500"},"savingThrows":{"chaSave":{"misc":0,"miscScore":6,"prof":0,"score":0},"conSave":{"misc":0,"miscScore":6,"prof":1,"score":1},"dexSave":{"misc":0,"miscScore":6,"prof":0,"score":2},"intSave":{"misc":0,"miscScore":6,"prof":0,"score":3},"strSave":{"misc":0,"miscScore":6,"prof":1,"score":4},"wisSave":{"misc":0,"miscScore":6,"prof":0,"score":5}},"skills":{"Acrobatics":{"misc":0,"prof":1,"score":2},"Arcana":{"misc":0,"prof":1,"score":3},"Athletics":{"misc":0,"prof":2,"score":4},"Deception":{"misc":0,"prof":0,"score":0},"History":{"misc":0,"prof":0,"score":3},"Insight":{"misc":0,"prof":0,"score":5},"Intimidation":{"misc":0,"prof":0,"score":0},"Investigation":{"misc":0,"prof":0,"score":3},"Medicine":{"misc":0,"prof":0,"score":5},"Nature":{"misc":0,"prof":0,"score":3},"Perception":{"misc":0,"prof":1,"score":5},"Performance":{"misc":0,"prof":0,"score":0},"Persuasion":{"misc":0,"prof":0,"score":0},"Religion":{"misc":0,"prof":0,"score":3},"Sleight of Hand":{"misc":0,"prof":0,"score":2},"Stealth":{"misc":0,"prof":2,"score":2},"Survival":{"misc":0,"prof":0,"score":5}},"spells":{"spellCasts":{"spellEighthCasts":{"remain":0,"total":0},"spellFifthCasts":{"remain":0,"total":0},"spellFirstCasts":{"remain":4,"total":4},"spellFourthCasts":{"remain":0,"total":0},"spellNinthCasts":{"remain":0,"total":0},"spellSecondCasts":{"remain":3,"total":3},"spellSeventhCasts":{"remain":0,"total":0},"spellSixthCasts":{"remain":0,"total":0},"spellThirdCasts":{"remain":2,"total":2}},"spellStats":{"atkMod":0,"dcMod":0,"reset":"longRest","score":3},"spellsList":{"spellCantrip":{"Dancing Lights":{"isConc":true,"isMem":true,"isRitual":false},"Firebolt":{"isConc":false,"isMem":true,"isRitual":false},"Green-Flame Blade":{"isConc":false,"isMem":true,"isRitual":false},"Mending":{"isConc":false,"isMem":true,"isRitual":false}},"spellEighth":{},"spellFifth":{},"spellFirst":{"Chromatic Orb":{"isConc":false,"isMem":true,"isRitual":false},"Comprehend Languages":{"isConc":false,"isMem":false,"isRitual":true},"Detect Magic":{"isConc":true,"isMem":true,"isRitual":true},"Expeditious Retreat":{"isConc":true,"isMem":true,"isRitual":false},"Identify":{"isConc":false,"isMem":false,"isRitual":true},"Magic Missile":{"isConc":false,"isMem":true,"isRitual":false},"Shield":{"isConc":false,"isMem":false,"isRitual":false}},"spellFourth":{},"spellNinth":{},"spellSecond":{"Invisibility":{"isConc":true,"isMem":true,"isRitual":false},"Shatter":{"isConc":false,"isMem":false,"isRitual":false},"Spider Climb":{"isConc":true,"isMem":false,"isRitual":false},"Web":{"isConc":true,"isMem":true,"isRitual":false}},"spellSeventh":{},"spellSixth":{},"spellThird":{"Fireball":{"isConc":false,"isMem":true,"isRitual":false},"Haste":{"isConc":true,"isMem":true,"isRitual":false},"Leomund's Tiny Hut":{"isConc":false,"isMem":false,"isRitual":true}}}}}
+            currentCharacter = {"abilityScores":{"chaScore":8,"conScore":15,"dexScore":13,"intScore":16,"strScore":18,"wisScore":10},"attacks":{"Longsword":{"atkBon":0,"damage":"1d8","dmgBon":0,"prof":1,"range":"Melee","score":4}},"charInfo":{"characterAlignment":"Chaotic-Good","characterBackground":"Outlander","characterLevel":{"Fighter":{"hd":2,"lvl":3},"Rogue":{"hd":1,"lvl":2},"Wizard":{"hd":0,"lvl":5}},"characterName":"Obliviaron","characterRace":"Human","characterSaveName":"Obliviaron"},"details":{"1576187193468":{"detailInfo":"Light Armor, Medium Armor, Heavy Armor, Shields, Simple Weapons, Martial Weapons, Flute","detailName":"Proficiencies"},"1576187223619":{"detailInfo":"You have an excellent memory for maps and geography, and you can always recall the general layout of terrain, settlements, and other features around you. In addition, you can find food and fresh water for yourself and up to five other people each day, provided that the land offers berries, small game, water, and so forth","detailName":"Outlander"}},"inventory":{"Breastplate":{"attune":false,"equipped":true,"qty":1},"Longbow":{"attune":false,"equipped":true,"qty":1},"Longsword":{"attune":false,"equipped":true,"qty":1},"Potion of Healing - 2d4+2":{"attune":false,"equipped":true,"qty":3}},"misc":{"abilityBadges":{},"armorClass":{"armor":15,"maxDex":2,"misc":0,"miscScore":6,"shield":2},"coin":{"cp":"50","gp":"500","pp":"25","sp":"100"},"hitDice":{"d10":3,"d12":0,"d6":5,"d8":2,"recover":"half"},"hitPoints":{"currentHP":70,"maxHP":70,"maxMod":0,"tempHP":0},"initiative":{"misc":0,"miscScore":6},"passivePerceptionBonus":{"misc":0,"miscScore":6},"proficiencyBonus":0,"speed":"30","vision":"Darkvision 60","xp":8000},"savingThrows":{"chaSave":{"misc":0,"miscScore":6,"prof":0,"score":0},"conSave":{"misc":0,"miscScore":6,"prof":1,"score":1},"dexSave":{"misc":0,"miscScore":6,"prof":0,"score":2},"intSave":{"misc":0,"miscScore":6,"prof":0,"score":3},"strSave":{"misc":0,"miscScore":6,"prof":1,"score":4},"wisSave":{"misc":0,"miscScore":6,"prof":0,"score":5}},"skills":{"Acrobatics":{"misc":0,"prof":1,"score":2},"Animal Handling":{"misc":0,"prof":0,"score":5},"Arcana":{"misc":0,"prof":1,"score":3},"Athletics":{"misc":0,"prof":2,"score":4},"Deception":{"misc":0,"prof":0,"score":0},"History":{"misc":0,"prof":0,"score":3},"Insight":{"misc":0,"prof":0,"score":5},"Intimidation":{"misc":0,"prof":0,"score":0},"Investigation":{"misc":0,"prof":0,"score":3},"Medicine":{"misc":0,"prof":0,"score":5},"Nature":{"misc":0,"prof":0,"score":3},"Perception":{"misc":0,"prof":1,"score":5},"Performance":{"misc":0,"prof":0,"score":0},"Persuasion":{"misc":0,"prof":0,"score":0},"Religion":{"misc":0,"prof":0,"score":3},"Sleight of Hand":{"misc":0,"prof":0,"score":2},"Stealth":{"misc":0,"prof":2,"score":2},"Survival":{"misc":0,"prof":0,"score":5}},"spells":{"spellCasts":{"spellEighthCasts":{"lrRemain":0,"lrTotal":0,"srRemain":0,"srTotal":0},"spellFifthCasts":{"lrRemain":0,"lrTotal":0,"srRemain":0,"srTotal":0},"spellFirstCasts":{"lrRemain":4,"lrTotal":4,"srRemain":0,"srTotal":0},"spellFourthCasts":{"lrRemain":0,"lrTotal":0,"srRemain":0,"srTotal":0},"spellNinthCasts":{"lrRemain":0,"lrTotal":0,"srRemain":0,"srTotal":0},"spellSecondCasts":{"lrRemain":3,"lrTotal":3,"srRemain":0,"srTotal":0},"spellSeventhCasts":{"lrRemain":0,"lrTotal":0,"srRemain":0,"srTotal":0},"spellSixthCasts":{"lrRemain":0,"lrTotal":0,"srRemain":0,"srTotal":0},"spellThirdCasts":{"lrRemain":2,"lrTotal":2,"srRemain":0,"srTotal":0}},"spellStats":{"atkMod":0,"dcMod":0,"score":3},"spellsList":{"spellCantrip":{"Dancing Lights":{"isConc":true,"isMem":true,"isRitual":false},"Firebolt":{"isConc":false,"isMem":true,"isRitual":false},"Green-Flame Blade":{"isConc":false,"isMem":true,"isRitual":false},"Mending":{"isConc":false,"isMem":true,"isRitual":false}},"spellEighth":{},"spellFifth":{},"spellFirst":{"Chromatic Orb":{"isConc":false,"isMem":true,"isRitual":false},"Comprehend Languages":{"isConc":false,"isMem":false,"isRitual":true},"Detect Magic":{"isConc":true,"isMem":true,"isRitual":true},"Expeditious Retreat":{"isConc":true,"isMem":true,"isRitual":false},"Identify":{"isConc":false,"isMem":false,"isRitual":true},"Magic Missile":{"isConc":false,"isMem":true,"isRitual":false},"Shield":{"isConc":false,"isMem":false,"isRitual":false}},"spellFourth":{},"spellNinth":{},"spellSecond":{"Invisibility":{"isConc":true,"isMem":true,"isRitual":false},"Shatter":{"isConc":false,"isMem":false,"isRitual":false},"Spider Climb":{"isConc":true,"isMem":false,"isRitual":false},"Web":{"isConc":true,"isMem":true,"isRitual":false}},"spellSeventh":{},"spellSixth":{},"spellThird":{"Fireball":{"isConc":false,"isMem":true,"isRitual":false},"Haste":{"isConc":true,"isMem":true,"isRitual":false},"Leomund's Tiny Hut":{"isConc":false,"isMem":false,"isRitual":true}}}}};
             populateSheet();
         }
     });
@@ -761,7 +767,71 @@ $('body').on('click', '.settingsIcon', function(){
         });
     }
 
-        //  *** Spell Settings ***
+
+        //  *** Skill Settings ***
+    if (settingsTitle === "Skills/Tools Settings") {
+        $('.settingsBox').prepend(settingsHeader);
+        const settingsForm = `  <div>
+                                    <p class="px120"></p>
+                                    <p class="px80" title="Miscellaneous ability bonus to be added to Passive Perception">Misc Ability</p>
+                                    <p class="px45" title="Miscellaneous bonus to be added to Passive Perception">Misc</p>
+                                </div>
+                                <section>
+                                    <label class="px120">Passive Perception</label>
+                                    <select id="passivePerceptionMiscAbility" class="px80">
+                                        <option value=6>None</option>
+                                        <option value=4>STR</option>
+                                        <option value=2>DEX</option>
+                                        <option value=1>CON</option>
+                                        <option value=3>INT</option>
+                                        <option value=5>WIS</option>
+                                        <option value=0>CHA</option>
+                                    </select>
+                                    <input type="number" id="passivePerceptionMisc" class="px45">
+                                </section>
+                                <div>
+                                    <p class="px60">Prof</p>
+                                    <p class="px100">Skill/Tool</p>
+                                    <p class="px60">Ability</p>
+                                    <p class="px45">Misc</p>
+                                </div>  `
+        $('.settingsBox form').append(settingsForm);
+        $.each(currentCharacter.skills, function(key, value){
+            const modKey = key.replace(/ /g,"_");
+            const cSkills = currentCharacter.skills;
+            const proficiency = cSkills[key]['prof'];
+            const abilityScore = cSkills[key]['score'];
+            const miscBonus = cSkills[key]['misc'];
+            const skillEntry = `<section>
+                                    <select id="${modKey}Prof" class="px60">
+                                        <option value=0>None</option>
+                                        <option value=0.5>1/2</option>
+                                        <option value=1>Prof</option>
+                                        <option value=2>Expert</option>
+                                    </select>
+                                    <label class="px100">${key}</label>
+                                    <select id="${modKey}Score" class="px60">
+                                        <option value=6>None</option>
+                                        <option value=4>STR</option>
+                                        <option value=2>DEX</option>
+                                        <option value=1>CON</option>
+                                        <option value=3>INT</option>
+                                        <option value=5>WIS</option>
+                                        <option value=0>CHA</option>
+                                    </select>
+                                    <input type="number" id="${modKey}Misc" class="px45">
+                                </section>  `
+        $('.settingsBox form').append(skillEntry);
+        $(`#${modKey}Prof`).val(proficiency);
+        $(`#${modKey}Score`).val(abilityScore);
+        $(`#${modKey}Misc`).val(miscBonus);
+        });
+
+
+    }
+
+
+        //  *** Add Character Detail ***
     if (settingsTitle === "Add New Info") {
         $('.settingsBox').prepend(settingsHeader);
         const settingsForm =   `<p class="px240">Title</p>
