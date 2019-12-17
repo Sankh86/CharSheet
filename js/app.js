@@ -776,7 +776,7 @@ $('body').on('click', '.settingsIcon', function(){
                                     <p class="px80" title="Miscellaneous ability bonus to be added to Passive Perception">Misc Ability</p>
                                     <p class="px45" title="Miscellaneous bonus to be added to Passive Perception">Misc</p>
                                 </div>
-                                <section>
+                                <section id="passivePerceptionSettings">
                                     <label class="px120">Passive Perception</label>
                                     <select id="passivePerceptionMiscAbility" class="px80">
                                         <option value=6>None</option>
@@ -789,12 +789,27 @@ $('body').on('click', '.settingsIcon', function(){
                                     </select>
                                     <input type="number" id="passivePerceptionMisc" class="px45">
                                 </section>
+                                <section>
+                                    <label class="px140">Change Skill Defaults</label>
+                                    <input type="checkbox" id="changeDefault" class="settingsCheckbox">
+                                    <label for="changeDefault" class="px45">Edit</label>
+                                </section>
                                 <div>
-                                    <p class="px60">Prof</p>
+                                    <p class="px45">Prof</p>
                                     <p class="px100">Skill/Tool</p>
-                                    <p class="px60">Ability</p>
-                                    <p class="px45">Misc</p>
-                                </div>  `
+                                    <p class="px55">Ability</p>
+                                    <p class="px40">Misc</p>
+                                </div>
+                                <section id="skillItems">
+
+                                </section>
+                                <section>
+                                    <button class="addSkill">New Skill/Tool</button>
+                                </section>
+                                <input type="submit" value="Add Detail">
+                                <button class="settingsCancel">Cancel</button>
+                                
+                                `
         $('.settingsBox form').append(settingsForm);
         $.each(currentCharacter.skills, function(key, value){
             const modKey = key.replace(/ /g,"_");
@@ -802,15 +817,18 @@ $('body').on('click', '.settingsIcon', function(){
             const proficiency = cSkills[key]['prof'];
             const abilityScore = cSkills[key]['score'];
             const miscBonus = cSkills[key]['misc'];
+            let stdSkill = ""
+            if (stdSkills.indexOf(key) !== -1) {stdSkill = ` stdSkill"`}
+
             const skillEntry = `<section>
-                                    <select id="${modKey}Prof" class="px60">
-                                        <option value=0>None</option>
+                                    <select id="${modKey}Prof" class="px45">
+                                        <option value=0> - </option>
                                         <option value=0.5>1/2</option>
-                                        <option value=1>Prof</option>
-                                        <option value=2>Expert</option>
+                                        <option value=1>x1</option>
+                                        <option value=2>x2</option>
                                     </select>
                                     <label class="px100">${key}</label>
-                                    <select id="${modKey}Score" class="px60">
+                                    <select id="${modKey}Score" class="px55${stdSkill}">
                                         <option value=6>None</option>
                                         <option value=4>STR</option>
                                         <option value=2>DEX</option>
@@ -819,14 +837,15 @@ $('body').on('click', '.settingsIcon', function(){
                                         <option value=5>WIS</option>
                                         <option value=0>CHA</option>
                                     </select>
-                                    <input type="number" id="${modKey}Misc" class="px45">
+                                    <input type="number" id="${modKey}Misc" class="px40">
                                 </section>  `
-        $('.settingsBox form').append(skillEntry);
+        $('#skillItems').append(skillEntry);
         $(`#${modKey}Prof`).val(proficiency);
         $(`#${modKey}Score`).val(abilityScore);
         $(`#${modKey}Misc`).val(miscBonus);
         });
-
+        // $('#changeDefault')
+        // $('#changeDefault').is(':checked')) {$('.stdSkill').prop('disabled', false)} else {$('.stdSkill').prop('disabled', true)}
 
     }
 
