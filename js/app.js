@@ -573,8 +573,6 @@ $('body').on('click', '.settingsIcon', function(){
                                 <input type="submit" value="Update">
                                 <button class="settingsCancel">Cancel</button>  `
         $('.settingsBox form').append(settingsForm);
-
-
         $.each(currentCharacter.charInfo.characterLevel, function(key, value){
             const classNum = $('#classLvlBreakout').children().length;
             const levelSettings = ` <section>
@@ -630,7 +628,7 @@ $('body').on('click', '.settingsIcon', function(){
                 if (loggedIn) {dbCharRef.update(update)};
             }
             populateSheet();
-            $('.settingsBox').remove();
+            $(this).parent().remove();
         });
             //  *** Submit Character Settings ***
         $('.settingsBox input[type="submit"]').on('click', function(e){
@@ -649,9 +647,10 @@ $('body').on('click', '.settingsIcon', function(){
             currentCharacter.abilityScores.chaScore = parseInt($('#chaStat').val());
             $('#classLvlBreakout').children().each(function(i){
                 if($(`#${i}Class`).val() !== "" && $(`#${i}Lvl`).val() !== "") {
-                    const className = $(`#${i}Class`).val();
+                    let className = $(`#${i}Class`).val();
                     const classLvl = parseInt($(`#${i}Lvl`).val());
                     const classHD = parseInt($(`#${i}HD`).val());
+                    className = className.replace(/[^a-zA-Z ]/g, "")
                     currentCharacter.charInfo.characterLevel[className] = {'lvl': classLvl, 'hd': classHD};
                 };
             });
@@ -665,7 +664,6 @@ $('body').on('click', '.settingsIcon', function(){
             $('.settingsBox').remove();
         });
     }
-
 
 
         //  *** Saving Throw Settings ***
@@ -799,27 +797,29 @@ $('body').on('click', '.settingsIcon', function(){
                                     <p class="px100">Skill/Tool</p>
                                     <p class="px55">Ability</p>
                                     <p class="px40">Misc</p>
+                                    <p class="px20"></p>
                                 </div>
                                 <section id="skillItems">
 
                                 </section>
                                 <section>
-                                    <button class="addSkill">New Skill/Tool</button>
+                                    <button id="addSkill">New Skill/Tool</button>
                                 </section>
-                                <input type="submit" value="Add Detail">
-                                <button class="settingsCancel">Cancel</button>
-                                
-                                `
+                                <input type="submit" value="Update">
+                                <button class="settingsCancel">Cancel</button>  `
         $('.settingsBox form').append(settingsForm);
         $.each(currentCharacter.skills, function(key, value){
-            const modKey = key.replace(/ /g,"_");
+            const modKey = key.replace(/ /g,"_").replace(/'/g,"").replace(/"/g,"");
             const cSkills = currentCharacter.skills;
             const proficiency = cSkills[key]['prof'];
             const abilityScore = cSkills[key]['score'];
             const miscBonus = cSkills[key]['misc'];
             let stdSkill = ""
-            if (stdSkills.indexOf(key) !== -1) {stdSkill = ` stdSkill"`}
-
+            let trash = `<img class="trash" src="img/trash.png" alt="Remove Skill" title="Remove Skill"></img>`
+            if (stdSkills.indexOf(key) !== -1) {
+                stdSkill = ` stdSkill"`;
+                trash = "";
+            }
             const skillEntry = `<section>
                                     <select id="${modKey}Prof" class="px45">
                                         <option value=0> - </option>
@@ -838,15 +838,86 @@ $('body').on('click', '.settingsIcon', function(){
                                         <option value=0>CHA</option>
                                     </select>
                                     <input type="number" id="${modKey}Misc" class="px40">
+                                    <p class="px20"></p>${trash}
                                 </section>  `
         $('#skillItems').append(skillEntry);
         $(`#${modKey}Prof`).val(proficiency);
         $(`#${modKey}Score`).val(abilityScore);
         $(`#${modKey}Misc`).val(miscBonus);
         });
-        // $('#changeDefault')
-        // $('#changeDefault').is(':checked')) {$('.stdSkill').prop('disabled', false)} else {$('.stdSkill').prop('disabled', true)}
-
+        $('#passivePerceptionMiscAbility').val(currentCharacter.misc.passivePerceptionBonus.miscScore);
+        $('#passivePerceptionMisc').val(currentCharacter.misc.passivePerceptionBonus.misc);
+        $('.stdSkill').prop('disabled', true)
+            //  *** Edit Standard Skills ***
+        $('#changeDefault').change(function(){
+            if ($(this).is(":checked")) {$('.stdSkill').prop('disabled', false)} else {$('.stdSkill').prop('disabled', true)}
+        });
+            //  *** Add New Skill ***
+        $('#addSkill').on('click', function(e){
+            e.preventDefault();
+            const length = $('#skillItems').children().length;
+            const skillEntry = `<section>
+                                    <select id="${length}Prof" class="px45">
+                                        <option value=0> - </option>
+                                        <option value=0.5>1/2</option>
+                                        <option value=1>x1</option>
+                                        <option value=2>x2</option>
+                                    </select>
+                                    <input type="text" id="${length}Key" class="px100">
+                                    <select id="${length}Score" class="px55">
+                                        <option value=6>None</option>
+                                        <option value=4>STR</option>
+                                        <option value=2>DEX</option>
+                                        <option value=1>CON</option>
+                                        <option value=3>INT</option>
+                                        <option value=5>WIS</option>
+                                        <option value=0>CHA</option>
+                                    </select>
+                                    <input type="number" id="${length}Misc" class="px40">
+                                    <p class="px20"></p>
+                                </section>  `
+            $('#skillItems').append(skillEntry);
+        });
+            //  *** Remove Custom Skill ***
+        $('.settingsBox').on('click', '.trash', function(){
+            const key = $(this).parent().children('label').text();
+            delete currentCharacter.skills[key];
+            const update = {};
+            update['skills.'+key] = firebase.firestore.FieldValue.delete();
+            if (loggedIn) {dbCharRef.update(update)};
+            $(this).parent().remove();
+            populateSheet();
+        });
+            //  *** Update Skills ***
+        $('.settingsBox input[type="submit"]').on('click', function(e){
+            e.preventDefault();
+            const saveSnapshotPassivePerception = JSON.stringify(currentCharacter.misc.passivePerceptionBonus);
+            const saveSnapshotSkills = JSON.stringify(currentCharacter.skills);
+            currentCharacter.misc.passivePerceptionBonus.miscScore = parseInt($('#passivePerceptionMiscAbility').val());
+            currentCharacter.misc.passivePerceptionBonus.misc = parseInt($('#passivePerceptionMisc').val());
+            $(skillItems).children().each(function(){
+                let key = ""
+                if ($(this).children('.px100').is('input')) {
+                    key = $(this).children('.px100').val();
+                    key = key.replace(/[^a-zA-Z0-9 '-]/g, "");
+                } else {
+                    key = $(this).children('.px100').text();
+                }
+                const prof = parseFloat($(this).children('.px45').val());
+                const score = parseInt($(this).children('.px55').val());
+                let misc = parseInt($(this).children('.px40').val());
+                if (isNaN(misc)) {misc = 0};
+                if (key !== "") {currentCharacter.skills[key] = {'misc': misc, 'prof': prof, 'score': score}};
+            });
+            const isEqualPassivePerception = saveSnapshotPassivePerception === JSON.stringify (currentCharacter.misc.passivePerceptionBonus);
+            const isEqualSkills = saveSnapshotSkills === JSON.stringify(currentCharacter.skills);
+            const update = {};
+            if (!(isEqualPassivePerception)) {update['misc.passivePerceptionBonus'] = currentCharacter.misc.passivePerceptionBonus};
+            if (!(isEqualSkills)) {update['skills'] = currentCharacter.skills};
+            if (loggedIn && (!(isEqualSkills) || !(isEqualPassivePerception))) {dbCharRef.update(update)};
+            populateSheet();
+            $('.settingsBox').remove();
+        });
     }
 
 
@@ -871,7 +942,6 @@ $('body').on('click', '.settingsIcon', function(){
                 update['details'] = currentCharacter.details;
             if (loggedIn) {dbCharRef.update(update)};
             populateSheet();
-            $('.settingsBox').remove();
             }
             $('.settingsBox').remove();
         });
@@ -1046,7 +1116,13 @@ $('#addItemForm input[type="submit"]').on('click', function(e){
 $('#inventory').on('click', '.relQty', function(){
     const itemName = $(this).parent().children('span').text();
     const itemQty = currentCharacter.inventory[itemName]['qty'];
-    const qtyForm = `<form class="sectWrapper" id="qtyForm"><h3>${itemName}</h3><input type="number" id="newQty" class=""><input type="image" class="checkmark" name="submit" src="img/checkmark.png" alt="Submit" title="Submit"><img class="cancel" src="img/xmark.png" alt="Cancel" title="Cancel"><img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item"></form>`
+    const qtyForm = `   <form class="sectWrapper" id="qtyForm">
+                            <h3>${itemName}</h3>
+                            <input type="number" id="newQty" class="">
+                            <input type="image" class="checkmark" name="submit" src="img/checkmark.png" alt="Submit" title="Submit">
+                            <img class="cancel" src="img/xmark.png" alt="Cancel" title="Cancel">
+                            <img class="trash" src="img/trash.png" alt="Remove Item" title="Remove Item">
+                        </form> `
     $(this).parent().append(qtyForm);
     $(this).parent().children('#qtyForm').children('#newQty').val(itemQty);
     $(this).parent().children('#qtyForm').focus();
@@ -1214,6 +1290,47 @@ $('#spellList').on('click','article', function(){
     if (loggedIn) {dbCharRef.update(update)};
     populateSheet();
 });
+        //  ***** Cast/Restore Spell *****
+            //  *** Generate Castbox
+$('#spellList').on('click', 'div', function(){
+    const spellLvl = $(this).attr('id');
+    const castBox = `   <section class="sectWrapper" id="castSpell">
+                            <h5 class="useSpell">Use Spell Slot</h5>
+                            <h5 class="restoreSpell">Restore Spell Slot</h5>
+                        </section> `
+    $(this).append(castBox);
+});
+            //  *** Generate Castbox
+$('#spellList').on('click', 'h5', function(){
+    const spellLvl = $(this).parent().parent().attr('id');
+    let lrRemain = currentCharacter.spells.spellCasts[spellLvl]['lrRemain'];
+    let srRemain = currentCharacter.spells.spellCasts[spellLvl]['srRemain'];
+    const lrTotal =  currentCharacter.spells.spellCasts[spellLvl]['lrTotal'];
+    const srTotal = currentCharacter.spells.spellCasts[spellLvl]['srTotal'];
+    const spellCheck = JSON.stringify(currentCharacter.spells.spellCasts[spellLvl]);
+    if ($(this).hasClass('useSpell')) {
+        if ((lrRemain + srRemain) > 0) {
+            if(srRemain > 0) {srRemain -= 1} else {lrRemain -= 1};
+        }
+    } else {
+        if ((lrRemain + srRemain) < (lrTotal + srTotal)) {
+            if(lrRemain < lrTotal) {lrRemain += 1} else {srRemain += 1};
+        }
+    }
+    currentCharacter.spells.spellCasts[spellLvl]['lrRemain'] = lrRemain;
+    currentCharacter.spells.spellCasts[spellLvl]['srRemain'] = srRemain;
+    currentCharacter.spells.spellCasts[spellLvl]['lrTotal'] = lrTotal;
+    currentCharacter.spells.spellCasts[spellLvl]['srTotal'] = srTotal;
+    const castCheck = JSON.stringify(currentCharacter.spells.spellCasts[spellLvl]) === spellCheck
+    const update = {}
+    update['spells.spellCasts.'+spellLvl] = currentCharacter.spells.spellCasts[spellLvl];
+    if (loggedIn && !(castCheck)) {dbCharRef.update(update)};
+    populateSheet();
+
+
+
+});
+
 //  ********** END Spell Management **********
 
 
@@ -1226,5 +1343,8 @@ $(document).mouseup(function(e){
     //  Settings Form - Remove Element on Focus Out
     if (!$('.settingsBox').is(e.target) && $('.settingsBox').has(e.target).length === 0) {
         $('.settingsBox').remove();
+    };
+    if (!$('#castSpell').is(e.target) && $('#castSpell').has(e.target).length === 0) {
+        $('#castSpell').remove();
     };
 });

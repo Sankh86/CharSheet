@@ -46,7 +46,9 @@ body {
 .ritualCheck,
 .concentrationCheck,
 #addSpellLevel,
-header h4 {
+header h4,
+#spellList div,
+#spellList article {
     cursor: pointer;
 }
 
@@ -220,7 +222,8 @@ button:hover,
 .addSpellCheckbox + label:hover,
 #addItemForm input[type=submit]:hover,
 .isEquippedBtn:hover,
-.edit:hover {
+.edit:hover,
+#castSpell h5:hover {
     box-shadow: inset 0 0 10px 1px rgba(255, 255, 255, 0.8),
         0 0 3px 2px rgb(120, 120, 120);
 }
@@ -883,6 +886,7 @@ header h4:hover,
     border-radius: 5px 5px 0 0;
     box-shadow: 1px 0 rgb(150, 150, 150), inset 0 0 10px rgba(0, 0, 0, .35);
     background: white;
+    position: relative;
 }
 
 #spellList ul {
@@ -975,16 +979,34 @@ header h4:hover,
 }
 
 #addItemForm input[type=submit],
-#addSpellForm input[type=submit] {
+#addSpellForm input[type=submit],
+#castSpell h5 {
     border-radius: 3px;
     border: 1px solid rgb(150, 150, 150);
     box-shadow: 1px 1px rgb(150, 150, 150);
+    background: rgb(240, 240, 240);
 }
 
 #addItemForm input[type=text],
 #addSpellForm input[type=text] {
     padding: 0 2px;
 }
+
+#castSpell {
+    position: absolute;
+    top: 0;
+    right: 45px;
+    width: 170px;
+    z-index: 3;
+}
+
+#castSpell h5 {
+    font-size: 1rem;
+    margin: 5px;
+    padding: 3px;
+    font-weight: normal;
+}
+
 
 /* Inventory Details */
 
@@ -1185,7 +1207,7 @@ header h4:hover,
 
 /* Settings Form */
 .settingsBox {
-    max-width: 96vw;
+    max-width: calc(100vw +6px);
     max-height: 82vh;
     width: max-content;
     background: black;
@@ -1241,6 +1263,12 @@ header h4:hover,
     border-radius: 5px;
 }
 
+.settingsBox select:disabled {
+    background: rgb(224, 224, 224);
+    border: 1px solid  rgb(90, 90, 90);
+    color: rgb(90, 90, 90);
+}
+
 .settingsBox input[type="number"],
 .settingsBox input[type="text"] {
     text-align: center;
@@ -1271,7 +1299,8 @@ header h4:hover,
     margin-top: 10px;
 }
 
-#passivePerceptionSettings {
+#passivePerceptionSettings,
+#addSkill {
     margin-bottom: 20px;
 }
 
@@ -1279,6 +1308,22 @@ header h4:hover,
     display:flex;
     flex-direction: column;
 }
+
+/* Settings - Character Details Form */
+#classLvlBreakout section,
+#skillItems section {
+    display: block;
+    position: relative;
+}
+
+.settingsBox .trash {
+    position: absolute;
+    top: 2px;
+    right: 0px;
+    width: 25px;
+    height: 24px;
+}
+
 
 /* Settings Element Sizers */
 .px20 {
@@ -1337,21 +1382,6 @@ header h4:hover,
 .px240 {
     width: 240px;
 }
-
-/* Settings - Character Details Form */
-#classLvlBreakout section {
-    display: block;
-    position: relative;
-}
-
-#classLvlBreakout .trash {
-    position: absolute;
-    top: 2px;
-    right: 0px;
-    width: 25px;
-    height: 24px;
-}
-
 
 
 /* Footer */
