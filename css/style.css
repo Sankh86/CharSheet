@@ -1165,9 +1165,11 @@ header h4:hover,
 /* Form Control */
 #qtyForm {
     position: absolute;
-    width:150px;
     padding: 2px;
     z-index: 100;
+    text-align: left;
+    min-width: 155px;
+    max-width: 250px;
 }
 
 #qtyForm * {
@@ -1190,18 +1192,23 @@ header h4:hover,
 #qtyForm .checkmark,
 #qtyForm .cancel,
 #qtyForm .trash {
-    margin-top: 3.5px;
-    height: 20px;
-    width: 23px;
+    height: 23px;
+    width: 25px;
+    position: absolute;
+    bottom: 4px;
 }
 
 
 #qtyForm .checkmark {
-    margin-left: 3px;
+    left: 57px;
+}
+
+#qtyForm .cancel {
+    left: 85px;
 }
 
 #qtyForm .trash {
-    margin-left:10px;
+    left: 122px;
 }
 
 

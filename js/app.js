@@ -14,6 +14,7 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 let dbUserRef = "";
 let dbCharRef = "";
+const dbCharList = []
 let loggedIn = false;
 let userData = "";
 let currentCharacter = "";
@@ -295,6 +296,17 @@ function sortObjKeysAlphabetically(obj) {
     return ordered;
 };
 
+function createCharList() {
+    dbCharList.length = 0;
+    dbUserRef.collection('Characters').get().then(snapshot => {
+        snapshot.docs.forEach(doc => {dbCharList.push(doc.id)});
+        $('#charactersList').children().remove();
+        $.each(dbCharList, function(i){
+            const charList = `<h4>${dbCharList[i]}</h4>`
+            $('#charactersList').append(charList);
+        });
+    })
+};
 
 // ***** Create New User & Log In *****
 // const newuserform = document.querySelector("#newuser-form");
@@ -363,9 +375,11 @@ $('#logoutBtn').on('click', function(){
                 dbCharRef = db.collection("Users").doc(uid).collection('Characters').doc(lastSeen);
                 dbCharRef.get().then((snapshot) => {
                     currentCharacter = snapshot.data();
+                    createCharList();
                     populateSheet();
                 });
             });
+            dbCharList
 
         } else {
             uid = "";
@@ -522,14 +536,14 @@ $('body').on('click', '.settingsCancel', function(e){
     $('.settingsBox').remove();
 });
 
-    //  ***** Settings Form - Click Settings Icon *****
+//  ********** Settings Form - Click Settings Icon **********
 $('body').on('click', '.settingsIcon', function(){
     $('.settingsBox').remove();
     $('body').append(`<section class="settingsBox"><form class="scroll2"></form></section>`);
     const settingsTitle = $(this).attr('title');
     let settingsHeader = `<h3>${settingsTitle}</h3>`
 
-        //  *** Character Settings ***
+    //  ***** Character Settings *****
     if (settingsTitle === "Character Settings") {
         $('.settingsBox').prepend(settingsHeader);
         const settingsForm = `  <p class="px140">Name</p>
@@ -541,9 +555,9 @@ $('body').on('click', '.settingsIcon', function(){
                                 <p class="px140">Alignment</p>
                                 <input type="text" id="charAlignmentEntry" class="px140">
                                 <section>
-                                    <p class="px100">Class</p>
+                                    <p class="px90">Class</p>
+                                    <p class="px55">Hit Die</p>
                                     <p class="px45">Level</p>
-                                    <p class="px60">Hit Die</p>
                                     <p class="px20"></p>
                                 </section>
                                 <section id="classLvlBreakout">
@@ -575,21 +589,17 @@ $('body').on('click', '.settingsIcon', function(){
         $('.settingsBox form').append(settingsForm);
         $.each(currentCharacter.charInfo.characterLevel, function(key, value){
             const classNum = $('#classLvlBreakout').children().length;
+            const hdNum = currentCharacter.charInfo.characterLevel[key]['hd']
+            let hitDie = "";
+            if (hdNum === 3) {hitDie = "d12"} else if (hdNum === 2) {hitDie = "d10"} else if (hdNum === 1) {hitDie = "d8"} else {hitDie = "d6"}
             const levelSettings = ` <section>
-                                        <input type="text" id="${classNum}Class" class="px100"></input>
+                                        <label id="${classNum}Class" class="px90L">${key}</label>
+                                        <label id="${classNum}HD" class="px55">${hitDie}</label>
                                         <input type="number" id="${classNum}Lvl" class="px45">
-                                        <select id="${classNum}HD" class="px60">
-                                            <option value=0>d6</option>
-                                            <option value=1>d8</option>
-                                            <option value=2>d10</option>
-                                            <option value=3>d12</option>
-                                        </select>
                                         <p class="px20"></p><img class="trash" src="img/trash.png" alt="Remove Class" title="Remove Class">
                                     </section>  `
             $('#classLvlBreakout').append(levelSettings);
-            $(`#${classNum}Class`).val(key);
             $(`#${classNum}Lvl`).val(currentCharacter.charInfo.characterLevel[key]['lvl']);
-            $(`#${classNum}HD`).val(currentCharacter.charInfo.characterLevel[key]['hd']);
         });
         $('#charNameEntry').val(currentCharacter.charInfo.characterName);
         $('#charRaceEntry').val(currentCharacter.charInfo.characterRace);
@@ -601,26 +611,31 @@ $('body').on('click', '.settingsIcon', function(){
         $('#intStat').val(currentCharacter.abilityScores.intScore);
         $('#wisStat').val(currentCharacter.abilityScores.wisScore);
         $('#chaStat').val(currentCharacter.abilityScores.chaScore);
-            //  *** Add New Class Button ***
+        //  *** Add New Class Button ***
         $('.settingsBox').on('click', '#addNewClass', function(e){
             e.preventDefault();
             const classNum = $('#classLvlBreakout').children().length;
             const newClass = `  <section>
-                                    <input type="text" id="${classNum}Class" class="px100"></input>
-                                    <input type="number" id="${classNum}Lvl" class="px45">
-                                    <select id="${classNum}HD" class="px60">
+                                    <input type="text" id="${classNum}Class" class="px90L"></input>
+                                    <select id="${classNum}HD" class="px55">
                                         <option value=0>d6</option>
                                         <option value=1>d8</option>
                                         <option value=2>d10</option>
                                         <option value=3>d12</option>
                                     </select>
+                                    <input type="number" id="${classNum}Lvl" class="px45">
                                     <p class="px20"></p><img class="trash" src="img/trash.png" alt="Remove Class" title="Remove Class">
                                 </section>  `
             $('#classLvlBreakout').append(newClass);
         });
-            //  *** Remove Class Button ***
+        //  *** Remove Class Button ***
         $('.settingsBox').on('click', '.trash', function(){
-            const className = $(this).parent().children('input[type="text"]').val();
+            let className = ""
+                if ($(this).parent().children('.px90L').is('input')) {
+                    className = $(this).parent().children('.px90L').val()
+                } else {
+                    className = $(this).parent().children('.px90L').text()
+                }
             if(className !== "") {
                 delete currentCharacter.charInfo.characterLevel[className];
                 const update = {};
@@ -630,7 +645,7 @@ $('body').on('click', '.settingsIcon', function(){
             populateSheet();
             $(this).parent().remove();
         });
-            //  *** Submit Character Settings ***
+        //  *** Submit Character Settings ***
         $('.settingsBox input[type="submit"]').on('click', function(e){
             e.preventDefault();
             const saveSnapshotScores = JSON.stringify(currentCharacter.abilityScores);
@@ -646,11 +661,23 @@ $('body').on('click', '.settingsIcon', function(){
             currentCharacter.abilityScores.wisScore = parseInt($('#wisStat').val());
             currentCharacter.abilityScores.chaScore = parseInt($('#chaStat').val());
             $('#classLvlBreakout').children().each(function(i){
-                if($(`#${i}Class`).val() !== "" && $(`#${i}Lvl`).val() !== "") {
-                    let className = $(`#${i}Class`).val();
-                    const classLvl = parseInt($(`#${i}Lvl`).val());
-                    const classHD = parseInt($(`#${i}HD`).val());
-                    className = className.replace(/[^a-zA-Z ]/g, "")
+                let className = ""
+                if ($(this).children('.px90L').is('input')) {
+                    className = $(this).children('.px90L').val()
+                } else {
+                    className = $(this).children('.px90L').text()
+                }
+                className = className.replace(/[^a-zA-Z ]/g, "")
+                let classHD = ""
+                if ($(this).children('.px55').is('input')) {
+                    classHD = $(this).children('.px55').val()
+                } else {
+                    classHD = $(this).children('.px55').text()
+                }
+                if (classHD === "d12") {classHD = 3} else if (classHD === "d10") {classHD = 2} else if (classHD === "d8") {classHD = 1} else {classHD = 0};
+                let classLvl = parseInt($(this).children('.px45').val());
+                if (classLvl < 1) {classLvl = ""}
+                if(className !== "" && classLvl !== "") {
                     currentCharacter.charInfo.characterLevel[className] = {'lvl': classLvl, 'hd': classHD};
                 };
             });
@@ -666,7 +693,7 @@ $('body').on('click', '.settingsIcon', function(){
     }
 
 
-        //  *** Saving Throw Settings ***
+    //  ***** Saving Throw Settings *****
     if (settingsTitle === "Saving Throw Settings") {
         settingsHeader += `<div><p class="px90">Ability</p><p class="px80">Proficiency</p><p class="px45">Bonus</p></div>`
         $('.settingsBox').prepend(settingsHeader);
@@ -734,7 +761,7 @@ $('body').on('click', '.settingsIcon', function(){
         $('#wisSaveMod').val(currentCharacter.savingThrows.wisSave.misc);
         $('#chaSaveMod').val(currentCharacter.savingThrows.chaSave.misc);
         $('#addToSaves').val(currentCharacter.savingThrows.strSave.miscScore);
-            //  *** Submit Saving Throw Settings ***
+        //  *** Submit Saving Throw Settings ***
         $('.settingsBox input[type="submit"]').on('click', function(e){
             e.preventDefault();
             const saveSnapshot = JSON.stringify(currentCharacter.savingThrows);
@@ -766,7 +793,7 @@ $('body').on('click', '.settingsIcon', function(){
     }
 
 
-        //  *** Skill Settings ***
+    //  ***** Skill Settings *****
     if (settingsTitle === "Skills/Tools Settings") {
         $('.settingsBox').prepend(settingsHeader);
         const settingsForm = `  <div>
@@ -848,11 +875,11 @@ $('body').on('click', '.settingsIcon', function(){
         $('#passivePerceptionMiscAbility').val(currentCharacter.misc.passivePerceptionBonus.miscScore);
         $('#passivePerceptionMisc').val(currentCharacter.misc.passivePerceptionBonus.misc);
         $('.stdSkill').prop('disabled', true)
-            //  *** Edit Standard Skills ***
+        //  *** Edit Standard Skills ***
         $('#changeDefault').change(function(){
             if ($(this).is(":checked")) {$('.stdSkill').prop('disabled', false)} else {$('.stdSkill').prop('disabled', true)}
         });
-            //  *** Add New Skill ***
+        //  *** Add New Skill ***
         $('#addSkill').on('click', function(e){
             e.preventDefault();
             const length = $('#skillItems').children().length;
@@ -878,7 +905,7 @@ $('body').on('click', '.settingsIcon', function(){
                                 </section>  `
             $('#skillItems').append(skillEntry);
         });
-            //  *** Remove Custom Skill ***
+        //  *** Remove Custom Skill ***
         $('.settingsBox').on('click', '.trash', function(){
             const key = $(this).parent().children('label').text();
             delete currentCharacter.skills[key];
@@ -888,7 +915,7 @@ $('body').on('click', '.settingsIcon', function(){
             $(this).parent().remove();
             populateSheet();
         });
-            //  *** Update Skills ***
+        //  *** Update Skills ***
         $('.settingsBox input[type="submit"]').on('click', function(e){
             e.preventDefault();
             const saveSnapshotPassivePerception = JSON.stringify(currentCharacter.misc.passivePerceptionBonus);
@@ -921,7 +948,7 @@ $('body').on('click', '.settingsIcon', function(){
     }
 
 
-        //  *** Add Character Detail ***
+    //  ***** Attacks Menu *****
     if (settingsTitle === "Add New Info") {
         $('.settingsBox').prepend(settingsHeader);
         const settingsForm =   `<p class="px240">Title</p>
@@ -931,6 +958,23 @@ $('body').on('click', '.settingsIcon', function(){
                                 <input type="submit" value="Add Detail">
                                 <button class="settingsCancel">Cancel</button>  `
         $('.settingsBox form').append(settingsForm);
+
+
+
+    }
+
+
+    //  ***** Add Character Detail *****
+    if (settingsTitle === "Add New Info") {
+        $('.settingsBox').prepend(settingsHeader);
+        const settingsForm =   `<p class="px240">Title</p>
+                                <section><input type="text" id="newDetailTitle" class="px240"></section>
+                                <p class="px240">Details</p>
+                                <section><textarea id="newDetailInfo" rows="7" cols="40"></textarea></section>
+                                <input type="submit" value="Add Detail">
+                                <button class="settingsCancel">Cancel</button>  `
+        $('.settingsBox form').append(settingsForm);
+        //  *** Submit Character Detail
         $('.settingsBox input[type="submit"]').on('click', function(e){
             e.preventDefault();
             const timestamp = $.now();
@@ -948,7 +992,7 @@ $('body').on('click', '.settingsIcon', function(){
     }
 
 
-        //  *** Spell Settings ***
+    //  ***** Spell Settings *****
     if (settingsTitle === "Spell Settings") {
         $('.settingsBox').prepend(settingsHeader);
         const settingsForm = `      <div>
@@ -1044,7 +1088,7 @@ $('body').on('click', '.settingsIcon', function(){
         $('#spellSeventhPSR').val(currentCharacter.spells.spellCasts.spellSeventhCasts.srTotal);
         $('#spellEighthPSR').val(currentCharacter.spells.spellCasts.spellEighthCasts.srTotal);
         $('#spellNinthPSR').val(currentCharacter.spells.spellCasts.spellNinthCasts.srTotal);
-            //  *** Submit Spell Settings ***
+        //  *** Submit Spell Settings ***
         $('.settingsBox input[type="submit"]').on('click', function(e){
             e.preventDefault();
             const saveSnapshot = JSON.stringify(currentCharacter.spells);
@@ -1080,11 +1124,12 @@ $('body').on('click', '.settingsIcon', function(){
     }
 });
 
-    //  ***** Settings Form - Submit Saving Throws *****
+//  ********** Settings Form - Cancel Button **********
 $('body').on('click', '.settingsCancel', function(e){
     e.preventDefault();
     $('.settingsBox').remove();
 });
+//  ********** END Settings Form **********
 
 
 //  ********** Inventory Management **********
@@ -1326,11 +1371,7 @@ $('#spellList').on('click', 'h5', function(){
     update['spells.spellCasts.'+spellLvl] = currentCharacter.spells.spellCasts[spellLvl];
     if (loggedIn && !(castCheck)) {dbCharRef.update(update)};
     populateSheet();
-
-
-
 });
-
 //  ********** END Spell Management **********
 
 
