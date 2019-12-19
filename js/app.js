@@ -409,24 +409,48 @@ $('header').on('mouseleave', 'h3', function(){
     $(this).children().hide();
 });
 
+//  ********** Character Menu - Change Character **********
+$('#charactersList').on('click', 'h4', function(){
+    if ($(this).attr('id') !== "createNewCharacter") {
+        const selectChar = $(this).text();
+        const currentChar = userData.lastCharSeen
+        const isNewChar = selectChar !== currentChar
+        console.log(selectChar);
+        if (loggedIn && isNewChar) {
+            dbCharRef = db.collection("Users").doc(uid).collection('Characters').doc(selectChar);
+            dbCharRef.get().then((snapshot) => {
+                currentCharacter = snapshot.data();
+                populateSheet();
+            });
+            userData.lastCharSeen = selectChar
+            const update = {}
+            update['lastCharSeen'] = selectChar;
+            dbUserRef.update(update)
+        };
+    };
+});
+
+
 
 //  ********** Update XP Total **********
 $('#charExperience input[type="submit"]').on('click', function(e){
     e.preventDefault();
     const xpTotal = parseInt($('#characterXP').val());
+    const xpChanged = xpTotal !== currentCharacter.misc.xp
     currentCharacter.misc.xp = xpTotal;
     $('#characterXP').blur();
     const update = {}
     update['misc.xp'] = currentCharacter.misc.xp;
-    if (loggedIn) {dbCharRef.update(update)};
+    if (loggedIn && xpChanged) {dbCharRef.update(update)};
     populateSheet();
 });
 $('#characterXP').on('focusout', function(){
     const xpTotal = $('#characterXP').val();
+    const xpChanged = xpTotal !== currentCharacter.misc.xp
     currentCharacter.misc.xp = xpTotal;
     const update = {}
     update['misc.xp'] = currentCharacter.misc.xp;
-    if (loggedIn) {dbCharRef.update(update)};
+    if (loggedIn && xpChanged) {dbCharRef.update(update)};
     populateSheet();
 });
 
@@ -669,12 +693,12 @@ $('body').on('click', '.settingsIcon', function(){
                 }
                 className = className.replace(/[^a-zA-Z ]/g, "")
                 let classHD = ""
-                if ($(this).children('.px55').is('input')) {
+                if ($(this).children('.px55').is('select')) {
                     classHD = $(this).children('.px55').val()
                 } else {
                     classHD = $(this).children('.px55').text()
                 }
-                if (classHD === "d12") {classHD = 3} else if (classHD === "d10") {classHD = 2} else if (classHD === "d8") {classHD = 1} else {classHD = 0};
+                if (classHD === "d12") {classHD = 3} else if (classHD === "d10") {classHD = 2} else if (classHD === "d8") {classHD = 1} else if (classHD === "d6") {classHD = 0} else {classHD = parseInt(classHD)};
                 let classLvl = parseInt($(this).children('.px45').val());
                 if (classLvl < 1) {classLvl = ""}
                 if(className !== "" && classLvl !== "") {
@@ -1237,47 +1261,43 @@ $('#inventory').on('click','div', function(){
 //  ********** Update Currency **********
 $('#money input[type="submit"]').on('click', function(e){
     e.preventDefault();
-    const prevPP = currentCharacter.misc.coin.pp;
-    const prevGP = currentCharacter.misc.coin.gp;
-    const prevSP = currentCharacter.misc.coin.sp;
-    const prevCP = currentCharacter.misc.coin.cp;
+    const prevCoin = JSON.stringify(currentCharacter.misc.coin);
     const ppAmount = parseInt($('#ppAmount').val());
     const gpAmount = parseInt($('#gpAmount').val());
     const spAmount = parseInt($('#spAmount').val());
     const cpAmount = parseInt($('#cpAmount').val());
     if (isNaN(ppAmount) || isNaN(gpAmount) || isNaN(spAmount) || isNaN(cpAmount)) {
         alert('Not a number.  Try Again')
-    } else if (prevPP !== ppAmount || prevGP !== gpAmount || prevSP !== spAmount || prevCP !== cpAmount)  {
+    } else {
         currentCharacter.misc.coin.pp = ppAmount;
         currentCharacter.misc.coin.gp = gpAmount;
         currentCharacter.misc.coin.sp = spAmount;
         currentCharacter.misc.coin.cp = cpAmount;
         $('#money input[type="text"]').blur();
+        const coinChanged = prevCoin !== JSON.stringify(currentCharacter.misc.coin)
         const update = {};
         update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
-        if (loggedIn) {dbCharRef.update(update)};
+        if (loggedIn && coinChanged) {dbCharRef.update(update)};
         populateSheet();
     }
 });
 $('#money input[type="text"]').on('focusout', function(){
-    const prevPP = currentCharacter.misc.coin.pp;
-    const prevGP = currentCharacter.misc.coin.gp;
-    const prevSP = currentCharacter.misc.coin.sp;
-    const prevCP = currentCharacter.misc.coin.cp;
+    const prevCoin = JSON.stringify(currentCharacter.misc.coin);
     const ppAmount = $('#ppAmount').val();
     const gpAmount = $('#gpAmount').val();
     const spAmount = $('#spAmount').val();
     const cpAmount = $('#cpAmount').val();
     if (isNaN(ppAmount) || isNaN(gpAmount) || isNaN(spAmount) || isNaN(cpAmount)) {
         alert('Not a number.  Try Again')
-    } else if (prevPP !== ppAmount || prevGP !== gpAmount || prevSP !== spAmount || prevCP !== cpAmount) {
+    } else {
         currentCharacter.misc.coin.pp = ppAmount;
         currentCharacter.misc.coin.gp = gpAmount;
         currentCharacter.misc.coin.sp = spAmount;
         currentCharacter.misc.coin.cp = cpAmount;
+        const coinChanged = prevCoin !== JSON.stringify(currentCharacter.misc.coin)
         const update = {};
         update['misc.coin'] = {'pp':ppAmount,'gp':gpAmount,'sp':spAmount,'cp':cpAmount};
-        if (loggedIn) {dbCharRef.update(update)};
+        if (loggedIn && coinChanged) {dbCharRef.update(update)};
         populateSheet();
     }
 });
@@ -1376,7 +1396,7 @@ $('#spellList').on('click', 'h5', function(){
 
 
 //  ********** On Click Hooks **********
-$(document).mouseup(function(e){
+$(document).mousedown(function(e){
     //  Change Quantity - Remove Qty Changer Element on Focus Out
     if (!$('#qtyForm').is(e.target) && $('#qtyForm').has(e.target).length === 0) {
         $('#qtyForm').remove();
