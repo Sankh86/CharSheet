@@ -973,14 +973,18 @@ $('body').on('click', '.settingsIcon', function(){
 
 
     //  ***** Attacks Menu *****
-    if (settingsTitle === "Add New Info") {
+    if (settingsTitle === "Attack Settings") {
         $('.settingsBox').prepend(settingsHeader);
-        const settingsForm =   `<p class="px240">Title</p>
-                                <section><input type="text" id="newDetailTitle" class="px240"></section>
-                                <p class="px240">Details</p>
-                                <section><textarea id="newDetailInfo" rows="7" cols="40"></textarea></section>
-                                <input type="submit" value="Add Detail">
-                                <button class="settingsCancel">Cancel</button>  `
+        const settingsForm =   `    <div>
+                                        <p class="px60">Prof</p>
+                                        <p class="px60">Attr</p>
+                                        <p class="px140">Name</p>
+                                        <p class="px60">Atk Bonus</p>
+                                        <p class="px140">Weapon Damage</p>
+                                        <p class="px60">Dmg Bonus</p>
+                                    </div>
+
+                                                    `
         $('.settingsBox form').append(settingsForm);
 
 
