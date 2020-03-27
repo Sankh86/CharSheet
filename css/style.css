@@ -116,6 +116,14 @@ header h4,
 .scroll2 {
     /* overflow-x: auto; */
     overflow-y: auto;
+    overflow-x: auto;
+    flex: 1 1;
+}
+
+.scroll3 {
+    /* overflow-x: auto; */
+    overflow-y: auto;
+    overflow-x: auto;
     flex: 1 1;
 }
 
@@ -1215,7 +1223,7 @@ header h4:hover,
 
 /* Settings Form */
 .settingsBox {
-    max-width: calc(100vw +6px);
+    max-width: calc(100vw + 6px);
     max-height: 82vh;
     width: max-content;
     background: black;
