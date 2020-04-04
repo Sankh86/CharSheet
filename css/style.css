@@ -1325,6 +1325,10 @@ header h4:hover,
     flex-direction: column;
 }
 
+.editAtkEntry {
+    position: relative;
+}
+
 /* Settings - Character Details Form */
 #classLvlBreakout section,
 #skillItems section {

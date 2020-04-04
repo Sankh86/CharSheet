@@ -860,7 +860,7 @@ $('body').on('click', '.settingsIcon', function(){
                                 <button class="settingsCancel">Cancel</button>  `
         $('.settingsBox form').append(settingsForm);
         $.each(currentCharacter.skills, function(key, value){
-            const modKey = key.replace(/ /g,"_").replace(/'/g,"").replace(/"/g,"");
+            const modKey = key.replace(/ /g,"_").replace(/[^\w\s]/gi, "");
             const cSkills = currentCharacter.skills;
             const proficiency = cSkills[key]['prof'];
             const abilityScore = cSkills[key]['score'];
@@ -978,15 +978,52 @@ $('body').on('click', '.settingsIcon', function(){
         const settingsForm =   `    <div>
                                         <p class="px60">Prof</p>
                                         <p class="px60">Attr</p>
-                                        <p class="px140">Name</p>
+                                        <p class="px120">Name</p>
                                         <p class="px60">Atk Bonus</p>
-                                        <p class="px140">Weapon Damage</p>
+                                        <p class="px80">Wpn Dmg</p>
                                         <p class="px60">Dmg Bonus</p>
+                                        <p class="px20"></p>
                                     </div>
 
                                                     `
         $('.settingsBox form').append(settingsForm);
-
+        $.each(currentCharacter.attacks, function(key, value){
+            const modKey = key.replace(/ /g,"_").replace(/[^\w\s]/gi, "");
+            const cAttacks = currentCharacter.attacks;
+            const proficiency = cAttacks[key]['prof'];
+            const abilityScore = cAttacks[key]['score'];
+            const attackBonus = cAttacks[key]['atkBon'];
+            const weaponDamage = cAttacks[key]['damage'];
+            const damageBonus = cAttacks[key]['dmgBon'];
+            let trash = `<img class="trash" src="img/trash.png" alt="Remove Attack" title="Remove Attack"></img>`
+            const attackEntry = `<section class="editAtkEntry">
+                                    <select id="${modKey}Prof" class="px60">
+                                        <option value=1>Proficient</option>
+                                        <option value=0>Non-Prof</option>
+                                    </select>
+                                    <select id="${modKey}Score" class="px60">
+                                        <option value=6>None</option>
+                                        <option value=4>STR</option>
+                                        <option value=2>DEX</option>
+                                        <option value=1>CON</option>
+                                        <option value=3>INT</option>
+                                        <option value=5>WIS</option>
+                                        <option value=0>CHA</option>
+                                    </select>
+                                    <input type="text" id="${modKey}Name" class="px120">
+                                    <input type="number" id="${modKey}AtkBon" class="px60">
+                                    <input type="text" id="${modKey}WpnDmg" class="px80">
+                                    <input type="number" id="${modKey}DmgBon" class="px60">
+                                    <p class="px20"></p>${trash}
+                                </section>  `
+        $('.settingsBox form').append(attackEntry);
+        $(`#${modKey}Prof`).val(proficiency);
+        $(`#${modKey}Score`).val(abilityScore);
+        $(`#${modKey}Name`).val(key);
+        $(`#${modKey}AtkBon`).val(attackBonus);
+        $(`#${modKey}WpnDmg`).val(weaponDamage);
+        $(`#${modKey}DmgBon`).val(damageBonus);
+        });
 
 
     }
