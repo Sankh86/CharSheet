@@ -1320,18 +1320,20 @@ header h4:hover,
     margin-bottom: 20px;
 }
 
-#skillItems {
+#skillItems,
+#attackItems {
     display:flex;
     flex-direction: column;
 }
 
-.editAtkEntry {
+/* .editAtkEntry {
     position: relative;
-}
+} */
 
 /* Settings - Character Details Form */
 #classLvlBreakout section,
-#skillItems section {
+#skillItems section,
+#attackItems section {
     display: block;
     position: relative;
 }

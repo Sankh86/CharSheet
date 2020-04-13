@@ -982,10 +982,17 @@ $('body').on('click', '.settingsIcon', function(){
                                         <p class="px60">Atk Bonus</p>
                                         <p class="px80">Wpn Dmg</p>
                                         <p class="px60">Dmg Bonus</p>
+                                        <p class="px80">Range</p>
                                         <p class="px20"></p>
                                     </div>
+                                    <section id="attackItems">
 
-                                                    `
+                                    </section>
+                                    <section>
+                                        <button id="addAttack">New Attack</button>
+                                    </section>
+                                    <input type="submit" value="Update">
+                                    <button class="settingsCancel">Cancel</button>  `
         $('.settingsBox form').append(settingsForm);
         $.each(currentCharacter.attacks, function(key, value){
             const modKey = key.replace(/ /g,"_").replace(/[^\w\s]/gi, "");
@@ -995,14 +1002,14 @@ $('body').on('click', '.settingsIcon', function(){
             const attackBonus = cAttacks[key]['atkBon'];
             const weaponDamage = cAttacks[key]['damage'];
             const damageBonus = cAttacks[key]['dmgBon'];
+            const range = cAttacks[key]['range'];
             let trash = `<img class="trash" src="img/trash.png" alt="Remove Attack" title="Remove Attack"></img>`
-            const attackEntry = `<section class="editAtkEntry">
-                                    <select id="${modKey}Prof" class="px60">
+            const attackEntry = `<section>
+                                    <select id="${modKey}Prof" class="px60 atkProf">
                                         <option value=1>Proficient</option>
                                         <option value=0>Non-Prof</option>
                                     </select>
-                                    <select id="${modKey}Score" class="px60">
-                                        <option value=6>None</option>
+                                    <select id="${modKey}Score" class="px60 atkScore">
                                         <option value=4>STR</option>
                                         <option value=2>DEX</option>
                                         <option value=1>CON</option>
@@ -1010,19 +1017,81 @@ $('body').on('click', '.settingsIcon', function(){
                                         <option value=5>WIS</option>
                                         <option value=0>CHA</option>
                                     </select>
-                                    <input type="text" id="${modKey}Name" class="px120">
-                                    <input type="number" id="${modKey}AtkBon" class="px60">
-                                    <input type="text" id="${modKey}WpnDmg" class="px80">
-                                    <input type="number" id="${modKey}DmgBon" class="px60">
+                                    <input type="text" id="${modKey}Name" class="px120 atkName">
+                                    <input type="number" id="${modKey}AtkBon" class="px60 atkAtkBon">
+                                    <input type="text" id="${modKey}WpnDmg" class="px80 atkWpnDmg">
+                                    <input type="number" id="${modKey}DmgBon" class="px60 atkDmgBon">
+                                    <input type="text" id="${modKey}Range" class="px80 atkRange">
                                     <p class="px20"></p>${trash}
                                 </section>  `
-        $('.settingsBox form').append(attackEntry);
+        $('#attackItems').append(attackEntry);
         $(`#${modKey}Prof`).val(proficiency);
         $(`#${modKey}Score`).val(abilityScore);
         $(`#${modKey}Name`).val(key);
         $(`#${modKey}AtkBon`).val(attackBonus);
         $(`#${modKey}WpnDmg`).val(weaponDamage);
         $(`#${modKey}DmgBon`).val(damageBonus);
+        $(`#${modKey}Range`).val(range);
+        });
+        //  *** Add New Attack ***
+        $('#addAttack').on('click', function(e){
+            e.preventDefault();
+            const length = $('#attackItems').children().length;
+            const attackEntry = `<section>
+                                    <select id="${length}Prof" class="px60 atkProf">
+                                        <option value=1>Proficient</option>
+                                        <option value=0>Non-Prof</option>
+                                    </select>
+                                    <select id="${length}Score" class="px60 atkScore">
+                                        <option value=4>STR</option>
+                                        <option value=2>DEX</option>
+                                        <option value=1>CON</option>
+                                        <option value=3>INT</option>
+                                        <option value=5>WIS</option>
+                                        <option value=0>CHA</option>
+                                    </select>
+                                    <input type="text" id="${length}Name" class="px120 atkName">
+                                    <input type="number" id="${length}AtkBon" class="px60 atkAtkBon">
+                                    <input type="text" id="${length}WpnDmg" class="px80 atkWpnDmg">
+                                    <input type="number" id="${length}DmgBon" class="px60 atkDmgBon">
+                                    <input type="text" id="${length}Range" class="px80 atkRange">
+                                    <p class="px20"></p>
+                                </section>  `
+            $('#attackItems').append(attackEntry);
+        });
+        //  *** Remove Attack ***
+        $('.settingsBox').on('click', '.trash', function(){
+            const key = $(this).parent().children('.atkName').val();
+            console.log(key);
+            delete currentCharacter.attacks[key];
+            const update = {};
+            update['attacks.'+key] = firebase.firestore.FieldValue.delete();
+            if (loggedIn) {dbCharRef.update(update)};
+            $(this).parent().remove();
+            populateSheet();
+        });
+        //  *** Update Attacks ***
+        $('.settingsBox input[type="submit"]').on('click', function(e){
+            e.preventDefault();
+            const saveSnapshotAttacks = JSON.stringify(currentCharacter.attacks);
+            $(attackItems).children().each(function(){
+                let key = $(this).children('.atkName').val();
+                let atkBon = parseInt($(this).children('.atkAtkBon').val());
+                const damage = $(this).children('.atkWpnDmg').val();
+                let dmgBon = parseInt($(this).children('.atkDmgBon').val());
+                const prof = parseInt($(this).children('.atkProf').val());
+                const range = $(this).children('.atkRange').val();
+                const score = parseInt($(this).children('.atkScore').val());
+                if (isNaN(dmgBon)) {dmgBon = 0};
+                if (isNaN(atkBon)) {atkBon = 0};
+                if (key !== "") {currentCharacter.attacks[key] = {'atkBon': atkBon, 'damage': damage, 'dmgBon': dmgBon, 'prof': prof, 'range': range, 'score': score}};
+            });
+            const isEqualAttacks = saveSnapshotAttacks === JSON.stringify(currentCharacter.attacks);
+            const update = {};
+            if (!(isEqualAttacks)) {update['attacks'] = currentCharacter.attacks};
+            if (loggedIn && !(isEqualAttacks)) {dbCharRef.update(update)};
+            populateSheet();
+            $('.settingsBox').remove();
         });
 
 
